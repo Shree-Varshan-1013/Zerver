@@ -1,29 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&family=Noto+Sans+JP:wght@600&family=Noto+Sans:wght@300&family=Nunito:wght@700&family=Poppins:wght@300&display=swap");
 h1 {
-    font-family: "Nunito", sans-serif;
-    color: black;
+  font-family: "Nunito", sans-serif;
+  color: black;
 }
 p {
-    font-family: "Noto Sans", sans-serif;
-    color: black;
+  font-family: "Noto Sans", sans-serif;
+  color: black;
 }
 h2 {
-    font-family: "Noto Sans JP", sans-serif;
-    color: black;
+  font-family: "Noto Sans JP", sans-serif;
+  color: black;
 }
 li {
-    font-family: "Noto Sans", sans-serif;
-    color: black;
+  font-family: "Noto Sans", sans-serif;
+  color: black;
 }
 
 .video-container {
-    position: relative;
+  position: relative;
   width: 100%;
   height: 100%;
 }
 .video-container video {
-  top: 40%;
-  left: 50%;
+  top: 30%;
+  left: 30%;
   min-width: 100%;
   min-height: 100%;
   width: auto;
@@ -62,8 +62,6 @@ li {
 .backdrop-mobile {
   position: relative;
 }
-
-
 
 .text--gradient {
   font-size: 72px;
@@ -166,4 +164,10 @@ li {
 .button-28:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+#chart-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
