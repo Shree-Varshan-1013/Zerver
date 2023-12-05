@@ -46,6 +46,11 @@ option = {
             animation: false
         }
     },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
     xAxis: {
         type: 'time',
         splitLine: {
