@@ -166,8 +166,14 @@ li {
   transform: translateY(0);
 }
 
-#chart-container {
+.chartBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+/* #chart-container {
   position: relative;
   height: 100vh;
   overflow: hidden;
-}
+} */

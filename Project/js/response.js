@@ -1,85 +1,71 @@
-var dom = document.getElementById('chart-container');
-var myChart = echarts.init(dom, 'dark', {
-    renderer: 'canvas',
-    useDirtyRect: false
-});
+var chartDom = document.getElementById('chart-container-response');
+var myChart = echarts.init(chartDom, 'dark');
+var option;
 
-function randomData() {
-    now = new Date(+now + oneDay);
-    value = value + Math.random() * 21 - 10;
-    return {
-        name: now.toString(),
-        value: [
-            [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-            Math.round(value)
-        ]
-    };
-}
-let data = [];
-let now = new Date(1997, 9, 3);
-let oneDay = 24 * 3600 * 1000;
-let value = Math.random() * 1000;
-for (var i = 0; i < 1000; i++) {
-    data.push(randomData());
-}
 option = {
     title: {
-        text: 'FlashDB Keys'
+        text: 'Average Response Time',
+        top: 10,
     },
     tooltip: {
-        trigger: 'axis',
-        formatter: function (params) {
-            params = params[0];
-            var date = new Date(params.name);
-            return (
-                date.getDate() +
-                '/' +
-                (date.getMonth() + 1) +
-                '/' +
-                date.getFullYear() +
-                ' : ' +
-                params.value[1]
-            );
-        },
-        axisPointer: {
-            animation: false
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine'],
+        top: 50,
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+        top: 120,
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
         }
     },
     xAxis: {
-        type: 'time',
-        splitLine: {
-            show: false
-        }
+        type: 'category',
+        boundaryGap: false,
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     },
     yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%'],
-        splitLine: {
-            show: false
-        }
+        type: 'value'
     },
     series: [
         {
-            name: 'Fake Data',
+            name: 'Email',
             type: 'line',
-            showSymbol: false,
-            data: data
+            stack: 'Total',
+            data: [120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name: 'Union Ads',
+            type: 'line',
+            stack: 'Total',
+            data: [220, 182, 191, 234, 290, 330, 310]
+        },
+        {
+            name: 'Video Ads',
+            type: 'line',
+            stack: 'Total',
+            data: [150, 232, 201, 154, 190, 330, 410]
+        },
+        {
+            name: 'Direct',
+            type: 'line',
+            stack: 'Total',
+            data: [320, 332, 301, 334, 390, 330, 320]
+        },
+        {
+            name: 'Search Engine',
+            type: 'line',
+            stack: 'Total',
+            data: [820, 932, 901, 934, 1290, 1330, 1320]
         }
     ]
 };
 
-myChart.setOption(option);
-
-setInterval(function () {
-    for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
-    }
-    myChart.setOption({
-        series: [
-            {
-                data: data
-            }
-        ]
-    });
-}, 1000);
+option && myChart.setOption(option);

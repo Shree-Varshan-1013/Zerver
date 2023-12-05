@@ -24,7 +24,8 @@ for (var i = 0; i < 1000; i++) {
 }
 option = {
     title: {
-        text: 'FlashDB Keys'
+        text: 'FlashDB Keys',
+        top: 10,
     },
     tooltip: {
         trigger: 'axis',
@@ -49,7 +50,7 @@ option = {
         type: 'time',
         splitLine: {
             show: false
-        }
+        },
     },
     yAxis: {
         type: 'value',
@@ -63,7 +64,10 @@ option = {
             name: 'Fake Data',
             type: 'line',
             showSymbol: false,
-            data: data
+            data: data,
+            lineStyle: { 
+                color: 'red' 
+            }
         }
     ]
 };
