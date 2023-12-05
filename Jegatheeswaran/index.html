@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Include Tailwind CSS -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    /* Additional styling if needed */
+    /* canvas {
+      max-width: 200px; 
+      margin: auto;
+      display: block;
+    } */
+  </style>
+</head>
+
+<body class="bg-black">
+  <div class=" bg-slate-900 border border-blue-600 border-9  w-[30%] p-4">
+    <p class="text-white">Errors Details</p>
+    <p class="text-white">Error</p>
+
+    <!-- line representation -->
+    <canvas id="myGauge" class="m-auto w-[90%] flex"></canvas>
+
+    <script>
+        // Sample data
+        function generateLabels() {
+          const labels = [];
+          for (let i = 10; i <= 100; i += 10) {
+            labels.push(i.toString());
+          }
+          return labels;
+        }
+  
+        // Sample data
+        var labels = generateLabels();
+  
+        // Create the line chart with horizontal background
+        var ctx = document.getElementById('myGauge').getContext('2d');
+        var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+          labels: labels,
+          datasets: [{
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.1)', // Adjust the opacity as needed
+            tension: 0.1
+          }]
+        },
+          
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                grid: {
+                  display: false
+                }
+              },
+              y: {
+                grid: {
+                  color: 'rgba(255, 255, 255, 0.1)'
+                }
+              }
+            },
+            plugins: {
+            label: {
+              display: false, // Hide the legend
+            },
+          },
+          }
+          
+        });
+      </script>
+  </div>
+</body>
+
+</html>
