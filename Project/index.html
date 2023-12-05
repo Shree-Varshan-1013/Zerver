@@ -1,24 +1,79 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            clifford: '#da373d',
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body>
-  <h1 class="text-3xl">
-    Hello world!
-  </h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/Project/styles/index.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <div
+      class="w-full h-20 text-white z-20"
+      style="position: sticky; top: 0; background-color: rgb(43, 42, 42)"
+    >
+      <div
+        class="flex justify-between items-center max-w-screen-xl mx-auto px-4 h-full"
+      >
+        <div>
+          <a to="home">
+            <img src="/img/logoTale.png" width="{200}" />
+          </a>
+        </div>
+        <div class="hidden lg:flex items-center">
+          <ul class="flex">
+            <li class="inline-block self-center mx-4">
+              <a> Features </a>
+            </li>
+            <li class="inline-block self-center mx-4">
+              <a to="contact">Contact</a>
+            </li>
+            <div>
+              <button>Login</button>
+            </div>
+          </ul>
+        </div>
+        <!-- <div onClick={() => setIsMenuShown(!isMenuShown)}
+            class='block md:hidden cursor-pointer'>
+            {isMenuShown ? <FaTimes size={30} /> : <FaBars size={30} />}
+        </div> -->
+      </div>
+      <div
+        className="hidden md:flex lg:flex h-25 w-full video-container"
+      >
+        <div className="backdrop-desktop"></div>
+        <video autoplay loop muted>
+          <source src="/Project/assets/home-video.mp4" type="video/mp4"/>
+        </video>
+        <div className="overlay-content w-full">
+          <div style="margin-top: 100px">
+            <h1 style="font-size: 100px" className="text--gradient">Zerver</h1>
+          </div>
+          <div>
+            <p className="text-2xl">Server Informations</p>
+            <div className="flex justify-center" style="padding-top: 40px">
+              <div style="width: 180px; margin: 20px">
+                <button className="button-28">Login</button>
+              </div>
+              <div style="width: 180px; margin: 20px">
+                <button className="button-27" style="border: 2px solid #68b8d1">
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
