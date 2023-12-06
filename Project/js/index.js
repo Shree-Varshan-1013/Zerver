@@ -4,6 +4,7 @@ var myChart = echarts.init(dom, 'dark', {
     useDirtyRect: false
 });
 
+//data has been changed to data_index while combining   
 function randomData() {
     now = new Date(+now + oneDay);
     value = value + Math.random() * 21 - 10;
@@ -15,12 +16,12 @@ function randomData() {
         ]
     };
 }
-let data = [];
+let data_index = [];
 let now = new Date(1997, 9, 3);
 let oneDay = 24 * 3600 * 1000;
 let value = Math.random() * 1000;
 for (var i = 0; i < 1000; i++) {
-    data.push(randomData());
+    data_index.push(randomData());
 }
 option = {
     title: {
@@ -69,7 +70,7 @@ option = {
             name: 'Fake Data',
             type: 'line',
             showSymbol: false,
-            data: data,
+            data: data_index,
             lineStyle: { 
                 color: 'red' 
             }
@@ -81,13 +82,13 @@ myChart.setOption(option);
 
 setInterval(function () {
     for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
+        data_index.shift();
+        data_index.push(randomData());
     }
     myChart.setOption({
         series: [
             {
-                data: data
+                data: data_index
             }
         ]
     });

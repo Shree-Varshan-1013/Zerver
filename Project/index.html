@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
     <link rel="stylesheet" href="/Project/styles/index.css" />
     <script>
@@ -55,28 +57,185 @@
             <nav class="flex-1">
               <a href="#" class="block p-4 hover:bg-gray-700">Dashboard</a>
               <a href="#" class="block p-4 hover:bg-gray-700">Analytics</a>
-              <a href="#" class="block p-4 hover:bg-gray-700">Reports</a>
+              <a href="./reportPage.html" class="block p-4 hover:bg-gray-700">Reports</a>
               <a href="#" class="block p-4 hover:bg-gray-700">Settings</a>
             </nav>
             <div class="p-4 border-t border-gray-700">
               <a href="#" class="block hover:text-gray-400">Logout</a>
             </div>
           </aside>
-          <main class="flex p-4 align-center flex-col">
-            <h1 class="text-2xl font-semibold">Dashboard</h1>
-            <div class="flex m-10">
-              <div
-                id="chart-container"
-                style="width: 400px; height: 400px"
-              ></div>
-              <script src="/Project/js/index.js"></script>
-              <div
-                id="chart-container-response"
-                style="width: 400px; height: 400px"
-                class="ml-20"
-              ></div>
-              <script src="/Project/js/response.js"></script>
+          <!-- main data -->
+          <main class="flex w-full align-center flex-col">
+            <div class="w-full">
+            <h1 class="pl-3 py-4 text-2xl font-semibold bg-gray-700">Dashboard</h1>
+          </div>
+          <!-- main div -->
+            <div class="flex flex-col mt-2">
+              <!-- first -->
+              <div class="ml-4 gap-2 flex flex-row w-full">
+                <!-- doughnut chart -->
+                <div class="bg-slate-900 border border-transparent border-9 w-[32%] p-2 flex">
+                  <div class="float-left w-[60%]">
+                      <p class="text-white">Errors Details</p>
+                      <p class="text-white">Error</p>
+              
+                      <!-- Doughnut chart with the same width and height -->
+                      <canvas id="myDoughnut" class=" w-[35%] m-[10%] "></canvas>
+              
+                      <script>
+                      // Sample data
+                      var data = [60, 40 , 30];
+              
+                      // Create the doughnut chart
+                      var ctx = document.getElementById('myDoughnut').getContext('2d');
+                      var myDoughnut = new Chart(ctx, {
+                          type: 'doughnut',
+                          data: {
+                          labels: ['Filled', 'Empty' , 'free'],
+                          datasets: [{
+                              data: data,
+                              backgroundColor: [
+                              'rgba(75, 192, 192, 0.7)',
+                              'rgba(255, 255, 255, 0.7)',
+                                  'rgba(255,255,100, 0.7)'
+                              ],
+                              borderWidth: 1
+                          }]
+                          },
+                          options: {
+                          aspectRatio: 1, // Set aspect ratio to 1 for equal width and height
+                          responsive: true,
+                          //   maintainAspectRatio: false,
+                          cutout: '50%', // Adjust the size of the gap in the center
+                          plugins: {
+                              legend: {
+                              display: false,
+                              },
+                              label: {
+                              display: false,
+                              },
+                          },
+                          }
+                      });
+                      </script>
+                  </div>
+                  <!-- legend -->
+                  <div class="divide-y divide-slate-700  text-white float-right w-[40%] mt-[25%]">
+                      <div>Legend 1</div>
+                      <div>Legend 2</div>
+                      <div>Legend 3</div>
+              
+                  </div>
+                </div>
+                <!-- line chart -->
+                <div class="bg-slate-900 border border-transparent border-9 w-[32%] p-2 flex flex-col">
+                  <p class="text-white">Errors Details</p>
+                  <p class="text-white">Error</p>
+              
+                  <!-- line representation -->
+                  <canvas id="myGauge" class=" flex"></canvas>
+              
+                  <script>
+                      // Sample data
+                      function generateLabels() {
+                        const labels = [];
+                        for (let i = 10; i <= 100; i += 10) {
+                          labels.push(i.toString());
+                        }
+                        return labels;
+                      }
+                
+                      // Sample data
+                      var labels = generateLabels();
+                
+                      // Create the line chart with horizontal background
+                      var ctx = document.getElementById('myGauge').getContext('2d');
+                      var myLineChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                        labels: labels,
+                        datasets: [{
+                          data: [65, 59, 80, 81, 56, 55, 40],
+                          fill: true,
+                          borderColor: 'rgb(75, 192, 192)',
+                          backgroundColor: 'rgba(75, 192, 192, 0.1)', // Adjust the opacity as needed
+                          tension: 0.1
+                        }]
+                      },
+                        
+                        options: {
+                          responsive: true,
+                          scales: {
+                            x: {
+                              grid: {
+                                display: false
+                              }
+                            },
+                            y: {
+                              grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                              }
+                            }
+                          },
+                          plugins: {
+                          label: {
+                            display: false, // Hide the legend
+                          },
+                        },
+                        }
+                        
+                      });
+                    </script>
+                </div>
+                <div class="bg-slate-900 border border-transparent border-9 w-[32%] p-2 flex flex-col">
+                  <div id="chart-container-barchart" style="width: 380px; height: 300px"></div>
+                  <script src="../Project/js/bar.js" type="text/javascript"></script>
+                  <!-- <div id="scatter" style="width: 400px; height: 400px" class="ml-5"></div>
+                  <script src="scatter.js"></script> -->
+                </div>
+              </div>
+              <!-- </div>   -->
+              <!-- second -->
+              <div class="ml-4 gap-2 flex flex- w-full">
+                <div class="flex m-1">
+                  <div
+                    id="chart-container"
+                    style="width: 400px; height: 400px"
+                  ></div>
+                  <script src="../Project/js/index.js"></script>
+                  <div
+                    id="chart-container-response"
+                    style="width: 400px; height: 400px"
+                    class="ml-1"
+                  ></div>
+                  <script src="../Project/js/response.js"></script>
+
+                  <div id="scatter" style="width: 400px; height: 400px" class="ml-5"></div>
+                  <script src="../Project/js/scatter.js"></script>
+                </div>
+                
+              </div>
+              <!-- bottom -->
+              <!-- <div class="flex">
+                <div class=" m-10">
+                  <div
+                    id="chart-container"
+                    style="width: 400px; height: 400px"
+                  ></div>
+                  <script src="../Project/js/index.js"></script>
+                  <div
+                    id="chart-container-response"
+                    style="width: 400px; height: 400px"
+                    class="ml-20"
+                  ></div>
+                  <script src="../Project/js/response.js"></script>
+                </div>
+              </div> -->
+              <!-- </div> -->
+
             </div>
+
+            
           </main>
         </div>
       </div>
