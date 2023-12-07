@@ -93,7 +93,7 @@
   @apply !p-6 dark:!bg-boxdark dark:!text-bodydark dark:!shadow-8 2xsm:!w-auto;
 }
 .flatpickr-day {
-  @apply dark:!text-bodydark dark:hover:!bg-meta-4 dark:hover:!border-meta-4;
+  @apply dark:!text-bodydark dark:hover:!border-meta-4 dark:hover:!bg-meta-4;
 }
 .flatpickr-months .flatpickr-prev-month,
 .flatpickr-months .flatpickr-next-month {
@@ -168,3 +168,32 @@ span.flatpickr-weekday,
 [x-cloak] {
   display: none !important;
 }
+
+.stars {
+  display: inline-block;
+  font-size: 30px;
+}
+
+.stars:before {
+  content: "★★★★★";
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, gold var(--rating), #ddd var(--rating));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rotate {
+  margin: 40px;
+  width: 70%;
+  animation: spin 2s infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+

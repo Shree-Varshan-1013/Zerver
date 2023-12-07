@@ -12,6 +12,7 @@ module.exports = {
       transparent: 'transparent',
       white: '#FFFFFF',
       black: '#1C2434',
+      favo:'e2e8f0',
       'black-2': '#010101',
       body: '#64748B',
       bodydark: '#AEB7C0',

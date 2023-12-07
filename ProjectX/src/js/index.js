@@ -9,7 +9,9 @@ import chart01 from "./components/chart-01";
 import chart02 from "./components/chart-02";
 import chart03 from "./components/chart-03";
 import chart04 from "./components/chart-04";
+import statistics from "./components/statistics";
 import map01 from "./components/map-01";
+import progress from "./components/progress";
 
 Alpine.plugin(persist)
 window.Alpine = Alpine;
@@ -44,5 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chart02();
   chart03();
   chart04();
+  progress();
+  statistics();
   map01();
 });
