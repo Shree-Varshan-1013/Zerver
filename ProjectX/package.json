@@ -33,16 +33,16 @@
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.3",
     "style-loader": "^3.3.1",
-    "tailwindcss": "^3.2.7",
-    "webpack": "^5.67.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.3"
+    "tailwindcss": "^3.2.7"
   },
   "dependencies": {
     "@alpinejs/persist": "^3.12.0",
     "alpinejs": "^3.10.3",
     "apexcharts": "^3.36.3",
     "flatpickr": "^4.6.13",
-    "jsvectormap": "^1.5.1"
+    "jsvectormap": "^1.5.1",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
