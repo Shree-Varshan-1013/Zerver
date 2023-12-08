@@ -1,4 +1,8 @@
 import ApexCharts from 'apexcharts';
+
+const updateChart = (chart, newData) => {
+    chart.updateSeries(newData);
+};
 const statistics = () => {
     window.Apex = {
         chart: {
@@ -67,6 +71,23 @@ const statistics = () => {
     );
     
     chartArea.render();
+
+    const fetchData = () => {
+        // Replace this with your logic to fetch new data from an API or other source
+        const newTotalData = [15, 25, 40, 90, 50];
+        const newSuccessData = [40, 50, 5, 25, 30];
+        const newFailureData = [99, 50, 15, 45, 30];
+
+        // Update the chart with the new data
+        updateChart(chartArea, [
+            { name: 'Total', data: newTotalData },
+            { name: 'Success', data: newSuccessData },
+            { name: 'Failure', data: newFailureData }
+        ]);
+    };
+
+    // Simulate fetching data every 5 seconds (replace with your desired interval)
+    setInterval(fetchData, 5000); // Fetch data every 5 seconds
 }
 
 export default statistics;
