@@ -171,7 +171,9 @@ span.flatpickr-weekday,
 
 .stars {
   display: inline-block;
-  font-size: 30px;
+  font-size: 55px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .stars:before {
