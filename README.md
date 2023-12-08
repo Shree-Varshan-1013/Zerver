@@ -1,3 +1,0 @@
-# Zerver
-
-# SIH Project
