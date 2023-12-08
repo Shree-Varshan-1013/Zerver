@@ -41,6 +41,8 @@
     "apexcharts": "^3.36.3",
     "flatpickr": "^4.6.13",
     "jsvectormap": "^1.5.1",
+    "mongodb": "^6.3.0",
+    "socket.io": "^4.7.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
