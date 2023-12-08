@@ -87,7 +87,7 @@ const statistics = () => {
     };
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
-    setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    setInterval(fetchData, 5000); 
 }
 
 export default statistics;
