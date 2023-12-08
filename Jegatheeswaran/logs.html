@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="../Project/styles/index.css" />
+    <!-- flowbite cdn -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+    <!-- Add this line to include Font Awesome -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-6qUM5BtfP78xmBcqT5I5n+WAnliH4OfKs4P5cD6DbVtLzxNeNui0u9z9pGILO0RzYw8Dj3Ig3tCXWxYB6Y6VdA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+
+
+    <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <!-- <link rel="" -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              cyber: "#18181b",
+            },
+          },
+        },
+      };
+    </script>
+    
+    <title>Logs</title>
+    <style>
+      .datetime-input[disabled] {
+          background-color: #f2f2f2; /* Set your desired background color */
+      }
+    </style>
+    <style>
+      .rotate-90 {
+    transform: rotate(90deg);
+}
+      /* Add your existing styles here */
+
+      /* Add a new class for the sorting icon */
+      .sort-icon {
+          width: 16px;
+          height: 16px;
+          transition: transform 0.3s ease;
+      }
+
+      /* Add styling for the rotated icon */
+      .sort-icon.rotated {
+          transform: rotate(90deg);
+      }
+  </style>
+</head>
+<body >
+  <div  class=" bg-gray-700  h-20 text-white z-20 sticky">
+    <!-- //Sidebar -->
+    <div class="flex h-screen bg-gray-200">
+        <aside class="fixed  h-full bg-cyber text-gray-300 w-64 flex flex-col">
+            <div class="p-4 border-b border-gray-700">
+              <h1 class="text-2xl font-semibold text-white">Zerver</h1>
+            </div>
+            <nav class="flex-1">
+              <a href="#" class="block p-4 hover:bg-gray-700">Dashboard</a>
+              <a href="#" class="block p-4 hover:bg-gray-700">Analytics</a>
+              <a href="./reportPage.html" class="block p-4 hover:bg-gray-700">Reports</a>
+              <a href="#" class="block p-4 hover:bg-gray-700">Settings</a>
+            </nav>
+            <div class="p-4 border-t border-gray-700">
+              <a href="#" class="block hover:text-gray-400">Logout</a>
+            </div>
+          </aside>
+    
+    <!-- //headers -->
+
+    <!-- main div -->
+    <!-- <div> -->
+        <main  class="flex ml-[17%] w-[83%] h-fit    align-center flex-col bg-gray-700">
+            <div >
+                <h1 class="px-3 py-4 text-2xl font-semibold ">Navbar</h1>
+            </div>
+            <div  class="px-3 bg-slate-600 h-full w-full flex flex-col ">
+                <div class="flex">
+                  <div class="w-[12%]">
+                    <h1 class="font-extrabold text-5xl text-white">Logs</h1>
+                    <p class="text-blue-500 font-bold">All Logs</p>
+                  </div>
+                  <div class="w-ful">
+                    <div class="flex mt-3 ml-4 text-black bg-gray-700">
+                      <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
+                      <select id="searchColumn" class="border border-gray-700   p-2">
+                          <option class="text-red" value="search">Search By</option>
+                          <option class="text-red" value="all">All</option>
+                          <option class="text-red" value="log_id">Log ID</option>
+                          <option value="log_time">Log Time</option>
+                          <option value="timestamp">Timestamp</option>
+                          <option value="ip_address">IP Address</option>
+                          <option value="http_method">HTTP Method</option>
+                          <option value="request_url">Request URL</option>
+                          <option value="status_code">Status Code</option>
+                      </select> 
+                      <!-- <div class="flex bg-transparent"> -->
+                        <input type="text" id="search" class="border border-gray-700 p-2 ml-2 text-black w-3/2" placeholder="Search...">
+                        <svg class="p-1  w-6 h-6 text-gray-800 dark:text-white reset-search-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                      
+                        <!-- <img width="40" height="40" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/recurring-appointment.png" alt="recurring-appointment"/> -->
+                        <!-- <img class="bg-white right-[50%]" width="34" height="18" src="https://img.icons8.com/material-sharp/24/000000/recurring-appointment.png" alt="recurring-appointment"/> -->
+                      <!-- </div> -->
+                      </div>
+                  </div>
+                  <!-- date inputs -->
+                  
+                  <div date-rangepicker class="flex mt-3 ml-4 text-black">
+                    <div class="relative">
+                        <input name="start" type="datetime-local" class="text-black datetime-input" disabled>
+                    </div>
+                    <span class="mx-4 text-gray-500">to</span>
+                    <div class="relative">
+                        <input name="end" type="datetime-local" class="text-black datetime-input" disabled>
+                    </div>
+                  </div>
+                
+
+                <!-- <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var bindDatePicker = function () {
+                            var datepicker = new Datepicker(document.getElementById('datetimepicker1'), {
+                                format: 'YYYY-MM-DD | hh:mm A',
+                                icons: {
+                                    time: "glyphicon glyphicon-time",
+                                    date: "glyphicon glyphicon-calendar",
+                                    up: "glyphicon glyphicon-chevron-up",
+                                    down: "glyphicon glyphicon-chevron-down"
+                                }
+                            });
+
+                            datepicker.getInputField().addEventListener("blur", function () {
+                                // check if the date is correct.
+                                var date = moment(this.value, 'YYYY-MM-DD | hh:mm A', true);
+
+                                if (!date.isValid()) {
+                                    // create date based on momentjs (we have that)
+                                    date = moment();
+                                }
+
+                                this.value = date.format('YYYY-MM-DD | hh:mm A');
+                            });
+                        }
+
+                        bindDatePicker();
+                    });
+                </script>
+                 -->
+                  
+                  <!-- <div class="ml-auto flex items-center">
+                    <label for="startDate" class="mr-2 text-white">Start Date:</label>
+                    <input type="date" id="startDate" class="border border-gray-700 p-2 text-black">
+                    <label for="startTime" class="ml-4 mr-2 text-white">Start Time:</label>
+                    <input type="time" id="startTime" class="border border-gray-700 p-2 text-black">
+                    <label for="endDate" class="ml-4 mr-2 text-white">End Date:</label>
+                    <input type="date" id="endDate" class="border border-gray-700 p-2 text-black">
+                    <label for="endTime" class="ml-4 mr-2 text-white">End Time:</label>
+                    <input type="time" id="endTime" class="border border-gray-700 p-2 text-black">
+                    
+                </div> -->
+                </div>
+                <div class=" pr-3 w-full h-[45%] border border-blue-500 ">
+                  <!-- <h1>Demo</h1> -->
+                  <div id="live-movement-graph"  style="width: 100%; height: 100%;"></div>
+                  <script src="./js/logsPage/logsChart.js"></script>
+                  <!-- <div id="chart-container"></div> -->
+                  <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+                  <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+                </div>
+                
+                <!-- Copy code -->
+                <div class="w-full bg-gray-700">
+                    <table id="logTable" class="w-full mt-4 border-collapse border border-dashed border-gray-700">
+                        <thead class=" bg-gray-700">
+                            <tr class=" border border-dashed">
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
+                                    Log ID
+                                    <img id="logIdSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
+                                    Log Time
+                                    <img id="logTimeSortIcon" class=" inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
+                                    Timestamp
+                                    <img id="timestampSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
+                                    IP Address
+                                    <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(4, 'httpMethodSortIcon')">
+                                    HTTP Method
+                                    <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(5, 'requestUrlSortIcon')">
+                                    Request URL
+                                    <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(6, 'statusCodeSortIcon')">
+                                    Status Code
+                                    <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-700" id="logTableBody">
+                            <!-- Data will be populated here dynamically using JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+              
+              
+                
+                  
+            </div>
+        </main>
+    </div>
+  </div>
+
+  <!-- script for on off function -->
+  <script src="./js/liveDashboard/onOff.js"></script>
+  <script src="./js/liveDashboard/liveGraph.js"></script>
+  <script src="./js/liveDashboard/logTableScript.js"></script>
+  <script src="./js/logsPage/sortTimestamp.js"></script>
+
+  <!-- flowbite style -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+
+
+  <!-- <script>
+    // Add your existing script tags here
+
+    // Function to toggle sort order and update the table
+    function sortTable(column) {
+        const table = document.getElementById('logTable');
+        const rows = Array.from(table.rows).slice(1); // Exclude the header row
+
+        // Determine the sorting order (asc/desc)
+        const sortOrder = table.getAttribute('data-sort-order') === 'asc' ? 'desc' : 'asc';
+
+        // Update the arrow icon for the clicked column
+        updateSortIcon(column, sortOrder);
+
+        // Sort the rows based on the selected column
+        rows.sort((a, b) => {
+            const aValue = column === 'timestamp' ? new Date(a.cells[column]?.textContent || 0) : a.cells[column]?.textContent || '';
+            const bValue = column === 'timestamp' ? new Date(b.cells[column]?.textContent || 0) : b.cells[column]?.textContent || '';
+
+            return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        });
+
+        // Remove existing rows from the table
+        rows.forEach(row => table.tBodies[0].appendChild(row));
+
+        // Update the sorting order attribute
+        table.setAttribute('data-sort-order', sortOrder);
+    }
+
+    // Function to update the sort icon for the clicked column
+    function updateSortIcon(column, sortOrder) {
+        // Reset all icons to default state
+        document.querySelectorAll('.sort-icon').forEach(icon => icon.classList.remove('rotated'));
+
+        // Update the arrow icon for the clicked column
+        const sortIcon = document.getElementById(`${column}SortIcon`);
+        if (sortIcon) {
+            sortIcon.classList.toggle('rotated', sortOrder === 'desc');
+        }
+    }
+
+    // Event listener for the timestamp column
+    const timestampSortIcon = document.getElementById('timestampSortIcon');
+    if (timestampSortIcon) {
+        timestampSortIcon.addEventListener('click', function () {
+            sortTable('timestamp');
+        });
+    }
+
+    // Event listener for the Log ID column
+    const logIdSortIcon = document.getElementById('logIdSortIcon');
+    if (logIdSortIcon) {
+        logIdSortIcon.addEventListener('click', function () {
+            sortTable('log_id');
+        });
+    }
+
+    // Initial setup for the timestamp column (optional)
+    document.addEventListener('DOMContentLoaded', function () {
+        sortTable('timestamp'); // You can choose to sort by timestamp initially
+    });
+</script> -->
+
+<script>
+  // document.addEventListener('DOMContentLoaded', function () {
+  //     // Get the start and end datetime inputs
+  //     const startDatetimeInput = document.querySelector('input[name="start"]');
+  //     const endDatetimeInput = document.querySelector('input[name="end"]');
+
+  //     // Get the start and end time inputs
+  //     const startTimeInput = document.querySelector('input[name="startTime"]');
+  //     const endTimeInput = document.querySelector('input[name="endTime"]');
+
+  //     // Add an event listener to the start datetime input
+  //     startDatetimeInput.addEventListener('input', function () {
+  //         // Set the min attribute of the end datetime input to the value of the start datetime input
+  //         endDatetimeInput.min = startDatetimeInput.value;
+          
+  //         // If the start datetime input has a value, set the min attribute of the end time input to the value of the start time input
+  //         if (startDatetimeInput.value) {
+  //             endTimeInput.min = startTimeInput.value;
+  //         }
+  //     });
+
+  //     // Add an event listener to the start time input
+  //     startTimeInput.addEventListener('input', function () {
+  //         // If the start time input has a value, set the min attribute of the end time input to the value of the start time input
+  //         if (startTimeInput.value) {
+  //             endTimeInput.min = startTimeInput.value;
+  //         }
+  //     });
+  // });
+</script>
+
+
+</body>
+</html>

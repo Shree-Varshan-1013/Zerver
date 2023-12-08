@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Security</title>
-    <!-- <link rel="stylesheet" href="/Project/Sanjeevi/loader.css" /> -->
-    <link rel="stylesheet" href="/Project/Sanjeevi/loader.css" />
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
-    <link rel="stylesheet" href="/Project/styles/index.css">
-    <link rel="stylesheet" href="/Project/Sanjeevi/loader.css" />
+    <title>
+        Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template
+    </title>
     <style>
         body.blur {
             filter: blur(100px);
@@ -61,8 +56,8 @@
 
         .overlay button {
             position: absolute;
-            top: -24%;
-            left: 32%;
+            top: 2%;
+            /* left: 32%; */
 
             padding: 12px;
 
@@ -71,40 +66,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 180%;
+            margin-left: 42%;
         }
-
-        
     </style>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clifford: "#da373d",
-                    },
-                },
-            },
-        };
-    </script>
-    <!-- Loader Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            showLoader();
-            // showErrorOverlay();
-        });
-
-        function showLoader() {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('content').style.display = 'none';
-
-            setTimeout(function () {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
-            }, 3000); 
-        }
-    </script>
-    <!-- Overlay Script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script>
         function playSiren() {
             var sirenAudio = document.getElementById('sirenAudio');
@@ -113,7 +79,7 @@
         function stopSiren() {
             var sirenAudio = document.getElementById('sirenAudio');
             sirenAudio.pause();
-            sirenAudio.currentTime = 0; 
+            sirenAudio.currentTime = 0;
         }
         function showErrorOverlay() {
             document.getElementById('overlay').style.display = 'flex';
@@ -128,24 +94,20 @@
     <script>
         setTimeout(showErrorOverlay, 5000);
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+    <!-- <link rel="stylesheet" href="/Project/styles/index.css"> -->
 </head>
 
-<body class="bg-black">
-    <!-- Loader -->
-    <audio id="sirenAudio" src="../assets/ship-siren-137067.mp3"></audio>
-    <div class="container">
-        <div class="loader-container" id="loader">
-            <div class="loader">
-                <div class="face">
-                    <div class="circle"></div>
-                </div>
-                <div class="face">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Error Message -->
+<body
+    x-data="{ page: 'formElements', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+    <audio id="sirenAudio" src="./images//ship-siren-137067.mp3"></audio>
     <div id="overlay" class="overlay">
         <div class="overlay-content">
             <lord-icon src="https://cdn.lordicon.com/abvsilxn.json" trigger="loop" delay="1500" colors="primary:#E5AB24"
@@ -155,32 +117,22 @@
                 <span class="X"></span>
                 <span class="Y"></span>
                 <div class="close">Close</div>
-              </button>
+            </button>
         </div>
     </div>
-    <!-- Page Content -->
-    <div class="w-full h-full text-white z-20 sticky" id="content">
-        <!-- //Sidebar -->
-        <div class="flex h-screen bg-gray-600">
-            <aside class="bg-cyber text-gray-300 w-64 flex flex-col">
-                <div class="p-4 border-b border-gray-700">
-                    <h1 class="text-2xl font-semibold text-white">Zerver</h1>
-                </div>
-                <nav class="flex-1">
-                    <a href="#" class="block p-4 hover:bg-gray-700">Dashboard</a>
-                    <a href="#" class="block p-4 hover:bg-gray-700">Analytics</a>
-                    <a href="./reportPage.html" class="block p-4 hover:bg-gray-700">Reports</a>
-                    <a href="#" class="block p-4 hover:bg-gray-700">Settings</a>
-                </nav>
-                <div class="p-4 border-t border-gray-700">
-                    <a href="#" class="block hover:text-gray-400">Logout</a>
-                </div>
-            </aside>
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <include src="./partials/sidebar.html"></include>
+        <!-- ===== Sidebar End ===== -->
 
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+            <!-- ===== Header Start ===== -->
+            <include src="./partials/header.html" />
+            <!-- ===== Header End ===== -->
             <main class="flex w-full align-center flex-col">
-                <div class="w-full">
-                    <h1 class="pl-3 py-4 text-2xl font-semibold bg-gray-700">Navbar</h1>
-                </div>
+
                 <div class="flex flex-row">
                     <div class="flex-1">
                         <div class="box-border h-60 w-full p-4 border-2 mt-[5%]">
@@ -198,14 +150,12 @@
                     </div>
                     <div class="flex-1">
                         <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%]"></div>
-                        <script src="./piechart.js"></script>
+                        <script src="./js/components/piechart.js"></script>
                         <div id="heatmap" style="width: 600px; height: 300px" class="ml-10 "></div>
-                        <script src="./heatmap.js"></script>
+                        <script src="./js/components/heatmap.js"></script>
                     </div>
                 </div>
             </main>
         </div>
-        <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script> -->
+    </div>
 </body>
-
-</html>

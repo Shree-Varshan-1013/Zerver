@@ -1,10 +1,5 @@
-var dom = document.getElementById('heatmap');
-var myChart = echarts.init(dom, null, {
-  renderer: 'canvas',
-  useDirtyRect: false
-});
-var app = {};
-
+var chartDom = document.getElementById('heatmap');
+var myChart = echarts.init(chartDom);
 var option;
 
 // prettier-ignore
@@ -72,8 +67,4 @@ option = {
   ]
 };
 
-if (option && typeof option === 'object') {
-  myChart.setOption(option);
-}
-
-window.addEventListener('resize', myChart.resize);
+option && myChart.setOption(option);
