@@ -47,16 +47,16 @@
         <li class="pr-5">
           <a
             href="health.html"
-            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-whiter dark:hover:bg-meta-4"
             @click="selected = (selected === 'Health' ? '':'Health')"
-            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
+            :class="{ 'bg-white dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
             >Health</a
           >
         </li>
         <li class="pr-5">
           <a
             href="performance.html"
-            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-whiter dark:hover:bg-meta-4"
             @click="selected = (selected === 'Performance' ? '':'Performance')"
             :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
             >Performance</a
@@ -65,7 +65,7 @@
         <li class="pr-5">
           <a
             href="security.html"
-            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-whiter dark:hover:bg-meta-4"
             @click="selected = (selected == 'Performance' ? '':'Performance')"
             :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
             >Security</a
@@ -128,7 +128,6 @@
           </label>
           <!-- Dark Mode Toggler -->
         </li>
-
         <!-- Notification Menu Area -->
         <li
           class="relative"
@@ -142,7 +141,7 @@
           >
             <span
               :class="!notifying && 'hidden'"
-              class="absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1"
+              class="absolute -top-0.1 right-0 z-1 h-4 w-4 rounded-full bg-meta-1"
             >
               <span
                 class="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"
@@ -256,13 +255,12 @@
           >
             <span
               :class="!notifying && 'hidden'"
-              class="absolute -top-0.5 -right-0.5 z-1 h-2 w-2 rounded-full bg-meta-1"
+              class="absolute top-1.5 -right-0.3 z-1 h-4 w-4 rounded-full bg-meta-1"
             >
               <span
                 class="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"
               ></span>
             </span>
-
             <svg
               class="fill-current duration-300 ease-in-out"
               width="18"
@@ -410,7 +408,7 @@
         >
           <span class="hidden text-right lg:block">
             <span class="block text-sm font-medium text-black dark:text-white"
-              >Thomas Anree</span
+              >Sane</span
             >
             <span class="block text-xs font-medium">UX Designer</span>
           </span>
