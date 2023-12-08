@@ -76,9 +76,7 @@
                   fill=""
                 />
               </svg>
-
-              Dashboard
-
+              Servers
               <svg
                 class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
                 :class="{ 'rotate-180': (selected === 'Dashboard') }"
@@ -108,7 +106,7 @@
                     class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                     href="index.html"
                     :class="page === 'ecommerce' && '!text-white'"
-                    >eCommerce</a
+                    >Server 1</a
                   >
                 </li>
               </ul>
@@ -120,7 +118,7 @@
           <!-- Menu Item Calendar -->
           <li>
             <a
-              class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+              class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
               href="calendar.html"
               @click="selected = (selected === 'Calendar' ? '':'Calendar')"
               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Calendar') && (page === 'calendar') }"
@@ -146,7 +144,7 @@
           <!-- Menu Item Profile -->
           <li>
             <a
-              class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+              class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
               href="performance.html"
               @click="selected = (selected === 'Profile' ? '':'Profile')"
               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Profile') && (page === 'profile') }"
@@ -176,7 +174,7 @@
           <!-- Menu Item Tables -->
           <li>
             <a
-              class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+              class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
               href="tables.html"
               @click="selected = (selected === 'Tables' ? '':'Tables')"
               :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Tables') && (page === 'Tables') }"
