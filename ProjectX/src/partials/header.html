@@ -39,14 +39,38 @@
       </button>
       <!-- Hamburger Toggle BTN -->
       <a class="block flex-shrink-0 lg:hidden" href="index.html">
-        <img src="./images/logo/logoZ.png" alt="Logo" width="20%"/>
+        <img src="./images/logo/logoZ.png" alt="Logo" width="20%" />
       </a>
     </div>
-    <div class="hidden sm:block">
+    <div class="hidden sm:block" x-data="{selected: $persist('Dashboard')}">
       <div class="flex list-none">
-        <li class="pr-5">Health</li>
-        <li class="pr-5">Performance</li>
-        <li class="pr-5">Security</li>
+        <li class="pr-5">
+          <a
+            href="performance.html"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            @click="selected = (selected === 'Health' ? '':'Health')"
+            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
+            >Health</a
+          >
+        </li>
+        <li class="pr-5">
+          <a
+            href="performance.html"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            @click="selected = (selected === 'Performance' ? '':'Performance')"
+            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
+            >Performance</a
+          >
+        </li>
+        <li class="pr-5">
+          <a
+            href="preloader.html"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black dark:text-white duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+            @click="selected = (selected == 'Performance' ? '':'Performance')"
+            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
+            >Security</a
+          >
+        </li>
       </div>
     </div>
 

@@ -54,9 +54,14 @@ const progress = () => {
         labels: ["Heat"]
     };
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    try {
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
 
-    chart.render();
+    }
+    catch (err) {
+        console.log(err);
+    }
 
     const stars = document.querySelector('.stars');
     const rating = parseInt(stars.getAttribute('data-rating')); // Fetch the rating value

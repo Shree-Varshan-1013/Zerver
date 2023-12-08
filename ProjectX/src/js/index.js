@@ -46,7 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
   chart02();
   chart03();
   chart04();
-  progress();
-  statistics();
   map01();
 });
+
+if (window.location.pathname === '/performance.html') {
+  statistics();
+  progress();
+}

@@ -7,7 +7,7 @@ const map01 = () => {
   if (mapSelector.length) {
     const mapOne = new jsVectorMap({
       selector: '#mapOne',
-      map: 'us_aea_en',
+      map: 'world',
       zoomButtons: true,
 
       regionStyle: {
