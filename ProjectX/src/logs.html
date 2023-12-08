@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="../src/css/style.css" />
+
+    <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script> -->
+    <title>Logs</title>
+  </head>
+
+  <body
+    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+        <!-- ===== Header End ===== -->
+
+        <!-- ===== Main Content Start ===== -->
+        <main  class="flex h-fit    align-center flex-col bg-gray-700">
+            <!-- <div >
+                <h1 class="px-3 py-4 text-2xl font-semibold ">Navbar</h1>
+            </div> -->
+            <div  class="px-3 bg-slate-600 h-full w-full flex flex-col ">
+                <div class="flex">
+                  <div class="w-[12%]">
+                    <h1 class="font-extrabold text-5xl text-white">Logs</h1>
+                    <p class="text-blue-500 font-bold">All Logs</p>
+                  </div>
+                  <div class="w-ful">
+                    <div class="flex mt-3 ml-4 text-black bg-gray-700">
+                      <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
+                      <select id="searchColumn" class="border border-gray-700   p-2">
+                          <option class="text-red" value="search">Search By</option>
+                          <option class="text-red" value="all">All</option>
+                          <option class="text-red" value="log_id">Log ID</option>
+                          <option value="log_time">Log Time</option>
+                          <option value="timestamp">Timestamp</option>
+                          <option value="ip_address">IP Address</option>
+                          <option value="http_method">HTTP Method</option>
+                          <option value="request_url">Request URL</option>
+                          <option value="status_code">Status Code</option>
+                      </select> 
+                      <!-- <div class="flex bg-transparent"> -->
+                        <input type="text" id="search" class="border border-gray-700 p-2 ml-2 text-black w-3/2" placeholder="Search...">
+                        <svg class="p-1  w-6 h-6 text-gray-800 dark:text-white reset-search-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                      
+                        <!-- <img width="40" height="40" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/recurring-appointment.png" alt="recurring-appointment"/> -->
+                        <!-- <img class="bg-white right-[50%]" width="34" height="18" src="https://img.icons8.com/material-sharp/24/000000/recurring-appointment.png" alt="recurring-appointment"/> -->
+                      <!-- </div> -->
+                      </div>
+                  </div>
+                  <!-- date inputs -->
+                  
+                  <div date-rangepicker class="flex mt-3 ml-4 text-black">
+                    <div class="relative">
+                        <input name="start" type="datetime-local" class="text-black datetime-input" disabled>
+                    </div>
+                    <span class="mx-4 text-gray-500">to</span>
+                    <div class="relative">
+                        <input name="end" type="datetime-local" class="text-black datetime-input" disabled>
+                    </div>
+                  </div>
+
+               
+                  
+                  <!-- <div class="ml-auto flex items-center">
+                    <label for="startDate" class="mr-2 text-white">Start Date:</label>
+                    <input type="date" id="startDate" class="border border-gray-700 p-2 text-black">
+                    <label for="startTime" class="ml-4 mr-2 text-white">Start Time:</label>
+                    <input type="time" id="startTime" class="border border-gray-700 p-2 text-black">
+                    <label for="endDate" class="ml-4 mr-2 text-white">End Date:</label>
+                    <input type="date" id="endDate" class="border border-gray-700 p-2 text-black">
+                    <label for="endTime" class="ml-4 mr-2 text-white">End Time:</label>
+                    <input type="time" id="endTime" class="border border-gray-700 p-2 text-black">
+                    
+                </div> -->
+                </div>
+                <div class=" pr-3 w-full h-[45%] border border-blue-500 ">
+                  <!-- <h1>Demo</h1> -->
+                  <div id="live-movement-graph"  style="width: 100; height: 300%;"></div>
+                  <!-- <script src="./js/logsPage/logsChart.js"></script> -->
+                  <!-- <div id="chart-container"></div> -->
+                  <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+                  <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+                </div>
+                
+                <!-- Copy code -->
+                <div class="w-full bg-gray-700">
+                    <table id="logTable" class="w-full mt-4 border-collapse border border-dashed border-gray-700">
+                        <thead class=" bg-gray-700">
+                            <tr class=" border border-dashed">
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
+                                    Log ID
+                                    <img id="logIdSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
+                                    Log Time
+                                    <img id="logTimeSortIcon" class=" inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
+                                    Timestamp
+                                    <img id="timestampSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
+                                    IP Address
+                                    <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(4, 'httpMethodSortIcon')">
+                                    HTTP Method
+                                    <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(5, 'requestUrlSortIcon')">
+                                    Request URL
+                                    <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(6, 'statusCodeSortIcon')">
+                                    Status Code
+                                    <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-700" id="logTableBody">
+                            <!-- Data will be populated here dynamically using JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+              
+              
+                
+                  
+            </div>
+        </main>
+        <!-- ===== Main Content End ===== -->
+      </div>
+      <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <script src="./js/components/logsFile.js"></script>
+    <script src="./js/components/logTableScript.js"></script>
+    <script src="./js/components/logTableSort.js"></script>
+
+  </body>
+</html>
