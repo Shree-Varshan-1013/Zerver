@@ -5,9 +5,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        Security
-    </title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+    <title>Security</title>
     <style>
         body.blur {
             filter: blur(100px);
@@ -69,8 +70,7 @@
             margin-left: 42%;
         }
     </style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+
     <script>
         function playSiren() {
             var sirenAudio = document.getElementById('sirenAudio');
@@ -94,12 +94,10 @@
     <script>
         setTimeout(showErrorOverlay, 5000);
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
-    <!-- <link rel="stylesheet" href="/Project/styles/index.css"> -->
 </head>
 
 <body
-    x-data="{ page: 'formElements', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -107,53 +105,62 @@
     <!-- ===== Preloader Start ===== -->
     <include src="./partials/preloader.html"></include>
     <!-- ===== Preloader End ===== -->
-    <audio id="sirenAudio" src="./images//ship-siren-137067.mp3"></audio>
-    <div id="overlay" class="overlay">
-        <div class="overlay-content">
-            <lord-icon src="https://cdn.lordicon.com/abvsilxn.json" trigger="loop" delay="1500" colors="primary:#E5AB24"
-                style="width:350px;height:350px">
-            </lord-icon>
-            <button class="button" onclick="hideErrorOverlay()">
-                <span class="X"></span>
-                <span class="Y"></span>
-                <div class="close">Close</div>
-            </button>
-        </div>
-    </div>
+
     <!-- ===== Page Wrapper Start ===== -->
     <div class="flex h-screen overflow-hidden">
         <!-- ===== Sidebar Start ===== -->
         <include src="./partials/sidebar.html"></include>
         <!-- ===== Sidebar End ===== -->
-
+        <audio id="sirenAudio" src="./images/ship-siren-137067.mp3"></audio>
         <!-- ===== Content Area Start ===== -->
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             <!-- ===== Header Start ===== -->
             <include src="./partials/header.html" />
             <!-- ===== Header End ===== -->
-            <main class="grid grid-cols-3 gap-4 overflow-hidden rounded-sm border border-stroke bg-gray-2 shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="mx-auto flex">
+            <!-- Error Message -->
+            <div id="overlay" class="overlay">
+                <div class="overlay-content">
+                    <lord-icon src="https://cdn.lordicon.com/abvsilxn.json" trigger="loop" delay="1500"
+                        colors="primary:#E5AB24" style="width:350px;height:350px">
+                    </lord-icon>
+                    <button class="button" onclick="hideErrorOverlay()">
+                        <span class="X"></span>
+                        <span class="Y"></span>
+                        <div class="close">Close</div>
+                    </button>
+                </div>
+            </div>
+            <!-- ===== Main Content Start ===== -->
+            <main class="flex w-full align-center flex-col">
+
+                <div class="flex flex-row">
                     <div class="flex-1">
-                        <div class="h-60 w-full mt-[5%] m-3 rounded-sm border border-stroke p-10  py-6 px-7.5">
+                        <div class="box-border h-60 w-full p-4 border-2 mt-[5%]">
                             <h1>Text Here</h1>
                         </div>
                         <div class="box-border h-[57%] w-full p-4 border-2 mt-[2%]">
                             <h1>Text Here</h1>
                         </div>
+
                     </div>
                     <div class="flex-1">
                         <div class="box-border h-[91%] w-full p-4 border-2 mt-[5%] ml-4">
-                            <h1>Text Here</h1>
+                            <h1 >Text Here</h1>
                         </div>
                     </div>
                     <div class="flex-1">
-                        <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%]"></div>
+                        <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%] dark:text-white"></div>
                         <script src="./js/components/piechart.js"></script>
                         <div id="heatmap" style="width: 600px; height: 300px" class="ml-10 "></div>
                         <script src="./js/components/heatmap.js"></script>
                     </div>
                 </div>
             </main>
+            <!-- ===== Main Content End ===== -->
         </div>
+        <!-- ===== Content Area End ===== -->
     </div>
+    <!-- ===== Page Wrapper End ===== -->
 </body>
+
+</html>

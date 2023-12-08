@@ -1,5 +1,6 @@
 var chartDom = document.getElementById('piechart');
 var myChart = echarts.init(chartDom);
+var darkMode = JSON.parse(localStorage.getItem('darkMode'));
 var option;
 
 option = {
@@ -8,7 +9,10 @@ option = {
   },
   legend: {
     top: '5%',
-    left: 'center'
+    left: 'center',
+    textStyle: {
+      color: darkMode ? 'white' : 'blue'
+    }
   },
   series: [
     {
@@ -18,12 +22,12 @@ option = {
       avoidLabelOverlap: false,
       itemStyle: {
         borderRadius: 10,
-        borderColor: '#fff',
         borderWidth: 2
       },
       label: {
         show: false,
-        position: 'center'
+        position: 'center',
+        
       },
       emphasis: {
         label: {
@@ -36,10 +40,10 @@ option = {
         show: false
       },
       data: [
-        { value: 1048, name: 'Search Engine' },
+        { value: 1048, name: 'Search Engine', itemStyle: { color:'white' } },
         { value: 735, name: 'Direct' },
         { value: 580, name: 'Email' },
-        { value: 484, name: 'Union Ads' },
+        { value: 484, name: 'Unions' },
         { value: 300, name: 'Video Ads' }
       ]
     }

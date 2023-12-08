@@ -1,5 +1,5 @@
 var chartDom = document.getElementById('semipie1');
-var myChart = echarts.init(chartDom,'dark');
+var myChart = echarts.init(chartDom);
 var option;
 
 option = {
