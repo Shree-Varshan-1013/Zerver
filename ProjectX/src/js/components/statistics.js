@@ -35,6 +35,23 @@ const statistics = () => {
             height: 380,
             type: 'area',
             stacked: false,
+            toolbar: {
+                show: true, // Set this to true to display the toolbar
+                tools: {
+                    download: true, // Enables download option in the toolbar
+                    selection: true,
+                    zoom: true,
+                    pan: true,
+                    reset: true,
+                },
+                autoSelected: 'zoom' // Auto-select zoom tool by default
+            },
+            events: {
+                beforeExport: function (chartContext, options) {
+                    // Change label color to black before export
+                    options.chart.foreColor = '#000'; // Set label color to black (#000)
+                }
+            }
         },
         stroke: {
             curve: 'straight'
@@ -62,7 +79,6 @@ const statistics = () => {
         fill: {
             opacity: 1,
         },
-    
     }
     
     var chartArea = new ApexCharts(
@@ -71,14 +87,23 @@ const statistics = () => {
     );
     
     chartArea.render();
+    const newTotalData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+    const newSuccessData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+    const newFailureData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+  
+    updateChart(chartArea, [
+        { name: 'Total', data: newTotalData },
+        { name: 'Success', data: newSuccessData },
+        { name: 'Failure', data: newFailureData }
+    ]);
 
     const fetchData = () => {
-        // Replace this with your logic to fetch new data from an API or other source
-        const newTotalData = [15, 25, 40, 90, 50];
-        const newSuccessData = [40, 50, 5, 25, 30];
-        const newFailureData = [99, 50, 15, 45, 30];
-
-        // Update the chart with the new data
+        newTotalData.shift();
+        newTotalData.push(Math.floor(Math.random() * 100));
+        newSuccessData.shift();
+        newSuccessData.push(Math.floor(Math.random() * 100));
+        newFailureData.shift();
+        newFailureData.push(Math.floor(Math.random() * 100));
         updateChart(chartArea, [
             { name: 'Total', data: newTotalData },
             { name: 'Success', data: newSuccessData },
@@ -87,7 +112,7 @@ const statistics = () => {
     };
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
-    setInterval(fetchData, 5000); 
+    setInterval(fetchData, 10000); 
 }
 
 export default statistics;
