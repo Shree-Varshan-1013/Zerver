@@ -4,6 +4,7 @@ import "../css/style.css";
 
 import Alpine from "alpinejs";
 import persist from '@alpinejs/persist'
+import io from "socket.io-client";
 import flatpickr from "flatpickr";
 import chart01 from "./components/chart-01";
 import chart02 from "./components/chart-02";
@@ -16,6 +17,40 @@ import progress from "./components/progress";
 Alpine.plugin(persist)
 window.Alpine = Alpine;
 Alpine.start();
+
+function updateFetchedData(data) {
+  const socket = io("http://localhost:2018");
+
+  socket.on("connect", () => {
+    console.log("Connected to socket.io server " + socket.id);
+  });
+
+  // var data1 = null;
+  // socket.on("documentData", (data) => {
+  //   console.log(data.log_entry);
+  //   data1 = data.log_entry;
+  //   console.log(Alpine);
+  //   console.log(document.querySelector("[x-text='fetchedData']"));
+  //   Alpine.data(
+  //     document.querySelector("[x-text='fetchedData']"),
+  //     "fetchedData",
+  //     () => data1
+  //   );
+  // });
+
+  const myDiv = document.querySelector("#myDiv");
+  console.log(myDiv);
+  if (myDiv) {
+    Alpine.data(myDiv, 'fetchedData', () => data);
+  }
+}
+
+// Simulating receiving data from some source
+const receivedData = { message: "Hello, world!" };
+
+// Update the fetchedData property with the received data
+updateFetchedData(receivedData);
+
 
 // Init flatpickr
 flatpickr(".datepicker", {
@@ -46,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chart02();
   chart03();
   chart04();
-  
+
   map01();
 });
 
@@ -54,4 +89,3 @@ if (window.location.pathname === '/performance.html') {
   statistics();
   progress();
 }
-
