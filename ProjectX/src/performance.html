@@ -14,29 +14,23 @@
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
-    <!-- ===== Preloader Start ===== -->
+
     <include src="./partials/preloader.html"></include>
-    <!-- ===== Preloader End ===== -->
 
-    <!-- ===== Page Wrapper Start ===== -->
     <div class="flex h-screen overflow-hidden">
-      <!-- ===== Sidebar Start ===== -->
-      <include src="./partials/sidebar.html"></include>
-      <!-- ===== Sidebar End ===== -->
 
-      <!-- ===== Content Area Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+
       <div
         class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
       >
-        <!-- ===== Header Start ===== -->
-        <include src="./partials/header.html" />
-        <!-- ===== Header End ===== -->
 
-        <!-- ===== Main Content Start ===== -->
+        <include src="./partials/header.html" />
+
         <main>
           <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
             <div class="mx-auto max-w-242.5">
-              <!-- Breadcrumb Start -->
+
               <div
                 class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
               >
@@ -52,9 +46,7 @@
                   </ol>
                 </nav>
               </div>
-              <!-- Breadcrumb End -->
 
-              <!-- ====== Profile Section Start -->
               <div class="flex">
                 <div
                   class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
@@ -119,10 +111,7 @@
             </div>
           </div>
         </main>
-        <!-- ===== Main Content End ===== -->
       </div>
-      <!-- ===== Content Area End ===== -->
     </div>
-    <!-- ===== Page Wrapper End ===== -->
   </body>
 </html>
