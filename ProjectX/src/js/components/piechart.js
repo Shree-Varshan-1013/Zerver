@@ -11,7 +11,7 @@ option = {
     top: '5%',
     left: 'center',
     textStyle: {
-      color: darkMode ? 'white' : 'blue'
+      color: 'grey'
     }
   },
   series: [
@@ -40,7 +40,7 @@ option = {
         show: false
       },
       data: [
-        { value: 1048, name: 'Search Engine', itemStyle: { color:'white' } },
+        { value: 1048, name: 'Search Engine' },
         { value: 735, name: 'Direct' },
         { value: 580, name: 'Email' },
         { value: 484, name: 'Unions' },
