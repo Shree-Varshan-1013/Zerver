@@ -186,10 +186,10 @@ span.flatpickr-weekday,
 .rotate {
   margin: 40px;
   width: 70%;
-  animation: spin 4s infinite;
+  animation: spin1 4s infinite;
 }
 
-@keyframes spin {
+@keyframes spin1 {
   0% {
     transform: rotate(0deg);
   }
