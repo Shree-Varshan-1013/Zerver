@@ -15,7 +15,10 @@ option = {
     // text: 'Bar Animation Delay'
   },
   legend: {
-    data: ['bar', 'bar2']
+    data: ['bar', 'bar2'],
+    textStyle: {
+      color: 'grey'
+    }
   },
   toolbox: {
     // y: 'bottom',

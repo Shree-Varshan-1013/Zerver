@@ -22,8 +22,14 @@ function updateFetchedData(data) {
   const socket = io("http://localhost:2018");
 
   socket.on("connect", () => {
+
     console.log("Connected to socket.io server " + socket.id);
   });
+
+  socket.on('documentData', (sas) => {
+    console.log(sas);
+  })
+
 
   // var data1 = null;
   // socket.on("documentData", (data) => {
