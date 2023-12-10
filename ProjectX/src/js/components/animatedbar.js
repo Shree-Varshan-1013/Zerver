@@ -74,5 +74,3 @@ const healthBar = () => {
 
   option && myChart.setOption(option);
 }
-
-export default healthBar;
