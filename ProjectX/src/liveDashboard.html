@@ -1,117 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script> -->
-    <link rel="stylesheet" href="../src/css/style.css" />
 
-    <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script> -->
+  <link rel="stylesheet" href="../src/css/style.css" />
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist"></script>
-    <title>Live Dashboard</title>
-  </head>
+  <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
 
-  <body
-    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, logEntry: 'The Performance of the Server is 90%' }"
-    x-init="
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist"></script>
+
+  <title>Live Dashboard</title>
+</head>
+
+<body
+  x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, logEntry: 'The Performance of the Server is 90%' }"
+  x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-  >
-    <!-- ===== Preloader Start ===== -->
-    <include src="./partials/preloader.html"></include>
-    <!-- ===== Preloader End ===== -->
+  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <!-- ===== Preloader Start ===== -->
+  <include src="./partials/preloader.html"></include>
+  <!-- ===== Preloader End ===== -->
 
-    <!-- ===== Page Wrapper Start ===== -->
-    <div class="flex h-screen overflow-hidden">
-      <!-- ===== Sidebar Start ===== -->
-      <include src="./partials/sidebar.html"></include>
-      <!-- ===== Sidebar End ===== -->
+  <!-- ===== Page Wrapper Start ===== -->
+  <div class="flex h-screen overflow-hidden">
+    <!-- ===== Sidebar Start ===== -->
+    <include src="./partials/sidebar.html"></include>
+    <!-- ===== Sidebar End ===== -->
 
-      <!-- ===== Content Area Start ===== -->
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <!-- ===== Header Start ===== -->
-        <include src="./partials/header.html" />
-        <!-- ===== Header End ===== -->
+    <!-- ===== Content Area Start ===== -->
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
 
-        <!-- ===== Main Content Start ===== -->
-        <main class="align-center flex w-full flex-col">
-          <!-- <div class="w-full">
+      <!-- ===== Main Content Start ===== -->
+      <main class="align-center flex w-full flex-col">
+        <!-- <div class="w-full">
             <h1 class="pl-3 py-4 text-2xl font-semibold bg-gray-700">Navbar</h1>
           </div> -->
-            <div class=" h-full w-full flex   ">
-              <!-- first -->
-                <div class="flex flex-col w-[40%] ">
-                  <!-- <h1 class="text-white ml-4 mt-4 font-black text-5xl">Logs</h1> -->
-                  <div class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center">
-                    
-                      <p class="text-white"><span class="font-bold">Server :</span> Server ABC</p>
-                  </div>
-                  <div class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
-                    <div id="statusIndicator" class="bg-red-status ml-[20%] border border-gray-700 rounded-xl mt-2 w-[60%] p-2 text-center">
-                      <p id="statusText" class=" py-[20%] font-black text-2xl">OFF</p>
-                  </div>
-                  <p class="text-white">Last Online : 06-Dec-2023 16:05</p>
-                  <div class="mt-[10%] ml-[20%] flex ">
-                    <div class="py-5  items-center border border-gray-200 rounded-md w-[30%] flex flex-col">
-                        <p class="text-white">Requests</p>
-                        <h1 id="requestCount" class="text-green-status font-extrabold text-4xl">2000</h1>
-                    </div>
-                    <div class="py-5 ml-5  items-center border border-gray-200 rounded-md w-[30%] flex flex-col">
-                      <p class="text-white">Dummy</p>
-                    </div>
-                  </div>
+        <div class=" h-full w-full flex   ">
+          <!-- first -->
+          <div class="flex flex-col w-[40%] ">
+            <!-- <h1 class="text-white ml-4 mt-4 font-black text-5xl">Logs</h1> -->
+            <div class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center">
+
+              <p class="text-white"><span class="font-bold">Server :</span> Server ABC</p>
+            </div>
+            <div
+              class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
+              <div id="statusIndicator"
+                class="bg-red-status ml-[20%] border border-gray-700 rounded-xl mt-2 w-[60%] p-2 text-center">
+                <p id="statusText" class=" py-[20%] font-black text-2xl">OFF</p>
+              </div>
+              <p class="text-white">Last Online : 06-Dec-2023 16:05</p>
+              <div class="mt-[10%] ml-[20%] flex ">
+                <div class="py-5  items-center border border-gray-200 rounded-md w-[30%] flex flex-col">
+                  <p class="text-white">Requests</p>
+                  <!-- <h1 id="requestCount" class="text-green-status font-extrabold text-4xl">2000</h1> -->
+                  <h1 id="dataValue" class="text-green-status font-extrabold text-4xl"></h1>
                 </div>
-                  <!-- <div class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
-                    <p class="text-white">Contents</p>
-                  </div> -->
-                  <div class="dark:bg-boxdark p-4 ml-4 my-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
-                    <p class="text-white py-2"><span class="font-bold">Ip :</span> 192.168.12.13 </p>
-                    <p class="text-white py-2"><span class="font-bold">MAC Address :</span> </p>
-                    <p class="text-white py-2"><span class="font-bold">Location : </span></p>
-                    <p class="text-white py-2"><span class="font-bold">Temperature : </span></p>
-                  </div>
-                </div>
-                <!-- second top -->
-                <div class="flex flex-col w-[60%] ">
-                  <!-- <div class="flex"> -->
-                    <!-- status indicator -->
-                    
-                  <!-- graph -->
-                  <div class="mt-5 mr-5 " id="chart-container" style="width: 100%; height: 350px"></div>
-                    <!-- third -->
-                    <!-- <div class="w-[60%] float-right ">
-                      
-                    </div> -->
-                  <!-- </div>  -->
-                  <div class="my-10 mr-10 ">
-                    <p class="font-bold text-white">Summary</p>
-                    <div class="p-10 h-[200px] bg-gradient-to-r from-[#0F1A29] to-[#0E2E4E] border border-gray-700 rounded-xl w[30%]">
-                      <p class="text-white" id="logEntry">The Performance of the Server is 90%</p>
-                      <p class="text-white" x-text="logEntry" id="logEntry"></p>
-                      <!-- <p class="text-white">The Performance of the Server is 90%</p> -->
-                      <!-- <p class="text-white">The health condition looks good</p> -->
-                    </div>
-                  </div>
+                <div class="py-5 ml-5  items-center border border-gray-200 rounded-md w-[30%] flex flex-col">
+                  <p class="text-white">Dummy</p>
                 </div>
               </div>
-              <!-- log table -->
-              <div class="bg-indigo-500 h-[40%]">
-                <p class="text-white ml-[10%] mt-4 font-black text-5xl">Log table</p>
+            </div>
+            <!-- <div class="dark:bg-meta-4 p-4 ml-4 mt-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
+                    <p class="text-white">Contents</p>
+                  </div> -->
+            <div
+              class="dark:bg-boxdark p-4 ml-4 my-4 border border-gray-700 w-[85%] rounded-md text-center content-center">
+              <p class="text-white py-2"><span class="font-bold">Ip :</span> 192.168.12.13 </p>
+              <p class="text-white py-2"><span class="font-bold">MAC Address :</span> </p>
+              <p class="text-white py-2"><span class="font-bold">Location : </span></p>
+              <p class="text-white py-2"><span class="font-bold">Temperature : </span></p>
+            </div>
+          </div>
+          <!-- second top -->
+          <div class="flex flex-col w-[60%] ">
+            <!-- <div class="flex"> -->
+            <!-- status indicator -->
 
-                <!--  -->
-                <!-- Search Functionality -->
-                  <!-- <div class="flex mt-4 text-black bg-black">
+            <!-- graph -->
+            <div class="mt-5 mr-5 " id="chart-container" style="width: 100%; height: 350px"></div>
+            <!-- third -->
+            <!-- <div class="w-[60%] float-right ">
+                      
+                    </div> -->
+            <!-- </div>  -->
+            <div class="my-10 mr-10 ">
+              <p class="font-bold text-white">Summary</p>
+              <div
+                class="p-10 h-[200px] bg-gradient-to-r from-[#0F1A29] to-[#0E2E4E] border border-gray-700 rounded-xl w[30%]">
+                <p class="text-white" id="logEntry">The Performance of the Server is 90%</p>
+                <p class="text-white" x-text="logEntry" id="logEntry"></p>
+                <!-- <p class="text-white">The Performance of the Server is 90%</p> -->
+                <!-- <p class="text-white">The health condition looks good</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- log table -->
+        <div class="bg-indigo-500 h-[40%]">
+          <p class="text-white ml-[10%] mt-4 font-black text-5xl">Log table</p>
+
+          <!--  -->
+          <!-- Search Functionality -->
+          <!-- <div class="flex mt-4 text-black bg-black">
                     <label for="searchColumn" class="mr-2">Search By:</label>
                     <select id="searchColumn" class="border border-gray-700 bg-indigo-500  p-2">
                       <option class="text-red" value="search">Drop Down</option>
@@ -126,50 +130,59 @@
                     </select>
                     <input type="text" id="search" class="border border-gray-700 p-2 ml-2 text-black" placeholder="Search...">
                 </div> -->
-              <div class="w-4/5 ml-[10%]">
-                <table id="logTable" class="w-full mt-4  shadow-md overflow-hidden bg-gray-500 border ">
-                  <thead class="dark:bg-boxdark">
-                      <tr>
-                          <th class="py-2 px-4 border-b text-center">Log ID</th>
-                          <th class="py-2 px-4 border-b text-center">Log Time</th>
-                          <th class="py-2 px-4 border-b text-center">Timestamp</th>
-                          <th class="py-2 px-4 border-b text-center">IP Address</th>
-                          <th class="py-2 px-4 border-b text-center">HTTP Method</th>
-                          <th class="py-2 px-4 border-b text-center">Request URL</th>
-                          <th class="py-2 px-4 border-b text-center">Status Code</th>
-                      </tr>
-                  </thead>
-                  <tbody class=" dark:bg-boxdark-2" id="logTableBody">
-                      <!-- Data will be populated here dynamically using JavaScript -->
-                  </tbody>
-              </table>
-            </div>
+          <div class="w-4/5 ml-[10%]">
+            <table id="logTable" class="w-full mt-4  shadow-md overflow-hidden bg-gray-500 border ">
+              <thead class="dark:bg-boxdark">
+                <tr>
+                  <th class="py-2 px-4 border-b text-center">Log ID</th>
+                  <th class="py-2 px-4 border-b text-center">Log Time</th>
+                  <th class="py-2 px-4 border-b text-center">Timestamp</th>
+                  <th class="py-2 px-4 border-b text-center">IP Address</th>
+                  <th class="py-2 px-4 border-b text-center">HTTP Method</th>
+                  <th class="py-2 px-4 border-b text-center">Request URL</th>
+                  <th class="py-2 px-4 border-b text-center">Status Code</th>
+                </tr>
+              </thead>
+              <tbody class=" dark:bg-boxdark-2" id="logTableBody">
+                <!-- Data will be populated here dynamically using JavaScript -->
+              </tbody>
+            </table>
           </div>
-          <div
-            x-data="{ items: [], addItem: function() { this.items.push('New Item ' + (this.items.length + 1)); } }"
-            x-init="() => {
+        </div>
+        <div x-data="{ items: [], addItem: function() { this.items.push('New Item ' + (this.items.length + 1)); } }"
+          x-init="() => {
               Alpine.plugin(window.persist)
               Alpine.persist('items')
-            }"
-          >
-            <!-- Display the list -->
-            <ul>
-              <template x-for="item in items" :key="item">
-                <li x-text="item"></li>
-              </template>
-            </ul>
+            }">
+          <!-- Display the list -->
+          <ul>
+            <template x-for="item in items" :key="item">
+              <li x-text="item"></li>
+            </template>
+          </ul>
 
-            <!-- Button to add items -->
-            <button x-on:click="addItem">Add Item</button>
-          </div>
-        </main>
-        <!-- ===== Main Content End ===== -->
-      </div>
-      <!-- ===== Content Area End ===== -->
+          <!-- Button to add items -->
+          <button x-on:click="addItem">Add Item</button>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
     </div>
-    <!-- ===== Page Wrapper End ===== -->
+    <!-- ===== Content Area End ===== -->
+  </div>
+  <!-- ===== Page Wrapper End ===== -->
 
-    <script src="./js/components/liveDashboard.js"></script>
-    <!-- <script src="./js/components/logTableScript.js"></script> -->
-  </body>
+  <script src="./js/components/liveDashboard.js"></script>
+  <script>
+    const socketer = io('http://localhost:3001');
+    socketer.on('dataFromServer', (data) => {
+      console.log(data);
+      if (data && data.value !== undefined) {
+        document.getElementById('dataValue').innerText = `${data.value}`;
+      }
+    });
+
+  </script>
+  <!-- <script src="./js/components/logTableScript.js"></script> -->
+</body>
+
 </html>
