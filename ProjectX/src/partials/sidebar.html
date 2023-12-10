@@ -171,9 +171,54 @@
                 <li>
                   <div x-data="{ checkboxToggle: false }">
                     <label for="checkboxLabelOne" class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
-                      Checkbox Text
+                      Logs
                     <div class="relative">
                       <input type="checkbox" id="checkboxLabelOne" class="sr-only"
+                        @change="checkboxToggle = !checkboxToggle" />
+                      <div :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
+                        class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                        <span :class="checkboxToggle && 'bg-primary'" class="h-2.5 w-2.5 rounded-sm"></span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                </li>
+                <li>
+                  <div x-data="{ checkboxToggle: false }">
+                    <label for="checkboxLabelHealth" class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Health
+                    <div class="relative">
+                      <input type="checkbox" id="checkboxLabelHealth" class="sr-only"
+                        @change="checkboxToggle = !checkboxToggle" />
+                      <div :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
+                        class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                        <span :class="checkboxToggle && 'bg-primary'" class="h-2.5 w-2.5 rounded-sm"></span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                </li>
+                <li>
+                  <div x-data="{ checkboxToggle: false }">
+                    <label for="checkboxLabelPerformance" class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Performance
+                    <div class="relative">
+                      <input type="checkbox" id="checkboxLabelPerformance" class="sr-only"
+                        @change="checkboxToggle = !checkboxToggle" />
+                      <div :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
+                        class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                        <span :class="checkboxToggle && 'bg-primary'" class="h-2.5 w-2.5 rounded-sm"></span>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                </li>
+                <li>
+                  <div x-data="{ checkboxToggle: false }">
+                    <label for="checkboxLabelSecurity" class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Security
+                    <div class="relative">
+                      <input type="checkbox" id="checkboxLabelSecurity" class="sr-only"
                         @change="checkboxToggle = !checkboxToggle" />
                       <div :class="checkboxToggle && 'border-primary bg-gray dark:bg-transparent'"
                         class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
@@ -210,7 +255,8 @@
                   fill=""
                 />
               </svg>
-              Health
+              <span :class="{ 'hidden': !sidebarExpanded, 'block': sidebarExpanded }">
+                <span>Health</span>
             </a>
           </li>
           <!-- Menu Item Calendar -->
@@ -241,7 +287,8 @@
                   fill=""
                 />
               </svg>
-              Performance
+              <span :class="{ 'hidden': !sidebarExpanded, 'block': sidebarExpanded }">
+                <span>Performance</span>
             </a>
           </li>
           <!-- Menu Item Profile -->
@@ -278,7 +325,8 @@
                   </clipPath>
                 </defs>
               </svg>
-              Security
+              <span :class="{ 'hidden': !sidebarExpanded, 'block': sidebarExpanded }">
+                <span>Security</span>
             </a>
           </li>
           <!-- Menu Item Tables -->
@@ -482,8 +530,8 @@
             >
               <svg
                 class="fill-current"
-                width="30"
-                height="30"
+                width="18"
+                height="19"
                 viewBox="0 0 18 19"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
