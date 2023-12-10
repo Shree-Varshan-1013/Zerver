@@ -7,12 +7,15 @@
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script> -->
     <link rel="stylesheet" href="../src/css/style.css" />
 
     <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist"></script>
     <title>Live Dashboard</title>
   </head>
 
@@ -42,7 +45,7 @@
         <!-- ===== Header End ===== -->
 
         <!-- ===== Main Content Start ===== -->
-        <main  class="flex   w-full align-center flex-col">
+        <main class="align-center flex w-full flex-col">
           <!-- <div class="w-full">
             <h1 class="pl-3 py-4 text-2xl font-semibold bg-gray-700">Navbar</h1>
           </div> -->
@@ -140,8 +143,25 @@
                       <!-- Data will be populated here dynamically using JavaScript -->
                   </tbody>
               </table>
-              </div>
-              </div>
+            </div>
+          </div>
+          <div
+            x-data="{ items: [], addItem: function() { this.items.push('New Item ' + (this.items.length + 1)); } }"
+            x-init="() => {
+              Alpine.plugin(window.persist)
+              Alpine.persist('items')
+            }"
+          >
+            <!-- Display the list -->
+            <ul>
+              <template x-for="item in items" :key="item">
+                <li x-text="item"></li>
+              </template>
+            </ul>
+
+            <!-- Button to add items -->
+            <button x-on:click="addItem">Add Item</button>
+          </div>
         </main>
         <!-- ===== Main Content End ===== -->
       </div>

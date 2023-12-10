@@ -70,7 +70,49 @@
       margin-left: 42%;
     }
 
-    .copy-box {
+    #glassy-container {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0);
+      border-radius: 10px;
+      border: 1px solid rgba(95, 63, 63, 0.516);
+      padding: 20px;
+      animation: shadow-pulse 2s infinite alternate;
+      box-shadow: rgba(76, 197, 36, 0.699) 0px 4px 4px, rgba(209, 22, 22, 0.845) 0px 4px 4px;
+      overflow: hidden;
+    }
+
+    #glassy-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      border-radius: 10px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes shadow-pulse {
+      0% {
+        box-shadow: rgba(210, 34, 34, 0.687) 0px 6px 6px, rgba(28, 172, 33, 0.1) 0px 6px 6px;
+      }
+
+      100% {
+        box-shadow: rgba(200, 236, 24, 0.5) 0px 4px 4px, rgba(204, 19, 152, 0.3) 0px 4px 4px;
+      }
+    }
+
+    /* .copy-box {
       position: relative;
       display: inline-block;
       margin: 0 auto;
@@ -97,6 +139,7 @@
       left: 2px;
       height: 96%;
     }
+
     .copy-box .line.left1 {
       top: 5px;
       left: 2px;
@@ -149,7 +192,7 @@
 
     .copy-box .inner {
       padding: 30px;
-    }
+    } */
   </style>
 
   <script>
@@ -215,58 +258,33 @@
       <main class="align-center flex w-full flex-col">
         <div class="flex flex-row m-5">
           <div class="flex-1">
-            <div class="copy-box w-70 h-50 mt-1">
+            <!-- <div class="copy-box w-70 h-50 mt-1">
               <div class="inner">
                 <div class="line left">
                   <div class="scanner"></div>
                 </div>
-                <!-- <div class="line right">
+                <div class="line right">
                   <div class="scanner"></div>
-                </div> -->
-                <!-- <div class="line top">
+                </div>
+                <div class="line top">
                   <div class="scanner"></div>
-                </div> -->
+                </div>
                 <div class="line bottom">
                   <div class="scanner"></div>
                 </div>
                 <div> Text Here </div>
               </div>
+            </div> -->
+            <div id="glassy-container" class="m-3 h-30 rounded-sm">
+              <h1 class="text-black dark:text-white">Text Here</h1>
             </div>
-            <div class="copy-box w-70 h-50 mt-1">
-              <div class="inner">
-                <div class="line left">
-                  <div class="scanner"></div>
-                </div>
-                <!-- <div class="line right">
-                  <div class="scanner"></div>
-                </div> -->
-                <!-- <div class="line top">
-                  <div class="scanner"></div>
-                </div> -->
-                <div class="line bottom">
-                  <div class="scanner"></div>
-                </div>
-                <div> Text Here </div>
-              </div>
+            <div id="glassy-container" class="m-3 h-30 rounded-sm">
+              <h1 class="text-black dark:text-white">Text Here</h1>
             </div>
           </div>
           <div class="flex-1">
-            <div class="copy-box w-70 h-[80%] mt-1">
-              <div class="inner">
-                <div class="line left1">
-                  <div class="scanner"></div>
-                </div>
-                <!-- <div class="line right">
-                  <div class="scanner"></div>
-                </div> -->
-                <!-- <div class="line top">
-                  <div class="scanner"></div>
-                </div> -->
-                <div class="line bottom">
-                  <div class="scanner"></div>
-                </div>
-                <div> Text Here </div>
-              </div>
+            <div id="glassy-container" class="m-3 h-30 rounded-sm">
+              <h1 class="text-black dark:text-white">Text Here</h1>
             </div>
           </div>
           <div class="flex-1">

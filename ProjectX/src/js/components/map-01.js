@@ -5,10 +5,25 @@ const map01 = () => {
   const mapSelector = document.querySelectorAll('#mapOne')
 
   if (mapSelector.length) {
+    const countryData = {
+      // Example data with country ISO codes and values
+      'ZA': 100,
+      'CA': 50,
+      'IN': 75,
+      // Add more countries and their respective values
+    };
     const mapOne = new jsVectorMap({
       selector: '#mapOne',
       map: 'world',
       zoomButtons: true,
+
+      series: {
+        regions: [{
+          values: countryData,
+          scale: ['#FFFFFF', '#FF0000'], // Scale of colors from white to red
+          normalizeFunction: 'polynomial',
+        }],
+      },
 
       regionStyle: {
         initial: {

@@ -45,6 +45,7 @@
     "jsvectormap": "^1.5.1",
     "mongodb": "^6.3.0",
     "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2",
     "webpack": "^5.89.0",
     "webpack-dev-server": "^4.15.1"
   }

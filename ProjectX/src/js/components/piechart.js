@@ -14,6 +14,18 @@ option = {
       color: 'grey'
     }
   },
+  toolbox: {
+    // y: 'bottom',
+    feature: {
+      // magicType: {
+      //   type: ['stack']
+      // },
+      // dataView: {},
+      saveAsImage: {
+        pixelRatio: 2
+      }
+    }
+  },
   series: [
     {
       name: 'Access From',
