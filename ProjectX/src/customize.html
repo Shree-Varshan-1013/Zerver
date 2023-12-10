@@ -66,9 +66,11 @@
                   </div>
                   <div x-show="health" class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark" style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;" x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                     <div class="text-2xl">Health</div>
-                    <div class="flex-1">
-                      <div id="animatedbar" style="width: 600px; height: 600px" class="ml-5 mt-[3%]"></div>
-                    </div>
+                    <!-- <div class="flex-1"> -->
+                      <!-- <div id="animatedbar" style="width: 600px; height: 600px" class="ml-5 mt-[3%]"></div>
+                       -->
+                       <include src="../src/healthchart.html"></include>
+                    <!-- </div> -->
                   </div>
                   <div x-show="performance" class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark" style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;" x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                     <div class="text-2xl">Performance</div>
