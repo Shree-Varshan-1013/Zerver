@@ -47,16 +47,16 @@ client
 
     console.log("hello");
 
-    // io.on("connection", (socket) => {
-    //   logsCollection.find().toArray((err, data) => {
-    //     if (err) {
-    //       console.error("Error fetching data from MongoDB:", err);
-    //     } else {
-    //       console.log("got to db");
-    //       socket.emit("logData", data);
-    //     }
-    //   });
-    // });
+    io.on("connection", (socket) => {
+      logsCollection.find().toArray((err, data) => {
+        if (err) {
+          console.error("Error fetching data from MongoDB:", err);
+        } else {
+          console.log("got to db");
+          socket.emit("logData", data);
+        }
+      });
+    });
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);

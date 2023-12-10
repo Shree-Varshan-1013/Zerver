@@ -4,16 +4,45 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
     <link rel="stylesheet" href="../src/css/style.css" />
+
+    <!-- flowbite cdn -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
 
     <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
 
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script> -->
     <title>Logs</title>
+    <style>
+      .datetime-input[disabled] {
+          background-color: #f2f2f2; /* Set your desired background color */
+      }
+    </style>
+    <style>
+      /* Add your existing styles here */
+      /* Add a new class for the sorting icon */
+      .sort-icon {
+          width: 16px;
+          height: 16px;
+          transition: transform 0.3s ease;
+      }
+
+      /* Add styling for the rotated icon */
+      .sort-icon.rotated {
+          transform: rotate(90deg);
+      }
+
+      /* Add styling for the date input */
+      .date-input {
+          border: 1px solid #ccc;
+          padding: 8px;
+          border-radius: 4px;
+      }
+  </style>
   </head>
 
   <body
@@ -50,7 +79,7 @@
                 <div class="flex">
                   <div class="w-[12%]">
                     <h1 class="font-extrabold text-5xl text-white">Logs</h1>
-                    <p class="text-blue-500 font-bold">All Logs</p>
+                    <!-- <p class="text-blue-500 font-bold">All Logs</p> -->
                   </div>
                   <div class="w-ful">
                     <div class="flex mt-3 ml-4 text-black bg-gray-700">
@@ -71,45 +100,61 @@
                         <svg class="p-1  w-6 h-6 text-gray-800 dark:text-white reset-search-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
-                      
-                        <!-- <img width="40" height="40" src="https://img.icons8.com/sf-black-filled/64/FFFFFF/recurring-appointment.png" alt="recurring-appointment"/> -->
-                        <!-- <img class="bg-white right-[50%]" width="34" height="18" src="https://img.icons8.com/material-sharp/24/000000/recurring-appointment.png" alt="recurring-appointment"/> -->
-                      <!-- </div> -->
+
                       </div>
                   </div>
                   <!-- date inputs -->
                   
                   <div date-rangepicker class="flex mt-3 ml-4 text-black">
                     <div class="relative">
-                        <input name="start" type="datetime-local" class="text-black datetime-input" disabled>
+                        <input name="start" type="datetime-local" class="text-black datetime-input bg-gray-300" disabled>
                     </div>
                     <span class="mx-4 text-gray-500">to</span>
                     <div class="relative">
-                        <input name="end" type="datetime-local" class="text-black datetime-input" disabled>
+                        <input name="end" type="datetime-local" class="text-black datetime-input bg-gray-300" disabled>
                     </div>
-                  </div>
-
-               
-                  
-                  <!-- <div class="ml-auto flex items-center">
-                    <label for="startDate" class="mr-2 text-white">Start Date:</label>
-                    <input type="date" id="startDate" class="border border-gray-700 p-2 text-black">
-                    <label for="startTime" class="ml-4 mr-2 text-white">Start Time:</label>
-                    <input type="time" id="startTime" class="border border-gray-700 p-2 text-black">
-                    <label for="endDate" class="ml-4 mr-2 text-white">End Date:</label>
-                    <input type="date" id="endDate" class="border border-gray-700 p-2 text-black">
-                    <label for="endTime" class="ml-4 mr-2 text-white">End Time:</label>
-                    <input type="time" id="endTime" class="border border-gray-700 p-2 text-black">
-                    
-                </div> -->
+                </div>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                      // Get the datetime inputs
+                      const startDatetimeInput = document.querySelector('input[name="start"]');
+                      const endDatetimeInput = document.querySelector('input[name="end"]');
+              
+                      // Get the dropdown
+                      const searchColumnDropdown = document.getElementById('searchColumn');
+              
+                      // Add an event listener to the dropdown
+                      searchColumnDropdown.addEventListener('change', function () {
+                          // Check if the selected option is 'timestamp'
+                          const isTimestampOption = this.value === 'timestamp';
+              
+                          // Enable or disable datetime inputs based on the selected option
+                          startDatetimeInput.disabled = !isTimestampOption;
+                          endDatetimeInput.disabled = !isTimestampOption;
+              
+                          // If disabled, clear the values
+                          if (!isTimestampOption) {
+                              startDatetimeInput.value = '';
+                              endDatetimeInput.value = '';
+                          }
+                      });
+              
+                      // Event listener for the timestamp column
+                      const timestampSortIcon = document.getElementById('timestampSortIcon');
+                      if (timestampSortIcon) {
+                          timestampSortIcon.addEventListener('click', function () {
+                              sortTable('timestamp');
+                          });
+                      }
+                  });
+              </script>
+                
                 </div>
                 <div class=" pr-3 w-full h-[45%] border border-blue-500 ">
-                  <!-- <h1>Demo</h1> -->
                   <div id="live-movement-graph"  style="width: 100; height: 300%;"></div>
                   <!-- <script src="./js/logsPage/logsChart.js"></script> -->
                   <!-- <div id="chart-container"></div> -->
                   <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-                  <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
                 </div>
                 
                 <!-- Copy code -->
@@ -117,33 +162,54 @@
                     <table id="logTable" class="w-full mt-4 border-collapse border border-dashed border-gray-700">
                         <thead class=" bg-gray-700">
                             <tr class=" border border-dashed">
-                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
+                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
                                     Log ID
-                                    <img id="logIdSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="logIdSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
+                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
                                     Log Time
-                                    <img id="logTimeSortIcon" class=" inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="logTimeSortIcon" class=" inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
+                                <th id="logIdSortIcon " class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
                                     Timestamp
-                                    <img id="timestampSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="timestampSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
+                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
                                     IP Address
-                                    <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(4, 'httpMethodSortIcon')">
+                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(4, 'httpMethodSortIcon')">
                                     HTTP Method
-                                    <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(5, 'requestUrlSortIcon')">
+                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(5, 'requestUrlSortIcon')">
                                     Request URL
-                                    <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
-                                <th class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(6, 'statusCodeSortIcon')">
+                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(6, 'statusCodeSortIcon')">
                                     Status Code
-                                    <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/>
+                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
+                                    </svg>
+                                    <!-- <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
                                 </th>
                             </tr>
                         </thead>
@@ -165,7 +231,7 @@
     </div>
     <!-- ===== Page Wrapper End ===== -->
 
-    <script src="./js/components/logsFile.js"></script>
+    <script src="./js/components/logPageGraph.js"></script>
     <script src="./js/components/logTableScript.js"></script>
     <script src="./js/components/logTableSort.js"></script>
 

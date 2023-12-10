@@ -1,34 +1,3 @@
-// // Sample data
-// const logs = [
-//     { log_id: 1, log_time: '2023-12-05 10:30:00', timestamp: '2023-12-05 10:30:15', ip_address: '192.168.1.1', http_method: 'GET', request_url: '/home', status_code: 200 },
-//     { log_id: 2, log_time: '2023-12-05 11:15:00', timestamp: '2023-12-05 11:15:30', ip_address: '192.168.1.2', http_method: 'POST', request_url: '/api/data', status_code: 404 },
-// ];
-
-// // Function to populate the table
-// function populateTable() {
-//     const tableBody = document.getElementById('logTableBody');
-
-//     // Clear existing rows
-//     tableBody.innerHTML = '';
-
-//     // Add rows based on data
-//     logs.forEach(log => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//             <td class="text-left">${log.log_id}</td>
-//             <td class="text-left">${log.log_time}</td>
-//             <td class="text-left">${log.timestamp}</td>
-//             <td class="text-left">${log.ip_address}</td>
-//             <td class="text-left">${log.http_method}</td>
-//             <td class="text-left">${log.request_url}</td>
-//             <td class="text-left">${log.status_code}</td>
-//         `;
-//         tableBody.appendChild(row);
-//     });
-// }
-
-// // Initial population
-// populateTable();
 
 
 // Assuming your log data is an array of objects
@@ -68,91 +37,6 @@ const logs = [
   console.log(logs);
   
 
-//   function renderTable(searchQuery, searchColumn) {
-//     const tableBody = document.getElementById('logTableBody');
-
-//     // Clear existing rows
-//     tableBody.innerHTML = '';
-
-//     // If search query is empty, display all logs
-//     if (!searchQuery || searchColumn === 'search') {
-//         logs.forEach(log => {
-//             const row = tableBody.insertRow();
-//             Object.values(log).forEach(value => {
-//                 const cell = row.insertCell();
-//                 cell.textContent = value;
-//             });
-//         });
-//     } else {
-//         // Filter logs based on the search query in the selected column
-//         const filteredLogs = logs.filter(log => {
-//             if (searchColumn === 'all') {
-//                 // Check if the search query exists in any column
-//                 return Object.values(log).some(value =>
-//                     value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-//                 );
-//             } else {
-//                 // Check if the search query exists in the specified column
-//                 const columnValue = log[searchColumn].toString().toLowerCase();
-//                 return columnValue.includes(searchQuery.toLowerCase());
-//             }
-//         });
-//         // Populate the table with filtered logs
-//         filteredLogs.forEach(log => {
-//             const row = tableBody.insertRow();
-//             Object.values(log).forEach(value => {
-//                 const cell = row.insertCell();
-//                 cell.textContent = value;
-//             });
-//         });
-//     }
-// }
-
-// // Event listener for the search input and column dropdown
-// document.getElementById('search').addEventListener('input', function () {
-//     const searchQuery = this.value.trim();
-//     const searchColumn = document.getElementById('searchColumn').value;
-//     renderTable(searchQuery, searchColumn);
-// });
-
-// // Initial rendering of the table (without any search query)
-// renderTable('', 'all');
-
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     // Get the datetime inputs
-//     const startDatetimeInput = document.querySelector('input[name="start"]');
-//     const endDatetimeInput = document.querySelector('input[name="end"]');
-  
-//     // Get the dropdown
-//     const searchColumnDropdown = document.getElementById('searchColumn');
-  
-//     // Add an event listener to the dropdown
-//     searchColumnDropdown.addEventListener('change', function () {
-//         // Check if the selected option is 'timestamp'
-//         const isTimestampOption = this.value === 'timestamp';
-  
-//         // Enable or disable datetime inputs based on the selected option
-//         startDatetimeInput.disabled = !isTimestampOption;
-//         endDatetimeInput.disabled = !isTimestampOption;
-  
-//         // If disabled, clear the values
-//         if (!isTimestampOption) {
-//             startDatetimeInput.value = '';
-//             endDatetimeInput.value = '';
-//         }
-//     });
-  
-//     // Event listener for the timestamp column
-//     const timestampSortIcon = document.getElementById('timestampSortIcon');
-//     if (timestampSortIcon) {
-//         timestampSortIcon.addEventListener('click', function () {
-//             sortTable('timestamp');
-//         });
-//     }
-//   });
-
-
 
 //reset functionality added
 
@@ -163,7 +47,7 @@ function resetSearch() {
 
     const startDatetimeInput = document.querySelector('input[name="start"]');
     const endDatetimeInput = document.querySelector('input[name="end"]');
-    
+
     startDatetimeInput.value = ''; // Clear the start datetime input
     endDatetimeInput.value = ''; // Clear the end datetime input
 
