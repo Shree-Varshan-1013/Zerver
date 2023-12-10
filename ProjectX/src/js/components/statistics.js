@@ -29,7 +29,7 @@ const statistics = () => {
             }
         }
     };
-    
+
     var optionsArea = {
         chart: {
             height: 380,
@@ -80,17 +80,17 @@ const statistics = () => {
             opacity: 1,
         },
     }
-    
+
     var chartArea = new ApexCharts(
         document.querySelector("#areachart"),
         optionsArea
     );
-    
+
     chartArea.render();
     const newTotalData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
     const newSuccessData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
     const newFailureData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
-  
+
     updateChart(chartArea, [
         { name: 'Total', data: newTotalData },
         { name: 'Success', data: newSuccessData },
@@ -112,7 +112,7 @@ const statistics = () => {
     };
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
-    setInterval(fetchData, 10000); 
+    setInterval(fetchData, 10000);
 }
 
 export default statistics;
