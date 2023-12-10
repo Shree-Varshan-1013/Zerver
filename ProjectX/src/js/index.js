@@ -63,16 +63,16 @@ function updateFetchedData(data) {
   localStorage.setItem('fetchedData', JSON.stringify(data));
 }
 
-const socket = io("http://localhost:2018");
+// const socket = io("http://localhost:2018");
 
-socket.on("connect", () => {
-  console.log("Connected to socket.io server " + socket.id);
-});
+// socket.on("connect", () => {
+//   console.log("Connected to socket.io server " + socket.id);
+// });
 
-socket.on('documentData', (data) => {
-  console.log("Received documentData:", data);
-  updateFetchedData(data);
-});
+// socket.on('documentData', (data) => {
+//   console.log("Received documentData:", data);
+//   updateFetchedData(data);
+// });
 
 // Simulating receiving data from some source
 const receivedData = { message: "Hello, world!" };

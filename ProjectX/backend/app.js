@@ -1,9 +1,7 @@
 const { Server } = require("socket.io");
 const http = require("http");
 const { MongoClient } = require("mongodb");
-const { Server } = require("socket.io");
-const http = require("http");
-const { MongoClient } = require("mongodb");
+
 
 const server = http.createServer();
 const io = new Server(server, {
@@ -15,7 +13,14 @@ const io = new Server(server, {
 const mongoURI =
   "mongodb+srv://test:test@sanenomore.mteelpf.mongodb.net/?retryWrites=true&w=majority";
 
+const  mongo_uri1 = "mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority"
+
 const client = new MongoClient(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const client1 = new MongoClient(mongo_uri1, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -63,6 +68,31 @@ client
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
+  });
+
+  client1
+  .connect()
+  .then(async () => {
+    console.log("Connected to MongoDB 2");
+    const db2 = client1.db("server1_clf"); // Replace with the name of your second database
+    const logsCollection2 = db2.collection("basic_data");
+    // Add MongoDB data fetching logic here if needed
+    const Document2 = await logsCollection2.find({}).toArray();
+    console.log("All Document", Document2);
+
+    io.on("connection", (socket) => { 
+      logsCollection2.find().toArray((err, data) => {
+        if (err) {
+          console.error("Error fetching data from MongoDB:", err);
+        } else {
+          console.log("got to db");
+          socket.emit("logTableDashboard", data);
+        }
+      });
+    });
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB 2:", err);
   });
 
 server.listen(3001, () => {
