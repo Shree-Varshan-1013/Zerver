@@ -9,8 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
     <link rel="stylesheet" href="../src/css/style.css" />
 
-    <!-- flowbite cdn -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"  rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
 
     <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
 
@@ -19,30 +21,30 @@
     <title>Logs</title>
     <style>
       .datetime-input[disabled] {
-          background-color: #f2f2f2; /* Set your desired background color */
+        background-color: #f2f2f2;
       }
     </style>
     <style>
       /* Add your existing styles here */
       /* Add a new class for the sorting icon */
       .sort-icon {
-          width: 16px;
-          height: 16px;
-          transition: transform 0.3s ease;
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
       }
 
       /* Add styling for the rotated icon */
       .sort-icon.rotated {
-          transform: rotate(90deg);
+        transform: rotate(90deg);
       }
 
       /* Add styling for the date input */
       .date-input {
-          border: 1px solid #ccc;
-          padding: 8px;
-          border-radius: 4px;
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 4px;
       }
-  </style>
+    </style>
   </head>
 
   <body
@@ -52,71 +54,113 @@
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
-    <!-- ===== Preloader Start ===== -->
     <include src="./partials/preloader.html"></include>
-    <!-- ===== Preloader End ===== -->
 
-    <!-- ===== Page Wrapper Start ===== -->
     <div class="flex h-screen overflow-hidden">
-      <!-- ===== Sidebar Start ===== -->
       <include src="./partials/sidebar.html"></include>
-      <!-- ===== Sidebar End ===== -->
 
-      <!-- ===== Content Area Start ===== -->
       <div
         class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
       >
-        <!-- ===== Header Start ===== -->
         <include src="./partials/header.html" />
-        <!-- ===== Header End ===== -->
 
-        <!-- ===== Main Content Start ===== -->
-        <main  class="flex h-fit    align-center flex-col bg-gray-700">
-            <!-- <div >
-                <h1 class="px-3 py-4 text-2xl font-semibold ">Navbar</h1>
-            </div> -->
-            <div  class="px-3 bg-slate-600 h-full w-full flex flex-col ">
-                <div class="flex">
-                  <div class="w-[12%]">
-                    <h1 class="font-extrabold text-5xl text-white">Logs</h1>
-                    <!-- <p class="text-blue-500 font-bold">All Logs</p> -->
-                  </div>
-                  <div class="w-ful">
-                    <div class="flex mt-3 ml-4 text-black bg-gray-700">
+        <main
+          class="align-center flex h-fit flex-col bg-whiten dark:bg-boxdark-2"
+        >
+          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto">
+              <div
+                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                  Logs
+                </h2>
+                <nav>
+                  <ol class="flex items-center gap-2">
+                    <li>
+                      <a class="font-medium" href="index.html">Dashboard /</a>
+                    </li>
+                    <li class="text-primary">Logs</li>
+                  </ol>
+                </nav>
+              </div>
+              <div>
+                <div
+                  class="mass-shadow m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
+                >
+                  <div class="m-10">
+                    <div class="bg-gray-700 mt-3 flex text-black">
                       <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
-                      <select id="searchColumn" class="border border-gray-700   p-2">
-                          <option class="text-red" value="search">Search By</option>
-                          <option class="text-red" value="all">All</option>
-                          <!-- <option class="text-red" value="log_id">Log ID</option> -->
-                          <!-- <option value="log_time">Log Time</option> -->
-                          <option value="timestamp">Timestamp</option>
-                          <option value="ip_address">IP Address</option>
-                          <option value="http_method">HTTP Method</option>
-                          <option value="request_url">Request URL</option>
-                          <option value="status_code">Status Code</option>
-                      </select> 
+                      <select
+                        id="searchColumn"
+                        class="border-gray-700 border text-center"
+                      >
+                        <option class="text-red" value="search">
+                          Search By
+                        </option>
+                        <option class="text-red" value="all">All</option>
+                        <!-- <option class="text-red" value="log_id">Log ID</option> -->
+                        <!-- <option value="log_time">Log Time</option> -->
+                        <option value="timestamp">Timestamp</option>
+                        <option value="ip_address">IP Address</option>
+                        <option value="http_method">HTTP Method</option>
+                        <option value="request_url">Request URL</option>
+                        <option value="status_code">Status Code</option>
+                      </select>
                       <!-- <div class="flex bg-transparent"> -->
-                        <input type="text" id="search" class="border border-gray-700 p-2 ml-2 text-black w-3/2" placeholder="Search...">
-                        <svg class="p-1  w-6 h-6 text-gray-800 dark:text-white reset-search-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-
+                      <input
+                        type="text"
+                        id="search"
+                        class="border-gray-700 ml-10 border text-black"
+                        placeholder="Search..."
+                      />
+                      <svg
+                        class="text-gray-800 reset-search-svg h-6 w-6 p-1 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- date inputs -->
+                  <div class="mt-13">
+                    <!-- date inputs -->
+                    <div date-range-picker class="flex text-black">
+                      <div class="  ">
+                        <span class="mr-4 text-black dark:text-white"
+                          >From</span
+                        >
+                        <input
+                          name="start"
+                          id="st-time"
+                          type="datetime-local"
+                          class="datetime-input bg-white text-black"
+                        />
                       </div>
-                  </div>
-                  <!-- date inputs -->
-                  
-                  <!-- date inputs -->
-                  <div date-rangepicker class="flex mt-3 ml-4 text-black">
-                    <div class="relative">
-                        <input name="start" id="st-time" type="datetime-local" class="text-black datetime-input bg-white">
-                    </div>
-                    <span class="mx-4 text-gray-500">to</span>
-                    <div class="relative">
-                        <input name="end" id="en-time" type="datetime-local" class="text-black datetime-input bg-white">
+                      <div class="">
+                        <span class="ml-4 mr-4 text-black dark:text-white"
+                          >To</span
+                        >
+                        <input
+                          name="end"
+                          id="en-time"
+                          type="datetime-local"
+                          class="datetime-input bg-white text-black"
+                        />
+                      </div>
                     </div>
                   </div>
 
-                <!-- <script>
+                  <!-- <script>
                   document.addEventListener('DOMContentLoaded', function () {
                       // Get the datetime inputs
                       const startDatetimeInput = document.querySelector('input[name="start"]');
@@ -150,89 +194,361 @@
                       }
                   });
               </script> -->
-                
                 </div>
-                <div class=" pr-3 w-full h-[45%] border border-blue-500 ">
-                  <div id="live-movement-graph"  style="width: 100; height: 300%;"></div>
+                <div
+                  class="mass-shadow m-5 rounded-sm border border-stroke bg-whiten dark:border-none"
+                >
+                  <div
+                    id="live-movement-graph"
+                    style="width: 100; height: 300%"
+                  ></div>
                   <!-- <script src="./js/logsPage/logsChart.js"></script> -->
                   <!-- <div id="chart-container"></div> -->
                   <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
                 </div>
-                
+
                 <!-- Copy code -->
-                <div class="w-full bg-gray-700">
-                    <table id="logTable" class="w-full mt-4 border-collapse border border-dashed border-gray-700">
-                        <thead class=" bg-gray-700">
-                            <tr class=" border border-dashed">
-                                <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
+                <div
+                  class="mass-shadow m-5 flex w-full justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
+                >
+                  <table
+                    id="logTable"
+                    class="mt-4 w-full border-collapse border border-dashed"
+                  >
+                    <thead class="">
+                      <tr class="border border-dashed">
+                        <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
                                     Log ID
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
                                     </svg>
                                     </th> -->
-                                <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
+                        <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
                                     Log Time
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
                                     </svg>
                                 </th> -->
-                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
-                                    Timestamp
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                  </th>
-                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
-                                    IP Address
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                    <!-- <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(4, 'httpMethodSortIcon')">
-                                    HTTP Method
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                    <!-- <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(5, 'requestUrlSortIcon')">
-                                    Request URL
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                    <!-- <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(6, 'statusCodeSortIcon')">
-                                    Status Code
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                    <!-- <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-gray-700" id="logTableBody">
-                            <!-- Data will be populated here dynamically using JavaScript -->
-                        </tbody>
-                    </table>
+                        <th
+                          id="logIdSortIcon"
+                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
+                          onclick="sortTable(2, 'timestampSortIcon')"
+                        >
+                          Timestamp
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                        </th>
+                        <th
+                          id="logIdSortIcon"
+                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
+                          onclick="sortTable(3, 'ipAddressSortIcon')"
+                        >
+                          IP Address
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                          <!-- <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
+                        </th>
+                        <th
+                          id="logIdSortIcon"
+                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
+                          onclick="sortTable(4, 'httpMethodSortIcon')"
+                        >
+                          HTTP Method
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                          <!-- <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
+                        </th>
+                        <th
+                          id="logIdSortIcon"
+                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
+                          onclick="sortTable(5, 'requestUrlSortIcon')"
+                        >
+                          Request URL
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                          <!-- <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
+                        </th>
+                        <th
+                          id="logIdSortIcon"
+                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
+                          onclick="sortTable(6, 'statusCodeSortIcon')"
+                        >
+                          Status Code
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                          <!-- <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                      <!-- Data will be populated here dynamically using JavaScript -->
+                    </tbody>
+                  </table>
                 </div>
+                <div
+                  class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+                >
+                  <div class="flex flex-col">
+                    <div
+                      class="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5"
+                    >
+                    <div
+                    class="flex items-center justify-center p-2.5 text-center xl:p-5"
+                  >
+                    <div>
+                      <h5
+                        class="text-sm font-medium uppercase xsm:text-base"
+                      >
+                        Timestamp
+                      </h5>
+                    </div>
+                    <span>
+                      <svg
+                        class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 16 20"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                      <div
+                      class="flex items-center justify-center p-2.5 text-center xl:p-5"
+                    >
+                      <div>
+                        <h5
+                          class="text-sm font-medium uppercase xsm:text-base"
+                        >
+                          Ip Address
+                        </h5>
+                      </div>
+                      <span>
+                        <svg
+                          class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 16 20"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                      <div
+                        class="flex items-center justify-center p-2.5 text-center xl:p-5"
+                      >
+                        <div>
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            HTTP Method
+                          </h5>
+                        </div>
+                        <span>
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <div
+                        class="flex items-center justify-center p-2.5 text-center xl:p-5"
+                      >
+                        <div>
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Request Uri
+                          </h5>
+                        </div>
+                        <span>
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                      <div
+                        class="flex items-center justify-center p-2.5 text-center xl:p-5"
+                      >
+                        <div>
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Status Code
+                          </h5>
+                        </div>
+                        <span>
+                          <svg
+                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 16 20"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
 
-              
-              
-                
-                  
+                    <div
+                      class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5"
+                    >
+                      <div class="flex items-center gap-3 p-2.5 xl:p-5">
+                        <p
+                          class="hidden font-medium text-black dark:text-white sm:block"
+                        >
+                          2023-12-06 12:51:45
+                        </p>
+                      </div>
+
+                      <div
+                        class="flex items-center justify-center p-2.5 xl:p-5"
+                      >
+                        <p class="font-medium text-black dark:text-white">
+                          192.168.1.30
+                        </p>
+                      </div>
+
+                      <div
+                        class="flex items-center justify-center p-2.5 xl:p-5"
+                      >
+                        <p class="font-medium text-meta-3">GET</p>
+                      </div>
+
+                      <div
+                        class="hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                      >
+                        <p class="font-medium text-black dark:text-white">
+                          /api/endpoint10
+                        </p>
+                      </div>
+
+                      <div
+                        class="hidden items-center justify-center p-2.5 sm:flex xl:p-5"
+                      >
+                        <p class="font-medium text-meta-5">404</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </main>
-        <!-- ===== Main Content End ===== -->
       </div>
-      <!-- ===== Content Area End ===== -->
     </div>
-    <!-- ===== Page Wrapper End ===== -->
 
     <script src="./js/components/logPageGraph.js"></script>
     <script src="./js/components/logTableScript.js"></script>
     <script src="./js/components/logTableSort.js"></script>
-
   </body>
 </html>
