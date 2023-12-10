@@ -61,7 +61,7 @@ client
           console.error("Error fetching data from MongoDB:", err);
         } else {
           console.log("got to db");
-          socket.emit("logData", data);
+          socket.emit("logData", document);
         }
       });
     });
@@ -74,18 +74,17 @@ client
   .connect()
   .then(async () => {
     console.log("Connected to MongoDB 2");
-    const db2 = client1.db("server1_clf"); // Replace with the name of your second database
+    const db2 = client1.db("server1_clf");
     const logsCollection2 = db2.collection("basic_data");
-    // Add MongoDB data fetching logic here if needed
-    const Document2 = await logsCollection2.find({}).toArray();
-    console.log("All Document", Document2);
 
-    io.on("connection", (socket) => { 
+    io.on("connection", (socket) => {
+      console.log("Socket connected on the client side");
+
       logsCollection2.find().toArray((err, data) => {
         if (err) {
           console.error("Error fetching data from MongoDB:", err);
         } else {
-          console.log("got to db");
+          console.log("Got data from MongoDB:", data);
           socket.emit("logTableDashboard", data);
         }
       });
@@ -94,6 +93,7 @@ client
   .catch((err) => {
     console.error("Error connecting to MongoDB 2:", err);
   });
+
 
 server.listen(3001, () => {
   console.log("Server running on port 3001");

@@ -105,14 +105,18 @@ socket.on('logData', (data) => {
       Alpine.data('logEntry', () => data.log_entry);
 });
 
+socket.on('logData', (data) => {
+  console.log(data);
+})
+
 socket.on('logTableDashboard', (data) => {
-  console.log("Received LogTableValue:",data.ip_address)
+  console.log("Received LogTableValue:",data)
   // updateTable(data);
   const tableBody = document.getElementById('logTableBody');
   // Clear existing rows in the table
   tableBody.innerHTML = '';
 
-  logs.forEach(log => {
+  data.forEach(log => {
     const row = document.createElement('tr');
     row.innerHTML = `
       <td class="py-2 px-4 border-b text-left">${log.timestamp}</td>
