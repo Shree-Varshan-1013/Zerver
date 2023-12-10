@@ -104,7 +104,7 @@
               <p class="font-bold text-black dark:text-white">Summary</p>
               <div
                 class="p-10 h-[200px] rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark mass-shadow"
-              ">
+              >
                 <p class="text-black dark:text-white" id="logEntry">The Performance of the Server is 90%</p>
                 <p class="text-black dark:text-white" x-text="logEntry" id="logEntry"></p>
                 <!-- <p class="text-white">The Performance of the Server is 90%</p> -->
@@ -119,12 +119,12 @@
     <table class="w-full table-auto">
       <thead>
         <tr class="bg-gray-2 text-left dark:bg-meta-4">
-          <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+          <!-- <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
             Log ID
           </th>
           <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
             Log Time
-          </th>
+          </th> -->
           <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">
             Timestamp
           </th>
@@ -143,91 +143,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 class="font-medium text-black dark:text-white">
-              Standard Log
-            </h5>
-            <p class="text-sm">sample text</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">4:12 pm</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">sample timestamp</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">192.168.10.14</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
-              GET
-            </p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">http://localhost:2018</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">404</p>
-          </td>
-        </tr>
-        <tr>
-          <td class="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 class="font-medium text-black dark:text-white">
-              Standard Log
-            </h5>
-            <p class="text-sm">sample text</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">4:12 pm</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">sample timestamp</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">192.168.10.14</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="inline-flex rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
-              DELETE
-            </p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">http://localhost:2018</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">404</p>
-          </td>
-        </tr>
-        <tr>  
-          <td class="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 class="font-medium text-black dark:text-white">
-              Standard Log
-            </h5>
-            <p class="text-sm">sample text</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">4:12 pm</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">sample timestamp</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">192.168.10.14</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="inline-flex rounded-full bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium text-warning">
-              PUT
-            </p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">http://localhost:2018</p>
-          </td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-            <p class="text-black dark:text-white">404</p>
-          </td>
-        </tr>  
-      </tbody>
+        <tbody class=" dark:bg-boxdark-2" id="logTableBody"></tbody>
     </table>
   </div>
 </div>
