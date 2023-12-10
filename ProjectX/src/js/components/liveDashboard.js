@@ -119,11 +119,11 @@ socket.on('logTableDashboard', (data) => {
   data.forEach(log => {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td class="py-2 px-4 border-b text-left">${log.timestamp}</td>
-      <td class="py-2 px-4 border-b text-left">${log.ip_address}</td>
-      <td class="py-2 px-4 border-b text-left">${log.http_method}</td>
-      <td class="py-2 px-4 border-b text-left">${log.requested_path}</td>
-      <td class="py-2 px-4 border-b text-left">${log.status_code}</td>
+    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
+    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.ip_address}</td>
+    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.http_method}</td>
+    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.requested_path}</td>
+    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.status_code}</td>
     `;
     tableBody.appendChild(row);
   });
@@ -155,21 +155,21 @@ const statusIndicator = document.getElementById('statusIndicator');
 const statusText = document.getElementById('statusText');
 
 // Function to update the status
-function updateStatus(isOn) {
-    if (isOn) {
-        statusIndicator.classList.remove('bg-red-status');
-        statusIndicator.classList.add('bg-green-status');
-        statusText.textContent = 'ON';
-    } else {
-        statusIndicator.classList.remove('bg-green-status');
-        statusIndicator.classList.add('bg-red-status');
-        statusText.textContent = 'OFF';
-    }
-}
+// function updateStatus(isOn) {
+//     if (isOn) {
+//         statusIndicator.classList.remove('bg-red-status');
+//         statusIndicator.classList.add('bg-green-status');
+//         statusText.textContent = 'ON';
+//     } else {
+//         statusIndicator.classList.remove('bg-green-status');
+//         statusIndicator.classList.add('bg-red-status');
+//         statusText.textContent = 'OFF';
+//     }
+// }
 
 
 setTimeout(() => {
-    updateStatus(true);
+    // updateStatus(true);
     // change();
 }, 2000);
 
@@ -252,3 +252,6 @@ function updateTable(logs) {
     tableBody.appendChild(row);
   });
 }
+
+
+console.log('hai from jegathees');

@@ -2,7 +2,6 @@ const { Server } = require("socket.io");
 const http = require("http");
 const { MongoClient } = require("mongodb");
 
-
 const server = http.createServer();
 const io = new Server(server, {
   cors: {
@@ -13,7 +12,7 @@ const io = new Server(server, {
 const mongoURI =
   "mongodb+srv://test:test@sanenomore.mteelpf.mongodb.net/?retryWrites=true&w=majority";
 
-const  mongo_uri1 = "mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority"
+const mongo_uri1 = "mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority";
 
 const client = new MongoClient(mongoURI, {
   useNewUrlParser: true,
@@ -32,72 +31,56 @@ setInterval(() => {
   io.emit("dataFromServer", { value: counter });
 }, 1000);
 
-// Socket.io handling
+// Socket.io handling for logsCollection
 io.on("connection", (socket) => {
-  console.log("Client connected");
-  
+  console.log("Client connected to logsCollection");
+
   socket.on("disconnect", () => {
-    console.log("Client disconnected");
+    console.log("Client disconnected from logsCollection");
   });
+
+  // Fetch data from MongoDB and emit to the client
+  client.connect()
+    .then(async () => {
+      console.log("Connected to MongoDB");
+      const db = client.db("allLogs");
+      const logsCollection = db.collection("logs3");
+      const document = await logsCollection.findOne({});
+      console.log("Fetched document:", document);
+      io.emit('logData', document);
+    })
+    .catch((err) => {
+      console.error("Error connecting to MongoDB:", err);
+    });
 });
 
-client
-  .connect()
-  .then(async () => {
-    console.log("Connected to MongoDB");
-    const db = client.db("allLogs"); // Use the name of your database
-    const logsCollection = db.collection("logs3");
-    const document = await logsCollection.findOne({});
-    console.log("Fetched document:", document);
-    // Find all documents in the collection
-    const allDocuments = await logsCollection.find({}).toArray();
-    // console.log("Found documents:", allDocuments);
-    io.emit('logData', document);
-    console.log("hello");
+// Socket.io handling for logsCollection2
+io.on("connection", (socket) => {
+  console.log("Client connected to logsCollection2");
 
-    io.on("connection", (socket) => {
-      logsCollection.find().toArray((err, data) => {
-        if (err) {
-          console.error("Error fetching data from MongoDB:", err);
-        } else {
-          console.log("got to db");
-          socket.emit("logData", document);
-        }
-      });
-    });
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB 2:", err);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected from logsCollection2");
   });
 
-  client1
-  .connect()
-  .then(async () => {
-    console.log("Connected to MongoDB 2");
-    const db2 = client1.db("server1_clf");
-    const logsCollection2 = db2.collection("basic_data");
-
-    io.on("connection", (socket) => {
-      console.log("Socket connected on the client side");
-
-      logsCollection2.find().toArray((err, data) => {
-        if (err) {
-          console.error("Error fetching data from MongoDB:", err);
-        } else {
-          console.log("Got data from MongoDB:", data);
-          socket.emit("logTableDashboard", data);
-        }
-      });
+  // Fetch data from MongoDB 2 and emit to the client
+  client1.connect()
+    .then(async () => {
+      console.log("Connected to MongoDB 2");
+      const db2 = client1.db("server1_clf");
+      const logsCollection2 = db2.collection("basic_data");
+      const data = await logsCollection2.find().toArray();
+      console.log("Got data from MongoDB 2:", data);
+      socket.emit("logTableDashboard", data);
+    })
+    .catch((err) => {
+      console.error("Error connecting to MongoDB 2:", err);
     });
-  })
-  .catch((err) => {
-    console.error("Error connecting to MongoDB 2:", err);
-  });
-
+});
 
 server.listen(3001, () => {
   console.log("Server running on port 3001");
 });
+
 
 
 
