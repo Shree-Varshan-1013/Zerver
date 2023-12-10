@@ -27,7 +27,7 @@ setInterval(() => {
 // Socket.io handling
 io.on("connection", (socket) => {
   console.log("Client connected");
-
+  
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
@@ -44,19 +44,10 @@ client
     // Find all documents in the collection
     const allDocuments = await logsCollection.find({}).toArray();
     // console.log("Found documents:", allDocuments);
-
+    io.emit('logData', document);
     console.log("hello");
 
-    io.on("connection", (socket) => {
-      logsCollection.find().toArray((err, data) => {
-        if (err) {
-          console.error("Error fetching data from MongoDB:", err);
-        } else {
-          console.log("got to db");
-          socket.emit("logData", data);
-        }
-      });
-    });
+  
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);

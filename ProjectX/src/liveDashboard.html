@@ -174,6 +174,10 @@
   <script src="./js/components/liveDashboard.js"></script>
   <script>
     const socketer = io('http://localhost:3001');
+
+    socketer.on('logData', (data) => {
+      console.log(data);
+    })
     socketer.on('dataFromServer', (data) => {
       console.log(data);
       if (data && data.value !== undefined) {
