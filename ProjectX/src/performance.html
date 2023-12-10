@@ -17,21 +17,18 @@
     <include src="./partials/preloader.html"></include>
 
     <div class="flex h-screen overflow-hidden">
-
       <include src="./partials/sidebar.html"></include>
 
       <div
         class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
       >
-
         <include src="./partials/header.html" />
 
         <main>
           <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
-            <div class="mx-auto max-w-242.5">
-
+            <div class="mx-auto">
               <div
-                class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
               >
                 <h2 class="text-title-md2 font-bold text-black dark:text-white">
                   Performance
@@ -49,7 +46,10 @@
               <div class="flex">
                 <div
                   class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
-                  style="box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
+                  style="
+                    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                      rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                  "
                 >
                   <div class="stars" data-rating="4"></div>
                   <div>
@@ -60,16 +60,22 @@
                 </div>
                 <div>
                   <div
-                    class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
-                  style="box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
-                    >
+                    class="m-3 mb-10 rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
+                    style="
+                      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                        rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                    "
+                  >
                     <div id="chart"></div>
                   </div>
                 </div>
                 <div>
                   <div
                     class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
-                    style="box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
+                    style="
+                      box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                        rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                    "
                   >
                     <div class="rotate">
                       <img
@@ -81,16 +87,24 @@
                   </div>
                 </div>
               </div>
-              <div class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4" style="box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;">
+              <div
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
+                style="
+                  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                "
+              >
                 <div class="w-full">
                   <div id="areachart"></div>
                 </div>
               </div>
-              <div
-              >
+              <div>
                 <div
                   class="m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
-                  style="box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
+                  style="
+                    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                      rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                  "
                 >
                   <div>
                     <h4 class="text-black dark:text-white">
@@ -105,6 +119,17 @@
                   <h5>Requests</h5>
                   <h5>Requests</h5>
                   <h5>Requests</h5>
+                </div>
+              </div>
+              <div
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
+                style="
+                  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+                    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+                "
+              >
+                <div class="rotate">
+                  <img src="./images/logo/logoFan.png" alt="fan" width="100%" />
                 </div>
               </div>
             </div>
