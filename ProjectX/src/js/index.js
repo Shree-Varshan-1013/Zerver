@@ -18,38 +18,61 @@ Alpine.plugin(persist)
 window.Alpine = Alpine;
 Alpine.start();
 
+// function updateFetchedData(data) {
+//   const socket = io("http://localhost:2018");
+
+//   socket.on("connect", () => {
+
+//     console.log("Connected to socket.io server " + socket.id);
+//   });
+
+//   socket.on('documentData', (sas) => {
+//     console.log(sas);
+//   })
+
+
+//   // var data1 = null;
+//   // socket.on("documentData", (data) => {
+//   //   console.log(data.log_entry);
+//   //   data1 = data.log_entry;
+//   //   console.log(Alpine);
+//   //   console.log(document.querySelector("[x-text='fetchedData']"));
+//   //   Alpine.data(
+//   //     document.querySelector("[x-text='fetchedData']"),
+//   //     "fetchedData",
+//   //     () => data1
+//   //   );
+//   // });
+
+//   const myDiv = document.querySelector("#myDiv");
+//   console.log("DIV "+myDiv);
+//   if (myDiv) {
+//     Alpine.data(myDiv, 'fetchedData', () => data);
+//   }
+// }
+
+// // Simulating receiving data from some source
+// const receivedData = { message: "Hello, world!" };
+
+// // Update the fetchedData property with the received data
+// updateFetchedData(receivedData);
+const myDiv = document.querySelector("#myDiv");
+
 function updateFetchedData(data) {
-  const socket = io("http://localhost:2018");
-
-  socket.on("connect", () => {
-
-    console.log("Connected to socket.io server " + socket.id);
-  });
-
-  socket.on('documentData', (sas) => {
-    console.log(sas);
-  })
-
-
-  // var data1 = null;
-  // socket.on("documentData", (data) => {
-  //   console.log(data.log_entry);
-  //   data1 = data.log_entry;
-  //   console.log(Alpine);
-  //   console.log(document.querySelector("[x-text='fetchedData']"));
-  //   Alpine.data(
-  //     document.querySelector("[x-text='fetchedData']"),
-  //     "fetchedData",
-  //     () => data1
-  //   );
-  // });
-
-  const myDiv = document.querySelector("#myDiv");
-  console.log(myDiv);
-  if (myDiv) {
-    Alpine.data(myDiv, 'fetchedData', () => data);
-  }
+  Alpine.data(myDiv, 'fetchedData', () => data.message);
+  localStorage.setItem('fetchedData', JSON.stringify(data));
 }
+
+const socket = io("http://localhost:2018");
+
+socket.on("connect", () => {
+  console.log("Connected to socket.io server " + socket.id);
+});
+
+socket.on('documentData', (data) => {
+  console.log("Received documentData:", data);
+  updateFetchedData(data);
+});
 
 // Simulating receiving data from some source
 const receivedData = { message: "Hello, world!" };

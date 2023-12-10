@@ -56,7 +56,7 @@ option = {
   ],
   series: [
     {
-      name: 'Fake Data',
+      name: 'Log Data',
       type: 'line',
       showSymbol: false,
       lineStyle: {  // Set the line style here
