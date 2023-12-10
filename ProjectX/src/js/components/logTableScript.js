@@ -72,28 +72,56 @@ function renderTable(searchQuery, searchColumn) {
     tableBody.innerHTML = '';
 
     // If search query is empty, display all logs
-    if (!searchQuery || searchColumn === 'search') {
-        logs.forEach(log => {
-            const row = tableBody.insertRow();
-            Object.values(log).forEach(value => {
-                const cell = row.insertCell();
-                cell.textContent = value;
-            });
+    // If search query is empty, display all logs
+if (!searchQuery || searchColumn === 'search') {
+    logs.forEach(log => {
+        const row = tableBody.insertRow();
+
+        // Exclude log_id and log_time from the displayed columns
+        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+
+        columnsToDisplay.forEach(key => {
+            const cell = row.insertCell();
+            cell.textContent = log[key];
         });
-    } else {
-        // Filter logs based on the search query in the selected column
-        const filteredLogs = logs.filter(log => {
-            if (searchColumn === 'all') {
-                // Check if the search query exists in any column
-                return Object.values(log).some(value =>
-                    value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-                );
-            } else {
-                // Check if the search query exists in the specified column
-                const columnValue = log[searchColumn].toString().toLowerCase();
-                return columnValue.includes(searchQuery.toLowerCase());
-            }
+    });
+} else {
+    // Filter logs based on the search query in the selected column
+    const filteredLogs = logs.filter(log => {
+        if (searchColumn === 'all') {
+            // Check if the search query exists in any column
+            return Object.values(log).some(value =>
+                value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        } 
+        else if (searchColumn === 'timestamp') {
+            const st_time = new Date(document.getElementById('st-time').value);
+            const en_time = new Date(document.getElementById('en-time').value);
+            const logTimestamp = new Date(log['timestamp']);
+            return logTimestamp >= st_time && logTimestamp <= en_time;
+            
+        }
+        else {
+            // Check if the search query exists in the specified column
+            const columnValue = log[searchColumn].toString().toLowerCase();
+            return columnValue.includes(searchQuery.toLowerCase());
+        }
+    });
+
+    // Populate the table with filtered logs, excluding log_id and log_time
+    filteredLogs.forEach(log => {
+        const row = tableBody.insertRow();
+
+        // Exclude log_id and log_time from the displayed columns
+        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+
+        columnsToDisplay.forEach(key => {
+            const cell = row.insertCell();
+            cell.textContent = log[key];
         });
+    });
+}
+
         // Populate the table with filtered logs
         filteredLogs.forEach(log => {
             const row = tableBody.insertRow();
@@ -103,25 +131,34 @@ function renderTable(searchQuery, searchColumn) {
             });
         });
     }
-}
+    
 
-// Event listener for the search input and column dropdown
+// // Event listener for the search input and column dropdown
 document.getElementById('search').addEventListener('input', function () {
     const searchQuery = this.value.trim();
     const searchColumn = document.getElementById('searchColumn').value;
     renderTable(searchQuery, searchColumn);
 });
 
-// Initial rendering of the table (without any search query)
+// // Initial rendering of the table (without any search query)
 renderTable('', 'all');
 
-// Event listener for the datetime inputs and dropdown
+// Event listener for the datetime inputs
 document.addEventListener('DOMContentLoaded', function () {
     const startDatetimeInput = document.querySelector('input[name="start"]');
     const endDatetimeInput = document.querySelector('input[name="end"]');
     const searchColumnDropdown = document.getElementById('searchColumn');
-    const timestampSortIcon = document.getElementById('timestampSortIcon');
 
+    // Add an event listener to the datetime inputs
+    startDatetimeInput.addEventListener('input', function () {
+        renderTable('', 'timestamp');
+    });
+
+    endDatetimeInput.addEventListener('input', function () {
+        renderTable('', 'timestamp');
+    });
+
+    // Add an event listener to the dropdown
     searchColumnDropdown.addEventListener('change', function () {
         const isTimestampOption = this.value === 'timestamp';
 
@@ -131,12 +168,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!isTimestampOption) {
             startDatetimeInput.value = '';
             endDatetimeInput.value = '';
+        } else {
+            // Trigger table rendering when switching to timestamp column
+            renderTable('', 'timestamp');
         }
     });
-
-    if (timestampSortIcon) {
-        timestampSortIcon.addEventListener('click', function () {
-            sortTable('timestamp');
-        });
-    }
 });

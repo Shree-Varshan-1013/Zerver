@@ -87,8 +87,8 @@
                       <select id="searchColumn" class="border border-gray-700   p-2">
                           <option class="text-red" value="search">Search By</option>
                           <option class="text-red" value="all">All</option>
-                          <option class="text-red" value="log_id">Log ID</option>
-                          <option value="log_time">Log Time</option>
+                          <!-- <option class="text-red" value="log_id">Log ID</option> -->
+                          <!-- <option value="log_time">Log Time</option> -->
                           <option value="timestamp">Timestamp</option>
                           <option value="ip_address">IP Address</option>
                           <option value="http_method">HTTP Method</option>
@@ -105,16 +105,18 @@
                   </div>
                   <!-- date inputs -->
                   
+                  <!-- date inputs -->
                   <div date-rangepicker class="flex mt-3 ml-4 text-black">
                     <div class="relative">
-                        <input name="start" type="datetime-local" class="text-black datetime-input bg-gray-300" disabled>
+                        <input name="start" id="st-time" type="datetime-local" class="text-black datetime-input bg-white">
                     </div>
                     <span class="mx-4 text-gray-500">to</span>
                     <div class="relative">
-                        <input name="end" type="datetime-local" class="text-black datetime-input bg-gray-300" disabled>
+                        <input name="end" id="en-time" type="datetime-local" class="text-black datetime-input bg-white">
                     </div>
-                </div>
-                <script>
+                  </div>
+
+                <!-- <script>
                   document.addEventListener('DOMContentLoaded', function () {
                       // Get the datetime inputs
                       const startDatetimeInput = document.querySelector('input[name="start"]');
@@ -147,7 +149,7 @@
                           });
                       }
                   });
-              </script>
+              </script> -->
                 
                 </div>
                 <div class=" pr-3 w-full h-[45%] border border-blue-500 ">
@@ -162,27 +164,24 @@
                     <table id="logTable" class="w-full mt-4 border-collapse border border-dashed border-gray-700">
                         <thead class=" bg-gray-700">
                             <tr class=" border border-dashed">
-                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
+                                <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
                                     Log ID
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
                                     </svg>
-                                    <!-- <img id="logIdSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                                <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
+                                    </th> -->
+                                <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
                                     Log Time
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
                                     </svg>
-                                    <!-- <img id="logTimeSortIcon" class=" inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
-                                <th id="logIdSortIcon " class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
+                                </th> -->
+                                <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(2, 'timestampSortIcon')">
                                     Timestamp
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
                                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
                                     </svg>
-                                    <!-- <img id="timestampSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                                </th>
+                                  </th>
                                 <th id="logIdSortIcon" class="py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(3, 'ipAddressSortIcon')">
                                     IP Address
                                     <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
