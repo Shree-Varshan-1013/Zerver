@@ -8,7 +8,7 @@ const map01 = () => {
     const countryData = {
       // Example data with country ISO codes and values
       'ZA': 100,
-      'CA': 50,
+      'EG': 50,
       'IN': 75,
       // Add more countries and their respective values
     };
