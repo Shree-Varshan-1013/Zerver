@@ -36,22 +36,16 @@ const statistics = () => {
             type: 'area',
             stacked: false,
             toolbar: {
-                show: true, // Set this to true to display the toolbar
+                show: true, 
                 tools: {
-                    download: true, // Enables download option in the toolbar
+                    download: true, 
                     selection: true,
                     zoom: true,
                     pan: true,
                     reset: true,
                 },
-                autoSelected: 'zoom' // Auto-select zoom tool by default
+                autoSelected: 'zoom'
             },
-            events: {
-                beforeExport: function (chartContext, options) {
-                    // Change label color to black before export
-                    options.chart.foreColor = '#000'; // Set label color to black (#000)
-                }
-            }
         },
         stroke: {
             curve: 'straight'

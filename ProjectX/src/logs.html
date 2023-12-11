@@ -206,150 +206,6 @@
                   <!-- <div id="chart-container"></div> -->
                   <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
                 </div>
-
-                <!-- Copy code -->
-                <div
-                  class="mass-shadow m-5 flex w-full justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
-                >
-                  <table
-                    id="logTable"
-                    class="mt-4 w-full border-collapse border border-dashed"
-                  >
-                    <thead class="">
-                      <tr class="border border-dashed">
-                        <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(0, 'logIdSortIcon')">
-                                    Log ID
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                    </th> -->
-                        <!-- <th id="logIdSortIcon" class=" py-2 px-4 border-red-500 text-left cursor-pointer" onclick="sortTable(1, 'logTimeSortIcon')">
-                                    Log Time
-                                    <svg class="inline-flex w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 20">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"/>
-                                    </svg>
-                                </th> -->
-                        <th
-                          id="logIdSortIcon"
-                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
-                          onclick="sortTable(2, 'timestampSortIcon')"
-                        >
-                          Timestamp
-                          <svg
-                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 20"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-                            />
-                          </svg>
-                        </th>
-                        <th
-                          id="logIdSortIcon"
-                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
-                          onclick="sortTable(3, 'ipAddressSortIcon')"
-                        >
-                          IP Address
-                          <svg
-                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 20"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-                            />
-                          </svg>
-                          <!-- <img id="ipAddressSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                        </th>
-                        <th
-                          id="logIdSortIcon"
-                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
-                          onclick="sortTable(4, 'httpMethodSortIcon')"
-                        >
-                          HTTP Method
-                          <svg
-                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 20"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-                            />
-                          </svg>
-                          <!-- <img id="httpMethodSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                        </th>
-                        <th
-                          id="logIdSortIcon"
-                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
-                          onclick="sortTable(5, 'requestUrlSortIcon')"
-                        >
-                          Request URL
-                          <svg
-                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 20"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-                            />
-                          </svg>
-                          <!-- <img id="requestUrlSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                        </th>
-                        <th
-                          id="logIdSortIcon"
-                          class="border-red-500 cursor-pointer py-2 px-4 text-left"
-                          onclick="sortTable(6, 'statusCodeSortIcon')"
-                        >
-                          Status Code
-                          <svg
-                            class="text-gray-800 inline-flex h-6 w-6 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 16 20"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M4 6v13m0 0 3-3m-3 3-3-3m11-2V1m0 0L9 4m3-3 3 3"
-                            />
-                          </svg>
-                          <!-- <img id="statusCodeSortIcon" class="inline-flex sort-icon" src="https://img.icons8.com/glyph-neue/64/FFFFFF/long-arrow-up.png" alt="long-arrow-up" alt="sorting-arrows"/> -->
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody id="logTableBody">
-                      <!-- Data will be populated here dynamically using JavaScript -->
-                    </tbody>
-                  </table>
-                </div>
                 <div
                   class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
                 >
@@ -498,7 +354,9 @@
                         </span>
                       </div>
                     </div>
+                    <table id="logTableBody">
 
+                    </table>
                     <div
                       class="grid grid-cols-3 border-b border-stroke dark:border-strokedark sm:grid-cols-5"
                     >

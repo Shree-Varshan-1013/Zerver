@@ -45,7 +45,8 @@
 
               <div class="flex gap-8">
                 <div
-                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4 mass-shadow">
+                  class="mass-shadow m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                >
                   <div class="stars" data-rating="4"></div>
                   <div>
                     <h4 class="text-black dark:text-white">
@@ -53,35 +54,54 @@
                     </h4>
                   </div>
                 </div>
-                <div>
-                  <div
-                    class="w-100 h-80 rounded-sm borderp-10 py-6 px-7.5 border-stroke dark:border-none dark:bg-meta-4 mass-shadow">
-                    <div id="chart"></div>
+                <div
+                  class="mass-shadow m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                >
+                  <div>
+                    <h5>Calculations of Star rating</h5>
                   </div>
                 </div>
+                
                 <div>
                   <div
-                    class="m-3 w-[100%] h-[90%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-meta-4 mass-shadow">
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum laboriosam reprehenderit rem adipisci sit facere mollitia modi porro consectetur saepe.</h2>
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum laboriosam reprehenderit rem adipisci sit facere mollitia modi porro consectetur saepe.</h2>
-                    <h2>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum laboriosam reprehenderit rem adipisci sit facere mollitia modi porro consectetur saepe.</h2>
+                    class="mass-shadow m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-meta-4"
+                  >
+                    <h2>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Eum laboriosam reprehenderit rem adipisci sit facere
+                      mollitia modi porro consectetur saepe.
+                    </h2>
+                    <h2>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Eum laboriosam reprehenderit rem adipisci sit facere
+                      mollitia modi porro consectetur saepe.
+                    </h2>
+                    <h2>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                      Eum laboriosam reprehenderit rem adipisci sit facere
+                      mollitia modi porro consectetur saepe.
+                    </h2>
                   </div>
                 </div>
               </div>
               <div
-                class="m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4 mass-shadow">
+                class="mass-shadow m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
+              >
                 <div class="w-full">
                   <div id="areachart"></div>
                 </div>
               </div>
               <div>
                 <div
-                  class="m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4 mass-shadow">
-                  <div>
-                    <h4 class="text-black dark:text-white">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                      Iure, official!
-                    </h4>
+                  class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                >
+                  <div class="col-md-7">
+                    <button id="combineButton">Download Chart</button>
+                    <div id="chartsContainer">
+                      <div id="progress1"></div>
+                      <div id="progress2"></div>
+                      <div id="progress3"></div>
+                    </div>
                   </div>
                 </div>
                 <div class="m-3 p-10 dark:bg-meta-4">
@@ -93,11 +113,16 @@
                 </div>
               </div>
               <div
-                class="w-50 rounded-sm border border-stroke dark:border-none dark:bg-meta-4 mass-shadow"
+                class="mass-shadow w-50 rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
               >
                 <div class="rotate">
                   <img src="./images/logo/logoFan.png" alt="fan" width="100%" />
                 </div>
+              </div>
+              <div
+                class="mass-shadow w-50 rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
+              >
+                <div id="chart"></div>
               </div>
             </div>
           </div>
