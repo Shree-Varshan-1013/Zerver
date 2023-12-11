@@ -1,4 +1,3 @@
-const healthBar = () => {
 
   var chartDom = document.getElementById('animatedbar');
   var myChart = echarts.init(chartDom);
@@ -73,4 +72,5 @@ const healthBar = () => {
   };
 
   option && myChart.setOption(option);
-}
+
+// export default animatedbar;
