@@ -73,15 +73,14 @@ myChart.setOption(option);
 // Socket.io connection
 const socket = io('http://localhost:3001');
 
-// Update chart dynamically when receiving data from socket
+
 socket.on('dataFromServer', (data) => {
-  // console.log(data)
+  if (data && data.value !== undefined) {
+    document.getElementById('dataValue').innerText = `${data.value}`;
+  }
   let newTimestamp = +new Date();
-  // Add the new random value to the array
   randomValues.push(data.value);
-  // Remove the oldest random value
   randomValues.shift();
-  // Update the chart data with the updated array
   myChart.setOption({
     series: [
       {
@@ -91,44 +90,41 @@ socket.on('dataFromServer', (data) => {
   });
 });
 
-socket.on('logData', (data) => {
-  // console.log('Received logData:', data.log_entry);
-  // console.log('logData function');
-
-  // // Extract relevant information
-  // const logEntry = data.log_entry;
-
-  // // Update the content of the <p> tag with the log entry
-  // document.getElementById('logEntry').textContent = logEntry;
-
-      // Update Alpine.js data
-      Alpine.data('logEntry', () => data.log_entry);
-});
 
 socket.on('logData', (data) => {
   console.log(data);
 })
 
+
 socket.on('logTableDashboard', (data) => {
-  console.log("Received LogTableValue:",data)
-  // updateTable(data);
+  console.log("Received LogTableValue:", JSON.stringify(data));
+  // console.log(data);
+
   const tableBody = document.getElementById('logTableBody');
   // Clear existing rows in the table
   tableBody.innerHTML = '';
 
-  data.forEach(log => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
-    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.ip_address}</td>
-    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.http_method}</td>
-    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.requested_path}</td>
-    <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.status_code}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+  // Check if data.data is an array before using map
+  if (Array.isArray(data.data)) {
+    const rows = data.data.map(log => {
+      return `
+        <tr>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.ip_address}</td>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.http_method}</td>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.requested_path}</td>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.status_code}</td>
+        </tr>
+      `;
+    });
 
+    // Join the rows and append to the table
+    tableBody.innerHTML = rows.join('');
+  } else {
+    console.error("Received data is not in the expected format:", data);
+  }
 });
+
 
 
 // const socket = io('http://localhost:3001'); // Replace with your server URL
@@ -155,21 +151,21 @@ const statusIndicator = document.getElementById('statusIndicator');
 const statusText = document.getElementById('statusText');
 
 // Function to update the status
-// function updateStatus(isOn) {
-//     if (isOn) {
-//         statusIndicator.classList.remove('bg-red-status');
-//         statusIndicator.classList.add('bg-green-status');
-//         statusText.textContent = 'ON';
-//     } else {
-//         statusIndicator.classList.remove('bg-green-status');
-//         statusIndicator.classList.add('bg-red-status');
-//         statusText.textContent = 'OFF';
-//     }
-// }
+function updateStatus(isOn) {
+    if (isOn) {
+        statusIndicator.classList.remove('bg-red-status');
+        statusIndicator.classList.add('bg-green-status');
+        statusText.textContent = 'ON';
+    } else {
+        statusIndicator.classList.remove('bg-green-status');
+        statusIndicator.classList.add('bg-red-status');
+        statusText.textContent = 'OFF';
+    }
+}
 
 
 setTimeout(() => {
-    // updateStatus(true);
+    updateStatus(true);
     // change();
 }, 2000);
 
