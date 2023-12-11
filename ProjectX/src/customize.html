@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customizable Dashboard</title>
 </head>
@@ -14,7 +15,7 @@
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
   :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
-  
+
   <script src="./js/components/liveDashboard.js"></script>
   <include src="./partials/preloader.html"></include>
 
@@ -23,7 +24,7 @@
     <include src="./partials/sidebar.html"></include>
 
     <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-    
+
       <include src="./partials/header.html" />
 
       <main>
@@ -41,16 +42,82 @@
               </ol>
             </nav>
           </div>
-          <div class="flex flex-col gap-9">
-            <div x-show="logs"
-              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
-              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
-              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-              <div class="text-2xl">Logs</div>
-              <include src="../src/logChartsDemo.html"></include>
-              <div
+          <div>
+            <div>
+              <div x-data="{ checkboxToggle: false }">
+                <label for="checkboxLabelOne"
+                  class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Logs
+                    <div class=" relative ml-15">
+                  <input type="checkbox" id="checkboxLabelOne" class="sr-only" x-model="logs"
+                    @change="checkboxToggle = !checkboxToggle" />
+                  <div :class="checkboxToggle && 'border-bodydark bg-gray dark:bg-transparent'"
+                    class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                    <span :class="checkboxToggle && 'bg-bodydark'" class="h-2.5 w-2.5 rounded-sm"></span>
+                  </div>
+              </div>
+              </label>
+            </div>
+
+            <div>
+              <div x-data="{ checkboxToggle: false }">
+                <label for="checkboxLabelHealth"
+                  class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Health
+                    <div class=" relative ml-12">
+                  <input type="checkbox" id="checkboxLabelHealth" class="sr-only" x-model="health"
+                    @change="checkboxToggle = !checkboxToggle" />
+                  <div :class="checkboxToggle && 'border-bodydark bg-gray dark:bg-transparent'"
+                    class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                    <span :class="checkboxToggle && 'bg-bodydark'" class="h-2.5 w-2.5 rounded-sm"></span>
+                  </div>
+              </div>
+              </label>
+            </div>
+
+            <div>
+              <div x-data="{ checkboxToggle: false }">
+                <label for="checkboxLabelPerformance"
+                  class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Performance
+                    <div class=" relative ml-1">
+                  <input type="checkbox" id="checkboxLabelPerformance" class="sr-only" x-model="performance"
+                    @change="checkboxToggle = !checkboxToggle" />
+                  <div :class="checkboxToggle && 'border-bodydark bg-gray dark:bg-transparent'"
+                    class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                    <span :class="checkboxToggle && 'bg-bodydark'" class="h-2.5 w-2.5 rounded-sm"></span>
+                  </div>
+              </div>
+              </label>
+            </div>
+            <div>
+              <div x-data="{ checkboxToggle: false }">
+                <label for="checkboxLabelSecurity"
+                  class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                      Security
+                    <div class=" relative ml-9">
+                  <input type="checkbox" id="checkboxLabelSecurity" class="sr-only" x-model="security"
+                    @change="checkboxToggle = !checkboxToggle" />
+                  <div :class="checkboxToggle && 'border-bodydark bg-gray dark:bg-transparent'"
+                    class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+                    <span :class="checkboxToggle && 'bg-bodydark'" class="h-2.5 w-2.5 rounded-sm"></span>
+                  </div>
+              </div>
+              </label>
+            </div>
+          </div>  
+          <!-- Customize button ends -->
+        </div>
+        <div class="flex flex-col gap-9">
+          <div x-show="logs"
+            class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+            x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <div class="text-2xl">Logs</div>
+            <include src="../src/logChartsDemo.html"></include>
+            <div
               class="m-10 rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 mass-shadow">
               <div class="max-w-full overflow-x-auto">
                 <table class="w-full table-auto">
@@ -75,64 +142,64 @@
                         Request URL
                       </th>
                       <th class="py-4 px-4 font-medium text-black dark:text-white">
-                        Status Code 
+                        Status Code
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tbody class=" dark:bg-boxdark-2" id="logTableBody"></tbody>
+                  <tbody class=" dark:bg-boxdark-2" id="logTableBody"></tbody>
                 </table>
               </div>
             </div>
+          </div>
+          <div x-show="health"
+            class="p-10 h-[34.5rem] my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+            x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <div class="text-2xl">Health</div>
+            <include src="../src/healthchart.html"></include>
+          </div>
+          <div x-show="performance"
+            class="m-10 my-5 p-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+            x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <div class="text-2xl">Performance</div>
+            <div class="w-full">
+              <div id="areachart"></div>
             </div>
-            <div x-show="health"
-              class="p-10 h-[34.5rem] my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
-              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
-              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-              <div class="text-2xl">Health</div>
-              <include src="../src/healthchart.html"></include>
-            </div>
-            <div x-show="performance"
-              class="m-10 my-5 p-10 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
-              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
-              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-              <div class="text-2xl">Performance</div>
-              <div class="w-full">
-                <div id="areachart"></div>
-              </div>
-              <div class="mt-10">
+            <div class="mt-10">
               <button id="combineButton">Download Chart</button>
-                    <div id="chartsContainer">
-                      <div id="progress1"></div>
-                      <div id="progress2"></div>
-                      <div id="progress3"></div>
-                    </div>
-                  </div>
+              <div id="chartsContainer">
+                <div id="progress1"></div>
+                <div id="progress2"></div>
+                <div id="progress3"></div>
+              </div>
             </div>
-            <div x-show="security"
-              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
-              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
-              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
-              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-              <div class="text-2xl">Security</div>
-              <div class="flex flex-row m-5">
-                <div class="flex-1">
-                  <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%] dark:text-white"></div>
-                </div>
-                <div class="flex-2">
-                  <div id="heatmap" style="width: 600px; height: 300px" class="ml-10 mt-[17px]"></div>
-                </div>
+          </div>
+          <div x-show="security"
+            class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+            x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <div class="text-2xl">Security</div>
+            <div class="flex flex-row m-5">
+              <div class="flex-1">
+                <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%] dark:text-white"></div>
+              </div>
+              <div class="flex-2">
+                <div id="heatmap" style="width: 600px; height: 300px" class="ml-10 mt-[17px]"></div>
               </div>
             </div>
           </div>
         </div>
     </div>
-    </main>
+  </div>
+  </main>
   </div>
   </div>
 </body>
