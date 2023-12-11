@@ -14,7 +14,8 @@
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
   :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
-
+  
+  <script src="./js/components/liveDashboard.js"></script>
   <include src="./partials/preloader.html"></include>
 
   <div class="flex h-screen overflow-hidden">
@@ -91,9 +92,7 @@
               x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
               x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
               <div class="text-2xl">Health</div>
-              
               <include src="../src/healthchart.html"></include>
-    
             </div>
             <div x-show="performance"
               class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
@@ -128,7 +127,6 @@
     </main>
   </div>
   </div>
-  <script src="./js/components/liveDashboard.js"></script>
 </body>
 
 </html>

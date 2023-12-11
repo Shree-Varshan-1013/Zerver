@@ -165,21 +165,21 @@
                     </select>
                     <input type="text" id="search" class="border border-gray-700 p-2 ml-2 text-black" placeholder="Search...">
                 </div> -->
-          <div x-data="{ items: [], addItem: function() { this.items.push('New Item ' + (this.items.length + 1)); } }"
+          <!-- <div x-data="{ items: [], addItem: function() { this.items.push('New Item ' + (this.items.length + 1)); } }"
             x-init="() => {
                 Alpine.plugin(window.persist)
                 Alpine.persist('items')
               }">
-            <!-- Display the list -->
+       
             <ul>
               <template x-for="item in items" :key="item">
                 <li x-text="item"></li>
               </template>
             </ul>
   
-            <!-- Button to add items -->
+          
             <button x-on:click="addItem">Add Item</button>
-          </div>
+          </div> -->
         </div>
       </main>
       <!-- ===== Main Content End ===== -->

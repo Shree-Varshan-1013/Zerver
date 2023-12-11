@@ -131,3 +131,4 @@ if (window.location.pathname === '/health.html' || window.location.pathname === 
   animatedBar();
 }
 
+
