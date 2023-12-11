@@ -4,9 +4,6 @@ module.exports = {
   content: ['./src/**/*.{html,js}'],
   darkMode: 'class',
   theme: {
-    fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif'],
-    },
     colors: {
       current: 'currentColor',
       transparent: 'transparent',
