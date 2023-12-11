@@ -40,6 +40,7 @@
     "@alpinejs/persist": "^3.12.0",
     "alpinejs": "^3.10.3",
     "apexcharts": "^3.36.3",
+    "dom-to-image": "^2.6.0",
     "flatpickr": "^4.6.13",
     "flowbite": "^2.2.0",
     "jsvectormap": "^1.5.1",

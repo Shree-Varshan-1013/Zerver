@@ -27,7 +27,7 @@
       <include src="./partials/header.html" />
 
       <main>
-        <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <div class="mx-auto max-w-screen-2xl p-4 md:p-3 2xl:p-10 2xl:pb-3">
           <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-title-md2 font-bold text-black dark:text-white">
               Customizable Dashboard
@@ -104,6 +104,14 @@
               <div class="w-full">
                 <div id="areachart"></div>
               </div>
+              <div class="mt-10">
+              <button id="combineButton">Download Chart</button>
+                    <div id="chartsContainer">
+                      <div id="progress1"></div>
+                      <div id="progress2"></div>
+                      <div id="progress3"></div>
+                    </div>
+                  </div>
             </div>
             <div x-show="security"
               class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
