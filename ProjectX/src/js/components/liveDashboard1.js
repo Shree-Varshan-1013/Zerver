@@ -6,7 +6,6 @@ socket.on('logData', (data) => {
   
   socket.on('logTableDashboard', (data) => {
     console.log("Received LogTableValue:", JSON.stringify(data));
-    // console.log(data);
   
     const tableBody = document.getElementById('logTableBody');
     // Clear existing rows in the table
@@ -14,7 +13,10 @@ socket.on('logData', (data) => {
   
     // Check if data.data is an array before using map
     if (Array.isArray(data.data)) {
-      const rows = data.data.map(log => {
+      // Extract the last 30 values and reverse the order
+      const last30Logs = data.data.slice(-30).reverse();
+      
+      const rows = last30Logs.map(log => {
         return `
           <tr>
             <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
@@ -31,20 +33,12 @@ socket.on('logData', (data) => {
     } else {
       console.error("Received data is not in the expected format:", data);
     }
-  });
+});
+
   
   
   
-  // const socket = io('http://localhost:3001'); // Replace with your server URL
-  
-  // socket.on('dataFromServer', (data) => {
-  //   dataPoints.push({ x: dataPoints.length + 1, y: data.value });
-  //   if (dataPoints.length > 10) {
-  //     dataPoints.shift(); // Keep a certain number of data points
-  //   }
-  
-  //   myChart.update(); // Update the chart with new data
-  // });
+
   
   
   
