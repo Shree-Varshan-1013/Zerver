@@ -1,76 +1,39 @@
-const healthBar = () => {
+import ApexCharts from 'apexcharts';
 
-  var chartDom = document.getElementById('animatedbar');
-  var myChart = echarts.init(chartDom);
-  var option;
+const animatedBar = () => {
 
-  var xAxisData = [];
-  var data1 = [];
-  var data2 = [];
-  for (var i = 0; i < 100; i++) {
-    xAxisData.push('A' + i);
-    data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-  }
-  option = {
-    title: {
-      // text: 'Bar Animation Delay'
-    },
-    legend: {
-      data: ['bar', 'bar2'],
-      textStyle: {
-        color: 'grey'
-      }
-    },
-    toolbox: {
-      // y: 'bottom',
-      feature: {
-        magicType: {
-          type: ['stack']
-        },
-        dataView: {},
-        saveAsImage: {
-          pixelRatio: 2
-        }
-      }
-    },
-    tooltip: {},
-    xAxis: {
-      data: xAxisData,
-      splitLine: {
-        show: false
-      }
-    },
-    yAxis: {},
-    series: [
-      {
-        name: 'bar',
-        type: 'bar',
-        data: data1,
-        emphasis: {
-          focus: 'series'
-        },
-        animationDelay: function (idx) {
-          return idx * 10;
-        }
-      },
-      {
-        name: 'bar2',
-        type: 'bar',
-        data: data2,
-        emphasis: {
-          focus: 'series'
-        },
-        animationDelay: function (idx) {
-          return idx * 10 + 100;
-        }
-      }
-    ],
-    animationEasing: 'elasticOut',
-    animationDelayUpdate: function (idx) {
-      return idx * 5;
-    }
-  };
+var options = {
+  series: [{
+  name: 'series1',
+  data: [31, 40, 28, 51, 42, 109, 100]
+}, {
+  name: 'series2',
+  data: [11, 32, 45, 32, 34, 52, 41]
+}],
+  chart: {
+  height: 350,
+  type: 'area'
+},
+dataLabels: {
+  enabled: false
+},
+stroke: {
+  curve: 'smooth'
+},
+xaxis: {
+  type: 'datetime',
+  categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+},
+tooltip: {
+  x: {
+    format: 'dd/MM/yy HH:mm'
+  },
+},
+};
 
-  option && myChart.setOption(option);
+var chart = new ApexCharts(document.querySelector("#animatedbar"), options);
+chart.render();
+
 }
+
+export default animatedBar;

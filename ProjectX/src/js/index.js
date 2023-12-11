@@ -15,7 +15,8 @@ import map01 from "./components/map-01";
 import progress from "./components/progress";
 import pieChartSecurity from "./components/piechart";
 import heatMap from "./components/heatmap";
-import healthBar from "./components/animatedbar";
+import animatedBar from "./components/animatedbar";
+// import healthBar from "./components/animatedbar";
 
 Alpine.plugin(persist)
 window.Alpine = Alpine;
@@ -118,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 if (window.location.pathname === '/performance.html' || window.location.pathname === '/customize.html') {
   statistics();
-  progress();
+  // progress();
 }
 
 if (window.location.pathname === '/security.html' || window.location.pathname === '/customize.html') {
@@ -127,6 +128,6 @@ if (window.location.pathname === '/security.html' || window.location.pathname ==
 }
 
 if (window.location.pathname === '/health.html' || window.location.pathname === '/customize.html') {
-  healthBar();
+  animatedBar();
 }
 

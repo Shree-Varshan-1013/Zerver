@@ -1,5 +1,15 @@
 var dom = document.getElementById('live-movement-graph');
-var myChart = echarts.init(dom, null, {
+var result = JSON.parse(localStorage.getItem('darkMode'));
+console.log(result); // Corrected log statement
+var theme = null;
+
+if (result === true) {
+  theme = 'dark';
+} else {
+  theme = 'light';
+}
+
+var myChart = echarts.init(dom, theme, {
   renderer: 'canvas',
   useDirtyRect: false
 });
@@ -20,7 +30,8 @@ let data_dynamic = [
 
 option = {
   title: {
-    text: 'Dynamic Data & Time Axis'
+    text: 'Dynamic Data & Time Axis',
+    padding: 20,
   },
   tooltip: {
     trigger: 'axis',
@@ -39,6 +50,11 @@ option = {
     },
     axisPointer: {
       animation: false
+    }
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
     }
   },
   xAxis: {
@@ -63,6 +79,11 @@ option = {
     }
   ]
 };
+
+option.grid = {
+  bottom: 35
+}
+
 
 if (option && typeof option === 'object') {
   myChart.setOption(option);
