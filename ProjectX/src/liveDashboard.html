@@ -189,18 +189,19 @@
   <!-- ===== Page Wrapper End ===== -->
 
   <script src="./js/components/liveDashboard.js"></script>
+  <script src="./js/components/liveDashboard1.js"></script>
   <script>
-    // const socketer = io('http://localhost:3001');
+    const socketer = io('http://localhost:3001');
 
-    // // socketer.on('logData', (data) => {
-    // //   console.log(data);
-    // // })
-    // socketer.on('dataFromServer', (data) => {
-    //   // console.log(data);
-    //   if (data && data.value !== undefined) {
-    //     document.getElementById('dataValue').innerText = `${data.value}`;
-    //   }
-    // });
+    // socketer.on('logData', (data) => {
+    //   console.log(data);
+    // })
+    socketer.on('dataFromServer', (data) => {
+      // console.log(data);
+      if (data && data.value !== undefined) {
+        document.getElementById('dataValue').innerText = `${data.value}`;
+      }
+    });
 
   </script>
   <!-- <script src="./js/components/logTableScript.js"></script> -->
