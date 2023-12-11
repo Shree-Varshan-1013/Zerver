@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const healthBar = () => {
-=======
 import ApexCharts from 'apexcharts';
->>>>>>> 556d3167e74ad38e21447b25ef84ae2d857d7697
 
 const animatedBar = () => {
 
@@ -35,14 +31,9 @@ tooltip: {
 },
 };
 
-<<<<<<< HEAD
-  option && myChart.setOption(option);
-}
-=======
 var chart = new ApexCharts(document.querySelector("#animatedbar"), options);
 chart.render();
 
 }
 
 export default animatedBar;
->>>>>>> 556d3167e74ad38e21447b25ef84ae2d857d7697
