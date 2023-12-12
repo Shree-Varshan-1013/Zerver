@@ -17,6 +17,7 @@ import progress from "./components/progress";
 import pieChartSecurity from "./components/piechart";
 import heatMap from "./components/heatmap";
 import animatedBar from "./components/animatedbar";
+import { followingDotCursor } from "./components/followingDotCursor";
 // import healthBar from "./components/animatedbar";
 
 Alpine.plugin(persist)
@@ -116,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chart03();
   chart04();
   map01();
+  followingDotCursor();
 });
 
 if (window.location.pathname === '/performance.html') {
