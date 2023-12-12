@@ -62,10 +62,6 @@ const progress = () => {
     catch (err) {
         console.log(err);
     }
-
-    const stars = document.querySelector('.stars');
-    const rating = parseInt(stars.getAttribute('data-rating')); // Fetch the rating value
-    stars.style.setProperty('--rating', (rating / 5) * 100 + '%');
 };
 
 export default progress;

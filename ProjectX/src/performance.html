@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Performance</title>
+    <script src="./js/components/cdn-scripts.js"></script>
   </head>
 
   <body
@@ -61,7 +62,7 @@
                     <h5>Calculations of Star rating</h5>
                   </div>
                 </div>
-                
+
                 <div>
                   <div
                     class="mass-shadow m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-meta-4"
@@ -129,5 +130,22 @@
         </main>
       </div>
     </div>
+
+    <script>
+      const s = io("http://localhost:3001");
+
+      s.on("connect", () => {
+        console.log("You connected to Server : " + s.id);
+      });
+
+      s.on("logTableDashboard", (data) => {
+        console.log(data);
+      });
+
+
+      const stars = document.querySelector(".stars");
+      const rating = parseInt(stars.getAttribute("data-rating"));
+      stars.style.setProperty("--rating", (rating / 5) * 100 + "%");
+    </script>
   </body>
 </html>
