@@ -1,99 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign In</title>
-</head>
-
-<body
-  x-data="{ page: 'signin', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-  x-init="
+  <body
+    x-data="{ page: 'signin', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+    x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <include src="./partials/preloader.html"></include>
 
-  <include src="./partials/preloader.html"></include>
+    <div class="flex h-screen overflow-hidden">
+      <include src="./partials/sidebar.html"></include>
 
-  <div class="flex h-screen overflow-hidden">
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <include src="./partials/header.html" />
 
-    <include src="./partials/sidebar.html"></include>
+        <main>
+          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div
+              class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <h2 class="text-title-md2 font-bold text-black dark:text-white">
+                Add Server
+              </h2>
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="index.html">Dashboard /</a>
+                  </li>
+                  <li class="font-medium text-primary">Add Server</li>
+                </ol>
+              </nav>
+            </div>
 
-    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-
-      <include src="./partials/header.html" />
-
-      <main>
-        <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 class="text-title-md2 font-bold text-black dark:text-white">
-              Add Server
-            </h2>
-            <nav>
-              <ol class="flex items-center gap-2">
-                <li><a class="font-medium" href="index.html">Dashboard /</a></li>
-                <li class="font-medium text-primary">Add Server</li>
-              </ol>
-            </nav>
-          </div>
-
-          <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="flex flex-wrap items-center">
-              <div class="hidden w-full xl:block xl:w-1/2">
-                <div class="py-17.5 px-26 text-center">
-                  <a class="mb-5.5 inline-block" href="index.html">
-                    <img class="hidden dark:block" src="./images/logo/logoZ.png" alt="Logo" width="100%"/>
-                    <h1 class="dark:hidden block mt-18 mb-17 tracking-widest" style="font-size: 100px;">Zerver</h1>
-                  </a>
-                  <p class="font-medium 2xl:px-20">
-                    Server and Log Monitoring made Eazy
-                  </p>
-                  <span class="mt-15 inline-block">
-                   <img src="./images/monitor.png"/>
-                  </span>
+            <div
+              class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            >
+              <div class="flex flex-wrap items-center">
+                <div class="hidden w-full xl:block xl:w-1/2">
+                  <div class="py-17.5 px-26 text-center">
+                    <a class="mb-5.5 inline-block" href="index.html">
+                      <img
+                        class="hidden dark:block"
+                        src="./images/logo/logoZ.png"
+                        alt="Logo"
+                        width="100%"
+                      />
+                      <h1
+                        class="mt-18 mb-17 block tracking-widest dark:hidden"
+                        style="font-size: 100px"
+                      >
+                        Zerver
+                      </h1>
+                    </a>
+                    <p class="font-medium 2xl:px-20">
+                      Server and Log Monitoring made Eazy
+                    </p>
+                    <span class="mt-15 inline-block">
+                      <img src="./images/monitor.png" />
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div class="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-                <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
-                  <span class="mb-1.5 block font-medium">Want to 👀? </span>
-                  <h2 class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                    Link your Zerver
-                  </h2>
+                <div
+                  class="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2"
+                >
+                  <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
+                    <span class="mb-1.5 block font-medium">Want to 👀? </span>
+                    <h2
+                      class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2"
+                    >
+                      Link your Zerver
+                    </h2>
 
-                  <form>
-                    <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Zerver Code</label>
-                      <div class="relative">
-                        <input type="code" placeholder="Enter your Zerver Code"
-                          class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-danger focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-danger" />
+                    <form>
+                      <div class="mb-4">
+                        <label
+                          class="mb-2.5 block font-medium text-black dark:text-white"
+                          >Zerver Code</label
+                        >
+                        <div class="relative">
+                          <input
+                            type="code"
+                            placeholder="Enter your Zerver Code"
+                            class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-danger focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-danger"
+                          />
 
-                        <span class="absolute right-4 top-4">
-                          <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.5">
-                              <path
-                                d="M11 0C7.13414 0 4 3.13414 4 7C4 8.3808 4.63214 9.55952 5.46447 10.4645L0.56066 15.3683C-0.195263 16.1243 -0.195263 17.3757 0.56066 18.1317C1.31659 18.8877 2.56799 18.8877 3.32392 18.1317L8.22773 13.2279C9.13277 14.0596 10.3115 14.6918 11.6923 14.6923C15.5581 14.6923 18.6923 11.5581 18.6923 7C18.6923 3.13414 15.5581 0 11 0ZM11.6923 13.1538C10.3115 13.1538 9.15385 11.9962 9.15385 10.6154C9.15385 9.23464 10.3115 8.07692 11.6923 8.07692C13.0731 8.07692 14.2308 9.23464 14.2308 10.6154C14.2308 11.9962 13.0731 13.1538 11.6923 13.1538Z"
-                                fill=""
-                              />
-                            </g>
-                          </svg>
-                        </span>
+                          <span class="absolute right-4 top-4">
+                            <svg
+                              class="fill-current"
+                              width="22"
+                              height="22"
+                              viewBox="0 0 22 22"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <g opacity="0.5">
+                                <path
+                                  d="M11 0C7.13414 0 4 3.13414 4 7C4 8.3808 4.63214 9.55952 5.46447 10.4645L0.56066 15.3683C-0.195263 16.1243 -0.195263 17.3757 0.56066 18.1317C1.31659 18.8877 2.56799 18.8877 3.32392 18.1317L8.22773 13.2279C9.13277 14.0596 10.3115 14.6918 11.6923 14.6923C15.5581 14.6923 18.6923 11.5581 18.6923 7C18.6923 3.13414 15.5581 0 11 0ZM11.6923 13.1538C10.3115 13.1538 9.15385 11.9962 9.15385 10.6154C9.15385 9.23464 10.3115 8.07692 11.6923 8.07692C13.0731 8.07692 14.2308 9.23464 14.2308 10.6154C14.2308 11.9962 13.0731 13.1538 11.6923 13.1538Z"
+                                  fill=""
+                                />
+                              </g>
+                            </svg>
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <div class="mb-5">
-                      <input type="submit" value="Monitor Now"
-                        class="w-full cursor-pointer rounded-lg border border-danger bg-red-status p-4 font-medium text-white transition hover:bg-opacity-90" />
-                    </div>
-                  </form>
+                      <div class="mb-5">
+                        <button
+                          type="submit"
+                          @click="$store.global.verified = true"
+                          class="w-full cursor-pointer rounded-lg border border-danger bg-red-status p-4 font-medium text-white transition hover:bg-opacity-90"
+                        >
+                          Monitor Now
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
