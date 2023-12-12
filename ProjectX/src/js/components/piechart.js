@@ -7,10 +7,10 @@ const pieChartSecurity = () => {
 
   // Initialize with dummy data
   var initialData = [
-    { value: 1048, name: 'Critical' },
-    { value: 735, name: 'Important' },
-    { value: 580, name: 'Moderate' },
-    { value: 484, name: 'Low' },
+    { value: 0, name: 'Critical' },
+    { value: 0, name: 'Important' },
+    { value: 0, name: 'Moderate' },
+    { value: 0, name: 'Low' },
   ];
 
   option = {
