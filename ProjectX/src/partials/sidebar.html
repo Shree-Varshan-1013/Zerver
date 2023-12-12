@@ -619,30 +619,41 @@
   </aside>
   <script>
     document.addEventListener('alpine:init', () => {
-    Alpine.store('global', {
-      dbName: Alpine.$persist("sample"),
+      Alpine.store('global', {
+        dbName: Alpine.$persist("sample"),
       dynamicValues: Alpine.$persist(['Server1']),
       verified: Alpine.$persist(false),
       updateDynamicValues: async (server) => {
         
-          const dynamicValues = Alpine.store('global').dynamicValues;
+        const dynamicValues = Alpine.store('global').dynamicValues;
   
           dynamicValues.push(server);
   
           Alpine.store('global').dynamicValues = dynamicValues;
   
-      },
+        },
       emptyDynamicValues: () => {
         Alpine.store('global').dynamicValues = [];
       },
+      getDbName: () => {
+        const val = Alpine.store('global').dbName;
+        sock.emit('getDBName', val);
+      }
     });
-    Alpine.store('global').emptyDynamicValues();
+    // Alpine.store('global').emptyDynamicValues();
     // const verified = Alpine.store('global').verified;
     
     // if(verified){
-    //     Alpine.store('global').updateDynamicValues();
-    //   }
+      //     Alpine.store('global').updateDynamicValues();
+      //   }
+      Alpine.store('global').getDbName();
   });
+  
+  const sock = io('http://localhost:3001');
+  sock.on('connect', () => {
+    console.log("connected to server !!!" + sock.id);
+  })
+  
   
   </script>
   </div>
