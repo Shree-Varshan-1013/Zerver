@@ -41,136 +41,136 @@
 //reset functionality added
 
 // Function to reset the search, time inputs, and disable time picker
-function resetSearch() {
-    document.getElementById('search').value = ''; // Reset the search input
-    document.getElementById('searchColumn').value = 'all'; // Reset the column dropdown
+// function resetSearch() {
+//     document.getElementById('search').value = ''; // Reset the search input
+//     document.getElementById('searchColumn').value = 'all'; // Reset the column dropdown
 
-    const startDatetimeInput = document.querySelector('input[name="start"]');
-    const endDatetimeInput = document.querySelector('input[name="end"]');
+//     const startDatetimeInput = document.querySelector('input[name="start"]');
+//     const endDatetimeInput = document.querySelector('input[name="end"]');
 
-    startDatetimeInput.value = ''; // Clear the start datetime input
-    endDatetimeInput.value = ''; // Clear the end datetime input
+//     startDatetimeInput.value = ''; // Clear the start datetime input
+//     endDatetimeInput.value = ''; // Clear the end datetime input
 
-    startDatetimeInput.disabled = true; // Disable the start datetime input
-    endDatetimeInput.disabled = true; // Disable the end datetime input
+//     startDatetimeInput.disabled = true; // Disable the start datetime input
+//     endDatetimeInput.disabled = true; // Disable the end datetime input
 
-    renderTable('', 'all'); // Render the table without any search query
-}
+//     renderTable('', 'all'); // Render the table without any search query
+// }
 
-// Event listener for the SVG element
-const resetSearchSVG = document.querySelector('.reset-search-svg');
+// // Event listener for the SVG element
+// const resetSearchSVG = document.querySelector('.reset-search-svg');
 
-if (resetSearchSVG) {
-    resetSearchSVG.addEventListener('click', resetSearch);
-}
+// if (resetSearchSVG) {
+//     resetSearchSVG.addEventListener('click', resetSearch);
+// }
 
-// Function to render the table based on search query and column
-function renderTable(searchQuery, searchColumn) {
-    const tableBody = document.getElementById('logTableBody');
+// // Function to render the table based on search query and column
+// function renderTable(searchQuery, searchColumn) {
+//     const tableBody = document.getElementById('logTableBody');
 
-    // Clear existing rows
-    tableBody.innerHTML = '';
+//     // Clear existing rows
+//     tableBody.innerHTML = '';
 
-    // If search query is empty, display all logs
-    // If search query is empty, display all logs
-if (!searchQuery || searchColumn === 'search') {
-    logs.forEach(log => {
-        const row = tableBody.insertRow();
+//     // If search query is empty, display all logs
+//     // If search query is empty, display all logs
+// if (!searchQuery || searchColumn === 'search') {
+//     logs.forEach(log => {
+//         const row = tableBody.insertRow();
 
-        // Exclude log_id and log_time from the displayed columns
-        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+//         // Exclude log_id and log_time from the displayed columns
+//         const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
 
-        columnsToDisplay.forEach(key => {
-            const cell = row.insertCell();
-            cell.textContent = log[key];
-        });
-    });
-} else {
-    // Filter logs based on the search query in the selected column
-    const filteredLogs = logs.filter(log => {
-        if (searchColumn === 'all') {
-            // Check if the search query exists in any column
-            return Object.values(log).some(value =>
-                value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        } 
-        else if (searchColumn === 'timestamp') {
-            const st_time = new Date(document.getElementById('st-time').value);
-            const en_time = new Date(document.getElementById('en-time').value);
-            const logTimestamp = new Date(log['timestamp']);
-            return logTimestamp >= st_time && logTimestamp <= en_time;
+//         columnsToDisplay.forEach(key => {
+//             const cell = row.insertCell();
+//             cell.textContent = log[key];
+//         });
+//     });
+// } else {
+//     // Filter logs based on the search query in the selected column
+//     const filteredLogs = logs.filter(log => {
+//         if (searchColumn === 'all') {
+//             // Check if the search query exists in any column
+//             return Object.values(log).some(value =>
+//                 value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+//             );
+//         } 
+//         else if (searchColumn === 'timestamp') {
+//             const st_time = new Date(document.getElementById('st-time').value);
+//             const en_time = new Date(document.getElementById('en-time').value);
+//             const logTimestamp = new Date(log['timestamp']);
+//             return logTimestamp >= st_time && logTimestamp <= en_time;
             
-        }
-        else {
-            // Check if the search query exists in the specified column
-            const columnValue = log[searchColumn].toString().toLowerCase();
-            return columnValue.includes(searchQuery.toLowerCase());
-        }
-    });
+//         }
+//         else {
+//             // Check if the search query exists in the specified column
+//             const columnValue = log[searchColumn].toString().toLowerCase();
+//             return columnValue.includes(searchQuery.toLowerCase());
+//         }
+//     });
 
-    // Populate the table with filtered logs, excluding log_id and log_time
-    filteredLogs.forEach(log => {
-        const row = tableBody.insertRow();
+//     // Populate the table with filtered logs, excluding log_id and log_time
+//     filteredLogs.forEach(log => {
+//         const row = tableBody.insertRow();
 
-        // Exclude log_id and log_time from the displayed columns
-        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+//         // Exclude log_id and log_time from the displayed columns
+//         const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
 
-        columnsToDisplay.forEach(key => {
-            const cell = row.insertCell();
-            cell.textContent = log[key];
-        });
-    });
-}
+//         columnsToDisplay.forEach(key => {
+//             const cell = row.insertCell();
+//             cell.textContent = log[key];
+//         });
+//     });
+// }
 
-        // Populate the table with filtered logs
-        filteredLogs.forEach(log => {
-            const row = tableBody.insertRow();
-            Object.values(log).forEach(value => {
-                const cell = row.insertCell();
-                cell.textContent = value;
-            });
-        });
-    }
+//         // Populate the table with filtered logs
+//         filteredLogs.forEach(log => {
+//             const row = tableBody.insertRow();
+//             Object.values(log).forEach(value => {
+//                 const cell = row.insertCell();
+//                 cell.textContent = value;
+//             });
+//         });
+//     }
     
 
-// // Event listener for the search input and column dropdown
-document.getElementById('search').addEventListener('input', function () {
-    const searchQuery = this.value.trim();
-    const searchColumn = document.getElementById('searchColumn').value;
-    renderTable(searchQuery, searchColumn);
-});
+// // // Event listener for the search input and column dropdown
+// document.getElementById('search').addEventListener('input', function () {
+//     const searchQuery = this.value.trim();
+//     const searchColumn = document.getElementById('searchColumn').value;
+//     renderTable(searchQuery, searchColumn);
+// });
 
-// // Initial rendering of the table (without any search query)
-renderTable('', 'all');
+// // // Initial rendering of the table (without any search query)
+// renderTable('', 'all');
 
-// Event listener for the datetime inputs
-document.addEventListener('DOMContentLoaded', function () {
-    const startDatetimeInput = document.querySelector('input[name="start"]');
-    const endDatetimeInput = document.querySelector('input[name="end"]');
-    const searchColumnDropdown = document.getElementById('searchColumn');
+// // Event listener for the datetime inputs
+// document.addEventListener('DOMContentLoaded', function () {
+//     const startDatetimeInput = document.querySelector('input[name="start"]');
+//     const endDatetimeInput = document.querySelector('input[name="end"]');
+//     const searchColumnDropdown = document.getElementById('searchColumn');
 
-    // Add an event listener to the datetime inputs
-    startDatetimeInput.addEventListener('input', function () {
-        renderTable('', 'timestamp');
-    });
+//     // Add an event listener to the datetime inputs
+//     startDatetimeInput.addEventListener('input', function () {
+//         renderTable('', 'timestamp');
+//     });
 
-    endDatetimeInput.addEventListener('input', function () {
-        renderTable('', 'timestamp');
-    });
+//     endDatetimeInput.addEventListener('input', function () {
+//         renderTable('', 'timestamp');
+//     });
 
-    // Add an event listener to the dropdown
-    searchColumnDropdown.addEventListener('change', function () {
-        const isTimestampOption = this.value === 'timestamp';
+//     // Add an event listener to the dropdown
+//     searchColumnDropdown.addEventListener('change', function () {
+//         const isTimestampOption = this.value === 'timestamp';
 
-        startDatetimeInput.disabled = !isTimestampOption;
-        endDatetimeInput.disabled = !isTimestampOption;
+//         startDatetimeInput.disabled = !isTimestampOption;
+//         endDatetimeInput.disabled = !isTimestampOption;
 
-        if (!isTimestampOption) {
-            startDatetimeInput.value = '';
-            endDatetimeInput.value = '';
-        } else {
-            // Trigger table rendering when switching to timestamp column
-            renderTable('', 'timestamp');
-        }
-    });
-});
+//         if (!isTimestampOption) {
+//             startDatetimeInput.value = '';
+//             endDatetimeInput.value = '';
+//         } else {
+//             // Trigger table rendering when switching to timestamp column
+//             renderTable('', 'timestamp');
+//         }
+//     });
+// });

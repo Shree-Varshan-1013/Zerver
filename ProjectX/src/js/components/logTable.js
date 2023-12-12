@@ -141,6 +141,14 @@ function updateLogTable(data) {
   }
 }
 
+function toggleSocketConnection(isConnected) {
+  if (isConnected) {
+    socket.connect();
+  } else {
+    socket.disconnect();
+  }
+}
+
 // Function to reset the search, time inputs, and disable time picker
 function resetSearch() {
   document.getElementById('search').value = ''; // Reset the search input
@@ -154,6 +162,7 @@ function resetSearch() {
 
   startDatetimeInput.disabled = true; // Disable the start datetime input
   endDatetimeInput.disabled = true; // Disable the end datetime input
+  toggleSocketConnection(true);
 
   renderTable('', 'all'); // Render the table without any search query
 }
@@ -183,20 +192,63 @@ function handleTimestampChange() {
 }
 
 // Function to render the table based on search query and column
-function renderTable(searchQuery, searchColumn) {
+let logsData = []; // Declare a global variable to store log data
+
+// Event listener for the logTableDashboard event
+socket.on('logTableDashboard', (data) => {
+  // console.log("Received LogTableValue:", JSON.stringify(data));
+
+  // Assuming data.data contains the log information
+  logsData = data.data.map(log => {
+    // Exclude the "_id" property
+    const { _id, ...logWithoutId } = log;
+    return logWithoutId;
+  });
+
+  // Call the renderTable function with the appropriate parameters
+  renderTable('', 'all', logsData);
+});
+
+// Function to render the table based on search query and column
+function renderTable(searchQuery, searchColumn, logs) {
   const tableBody = document.getElementById('logTableBody1');
 
   // Clear existing rows
   tableBody.innerHTML = '';
 
-  // Your existing rendering logic here...
+  // Check if logs is an array before using map
+  if (Array.isArray(logs)) {
+    const rows = logs.map(log => {
+      const row = tableBody.insertRow();
+
+      // Exclude log_id and log_time from the displayed columns
+      const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+
+      columnsToDisplay.forEach(key => {
+        const cell = row.insertCell();
+        cell.textContent = log[key];
+      });
+
+      return row;
+    });
+
+    // If you need to do something with the rows array, you can do it here
+
+  } else {
+    console.error('Logs data is not in the expected format:', logs);
+  }
 }
+
+
+// Call the renderTable function with the initial data (assuming empty search)
+renderTable('', 'all', logsData);
 
 // Event listener for the search input and column dropdown
 document.getElementById('search').addEventListener('input', function () {
   const searchQuery = this.value.trim();
   const searchColumn = document.getElementById('searchColumn').value;
-  renderTable(searchQuery, searchColumn);
+  toggleSocketConnection(false);
+  renderTable(searchQuery, searchColumn,logsData);
 });
 
 // Event listener for the SVG element
@@ -207,7 +259,7 @@ if (resetSearchSVG) {
 }
 
 // Initial rendering of the table (without any search query)
-renderTable('', 'all');
+// renderTable('', 'all');
 
 // Event listener for the datetime inputs
 document.addEventListener('DOMContentLoaded', function () {
