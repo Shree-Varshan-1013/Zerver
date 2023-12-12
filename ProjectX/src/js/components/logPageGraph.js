@@ -1,164 +1,122 @@
 var dom = document.getElementById('live-movement-graph');
-var result = JSON.parse(localStorage.getItem('darkMode'));
-console.log(result); // Corrected log statement
-var theme = null;
-
-if (result === true) {
-  theme = 'dark';
-} else {
-  theme = 'light';
-}
-
-var myChart = echarts.init(dom, theme, {
+var myChart = echarts.init(dom, 'dark', {
   renderer: 'canvas',
   useDirtyRect: false
 });
 
-var app = {};
-
 var option;
 
-// Manually provided data array
-let data_dynamic = [
-  { name: '1997-10-03', value: ['1997/10/03', 150] },
-  { name: '1997-10-04', value: ['1997/10/04', 200] },
-  { name: '1997-10-05', value: ['1997/10/05', 120] },
-  { name: '1997-10-06', value: ['1997/10/06', 300] },
-  { name: '1997-10-07', value: ['1997/10/07', 180] },
-  // Add more data points as needed
-];
+let now = new Date();
+let oneSecond = 1000;
+let maxLength = 86400; // Set the desired maximum length for the array
+let data = [];
+
+// WebSocket connection
+const socket = io('http://localhost:3001');
+
+// Listen for the initial data
+socket.on('initialDataFromServer', (initialData) => {
+  // Ensure the data array doesn't exceed the maximum length
+  data = initialData.slice(-maxLength);
+
+  // Update the chart with the fetched data
+  myChart.setOption({
+    series: [
+      {
+        data: data.map((value, index) => [now - (data.length - index - 1) * oneSecond, value])
+      }
+    ]
+  });
+});
+
+// Listen for real-time updates
+socket.on('dataFromServer', (newData) => {
+  let newTimestamp = +new Date();
+  data.push(newData.value);
+
+  // Ensure the data array doesn't exceed the maximum length
+  data = data.slice(-maxLength);
+
+  // Update local storage
+  localStorage.setItem('chartData', JSON.stringify(data));
+
+  // Update the chart with the new data
+  myChart.setOption({
+    series: [
+      {
+        data: data.map((value, index) => [newTimestamp - (data.length - index - 1) * oneSecond, value])
+      }
+    ]
+  });
+});
 
 option = {
-  title: {
-    text: 'Dynamic Data & Time Axis',
-    padding: 20,
-  },
   tooltip: {
     trigger: 'axis',
-    formatter: function (params) {
-      params = params[0];
-      var date = new Date(params.name);
-      return (
-        date.getDate() +
-        '/' +
-        (date.getMonth() + 1) +
-        '/' +
-        date.getFullYear() +
-        ' : ' +
-        params.value[1]
-      );
-    },
-    axisPointer: {
-      animation: false
+    position: function (pt) {
+      return [pt[0], '10%'];
     }
+  },
+  title: {
+    left: 'center',
+    text: 'Large Area Chart'
   },
   toolbox: {
     feature: {
+      dataZoom: {
+        yAxisIndex: 'none'
+      },
+      restore: {},
       saveAsImage: {}
     }
   },
   xAxis: {
     type: 'time',
-    splitLine: {
-      show: false
-    }
+    boundaryGap: false
   },
   yAxis: {
     type: 'value',
-    boundaryGap: [0, '100%'],
-    splitLine: {
-      show: false
-    }
+    boundaryGap: [0, '100%']
   },
+  dataZoom: [
+    {
+      type: 'inside',
+      start: 80,
+      end: 100
+    },
+    {
+      start: 80,
+      end: 100
+    }
+  ],
   series: [
     {
-      name: 'Fake Data',
+      name: 'Log Data',
       type: 'line',
       showSymbol: false,
-      data: data_dynamic
+      lineStyle: {
+        width: 1
+      },
+      data: data
     }
   ]
 };
 
-option.grid = {
-  bottom: 35
-}
+myChart.setOption(option);
 
+// Load data from local storage on page load
+const storedData = localStorage.getItem('chartData');
 
-if (option && typeof option === 'object') {
-  myChart.setOption(option);
+if (storedData) {
+  // Ensure the stored data array doesn't exceed the maximum length
+  data = JSON.parse(storedData).slice(-maxLength);
+  myChart.setOption({
+    series: [
+      {
+        data: data.map((value, index) => [now - (data.length - index - 1) * oneSecond, value])
+      }
+    ]
+  });
 }
 
 window.addEventListener('resize', myChart.resize);
-
-
-
-
-
-// <<====== sort function for table ====>
-
-// function sortTable(n, iconId) {
-//   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-//   table = document.getElementById("logTable");
-//   switching = true;
-//   // Set the sorting direction to ascending:
-//   dir = "asc";
-
-//   /* Make a loop that will continue until
-//   no switching has been done: */
-//   while (switching) {
-//       // Start by saying: no switching is done:
-//       switching = false;
-//       rows = table.rows;
-
-//       /* Loop through all table rows (except the
-//       first, which contains table headers): */
-//       for (i = 1; i < (rows.length - 1); i++) {
-//           // Start by saying there should be no switching:
-//           shouldSwitch = false;
-
-//           /* Get the two elements you want to compare,
-//           one from the current row and one from the next: */
-//           x = rows[i].getElementsByTagName("TD")[n];
-//           y = rows[i + 1].getElementsByTagName("TD")[n];
-
-//           /* Check if the two rows should switch place,
-//           based on the direction, asc or desc: */
-//           if (dir == "asc") {
-//               if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-//                   // If so, mark as a switch and break the loop:
-//                   shouldSwitch = true;
-//                   break;
-//               }
-//           } else if (dir == "desc") {
-//               if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-//                   // If so, mark as a switch and break the loop:
-//                   shouldSwitch = true;
-//                   break;
-//               }
-//           }
-//       }
-
-//       if (shouldSwitch) {
-//           /* If a switch has been marked, make the switch
-//           and mark that a switch has been done: */
-//           rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-//           switching = true;
-//           // Each time a switch is done, increase this count by 1:
-//           switchcount++;
-//       } else {
-//           /* If no switching has been done AND the direction is "asc",
-//           set the direction to "desc" and run the while loop again. */
-//           if (switchcount == 0 && dir == "asc") {
-//               dir = "desc";
-//               switching = true;
-//           }
-//       }
-//   }
-
-//   // Rotate the sorting icon
-//   const sortIcon = document.getElementById(iconId);
-//   if (sortIcon) {
-//       sortIcon.classList.toggle('rotate-90', dir === 'asc');
-//   }
-// }

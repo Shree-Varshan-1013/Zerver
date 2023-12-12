@@ -215,26 +215,64 @@ function renderTable(searchQuery, searchColumn, logs) {
 
   // Clear existing rows
   tableBody.innerHTML = '';
+  // toggleSocketConnection(false);
 
-  // Check if logs is an array before using map
+  // Check if logs is an array before using forEach
   if (Array.isArray(logs)) {
-    const rows = logs.map(log => {
-      const row = tableBody.insertRow();
+    if (!searchQuery || searchColumn === 'search') {
+      logs.forEach(log => {
+        const row = tableBody.insertRow();
 
-      // Exclude log_id and log_time from the displayed columns
-      const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+        // Exclude log_id and log_time from the displayed columns
+        const columnsToDisplay = Object.keys(log).filter(key => log[key] !== undefined && key !== 'log_id' && key !== 'log_time');
 
-      columnsToDisplay.forEach(key => {
-        const cell = row.insertCell();
-        cell.textContent = log[key];
+        columnsToDisplay.forEach(key => {
+          const cell = row.insertCell();
+          cell.textContent = log[key];
+        });
+      });
+    } else {
+      // Filter logs based on the search query in the selected column
+      const filteredLogs = logs.filter(log => {
+        if (searchColumn === 'all') {
+          // Check if the search query exists in any column
+          return Object.values(log).some(value => {
+            // Check if the value is not undefined before calling toString
+            return value !== undefined && value.toString().toLowerCase().includes(searchQuery.toLowerCase());
+          });
+        } else if (searchColumn === 'timestamp') {
+          const st_time = new Date(document.getElementById('st-time').value);
+          const en_time = new Date(document.getElementById('en-time').value);
+          const logTimestamp = new Date(log['timestamp']);
+          return logTimestamp >= st_time && logTimestamp <= en_time;
+        }else {
+          // if (searchColumn === 'request_url') {
+          //   // For 'requested_url' column, check if the search query is present in the URL
+          //   const urlValue = log['request_url'];
+          //   return urlValue !== undefined && urlValue.toString().toLowerCase().includes(searchQuery.toLowerCase());
+          // } else {
+            // Check if the search query exists in the specified column
+            const columnValue = log[searchColumn];
+            // Check if the columnValue is not undefined before calling toString
+            return columnValue !== undefined && columnValue.toString().toLowerCase().includes(searchQuery.toLowerCase());
+          // }
+        }
       });
 
-      return row;
-    });
+      // Populate the table with filtered logs, excluding log_id and log_time
+      filteredLogs.forEach(log => {
+        const row = tableBody.insertRow();
 
-    // If you need to do something with the rows array, you can do it here
+        // Exclude log_id and log_time from the displayed columns
+        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
 
-  } else {
+        columnsToDisplay.forEach(key => {
+          const cell = row.insertCell();
+          cell.textContent = log[key];
+        });
+      });
+    }
+  }  else {
     console.error('Logs data is not in the expected format:', logs);
   }
 }
