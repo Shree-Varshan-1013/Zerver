@@ -611,15 +611,13 @@
   document.addEventListener('alpine:init', () => {
   Alpine.store('global', {
     dbName: Alpine.$persist("shreee"),
-    dynamicValues: Alpine.$persist([]),
+    dynamicValues: Alpine.$persist(['Server1']),
     verified: Alpine.$persist(false),
-    updateDynamicValues: async () => {
+    updateDynamicValues: async (server) => {
       
-        const newData = 'Server 3';
-
         const dynamicValues = Alpine.store('global').dynamicValues;
 
-        dynamicValues.push(newData);
+        dynamicValues.push(server);
 
         Alpine.store('global').dynamicValues = dynamicValues;
 
@@ -628,12 +626,12 @@
       Alpine.store('global').dynamicValues = [];
     },
   });
-  Alpine.store('global').emptyDynamicValues();
-  const verified = Alpine.store('global').verified;
+  // Alpine.store('global').emptyDynamicValues();
+  // const verified = Alpine.store('global').verified;
   
-  if(verified){
-      Alpine.store('global').updateDynamicValues();
-    }
+  // if(verified){
+  //     Alpine.store('global').updateDynamicValues();
+  //   }
 });
 
 </script>
