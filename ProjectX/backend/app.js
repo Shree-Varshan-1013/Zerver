@@ -26,11 +26,11 @@
 // });
 
 // // Emit data to connected clients every second
-// let counter = 0;
-// setInterval(() => {
-//   counter++;
-//   io.emit("dataFromServer", { value: counter });
-// }, 1000);
+let counter = 0;
+setInterval(() => {
+  counter++;
+  io.emit("dataFromServer", { value: counter });
+}, 1000);
 
 // // Socket.io handling
 // io.on("connection", (socket) => {
@@ -136,6 +136,18 @@ const connectToDatabases = async () => {
   }
 };
 
+const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+    const logDataValue = await logsCollection.find().toArray();
+    console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+    io.emit(eventName, { data: logDataValue });
+  } catch (error) {
+    console.error(`Error fetching data from MongoDB (${dbName}):`, error);
+  }
+};
+
 const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
   try {
     const db = dbInstance.db(dbName);
@@ -155,9 +167,9 @@ io.on('connection', async (socket) => {
 
     await connectToDatabases();
 
-    await fetchDataAndEmit("server1_clf", "basic_data", "logTableDashboard");
+    await fetchDataAndEmitArray("server1_clf", "basic_data", "logTableDashboard");
 
-    await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
+    // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
 
   } catch (error) {
     console.error("Error during data fetching and emission:", error);
