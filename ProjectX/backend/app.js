@@ -30,10 +30,10 @@ const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.find().toArray();
-    console.log(Got data from MongoDB (${dbName}):, logDataValue);
+    console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
-    console.error(Error fetching data from MongoDB (${dbName}):, error);
+    console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
 };
 
@@ -42,10 +42,10 @@ const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne();
-    console.log(Got data from MongoDB (${dbName}):, logDataValue);
+    console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
-    console.error(Error fetching data from MongoDB (${dbName}):, error);
+    console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
 };
 
@@ -57,15 +57,15 @@ const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, lim
     // Use the limit method to fetch the first 'limit' documents
     const logDataValue = await logsCollection.find().limit(limit).toArray();
     
-    console.log(Got data from 7 (${dbName}):, logDataValue);
+    console.log("Got data from 7 (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
-    console.error(Error fetching data from MongoDB (${dbName}):, error);
+    console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
 };
 
 io.on('connection', async (socket) => {
-  console.log(Client Connected: ${socket.id});
+  console.log(`Client Connected: ${socket.id}`);
 
   socket.on("getDBName", (dbName) => {
     console.log("database name " + dbName);
@@ -91,7 +91,7 @@ io.on('connection', async (socket) => {
   }
 
   socket.on('disconnect', () => {
-    console.log(Client Disconnected: ${socket.id});
+    console.log(`Client Disconnected: ${socket.id}`);
   });
 });
 
