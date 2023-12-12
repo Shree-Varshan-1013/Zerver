@@ -1,8 +1,8 @@
-// const socket = io('http://localhost:3001');
+const socket = io('http://localhost:3001');
 socket.on('logData', (data) => {
     console.log(data);
   })
-  
+
   
   socket.on('logTableDashboard', (data) => {
     console.log("Received LogTableValue:", JSON.stringify(data));
