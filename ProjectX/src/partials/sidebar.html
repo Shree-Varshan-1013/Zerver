@@ -96,24 +96,29 @@
                 class="overflow-hidden"
                 :class="(selected === 'Dashboard') ? 'block' :'hidden'"
                 >
-                <ul class="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6" :class="{'hidden': !sidebarExpanded, 'block': sidebarExpanded}">
+                <ul class="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6" :class="{'hidden': !sidebarExpanded, 'block': sidebarExpanded}" x-data="{ array: $store.global.dynamicValues }">
+                  <template x-for="(value, index) in array" :key="index">
                   <li>
                     <a
+                    :name="value"
                     class="group relative items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="index.html"
+                    href="dashboard.html"
                       :class="page === 'ecommerce' && '!text-white'"
-                      >Server 1</a
+                      @click="$store.global.dbName = value"
+                      x-text="value"
+                      ></a
                     >
                   </li>
-                  <li>
-                    <a
-                    class="group relative items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="signin.html"
-                      :class="page === 'ecommerce' && '!text-white'"
-                      >Add Server</a
-                    >
-                  </li>
-                </ul>
+                </template>
+                <li>
+                  <a
+                  class="group relative items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                  href="signin.html"
+                    :class="page === 'ecommerce' && '!text-white'"
+                    >Add Server</a
+                  >
+                </li>
+              </ul>
               </div>
               <!-- Dropdown Menu End -->
             </li>
@@ -621,5 +626,33 @@
       </nav>
     </div>
   </aside>
+  <script>
+    document.addEventListener('alpine:init', () => {
+    Alpine.store('global', {
+      dbName: Alpine.$persist("shreee"),
+      dynamicValues: Alpine.$persist(['Server1']),
+      verified: Alpine.$persist(false),
+      updateDynamicValues: async (server) => {
+        
+          const dynamicValues = Alpine.store('global').dynamicValues;
+  
+          dynamicValues.push(server);
+  
+          Alpine.store('global').dynamicValues = dynamicValues;
+  
+      },
+      emptyDynamicValues: () => {
+        Alpine.store('global').dynamicValues = [];
+      },
+    });
+    Alpine.store('global').emptyDynamicValues();
+    // const verified = Alpine.store('global').verified;
+    
+    // if(verified){
+    //     Alpine.store('global').updateDynamicValues();
+    //   }
+  });
+  
+  </script>
   </div>
   
