@@ -117,8 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
   chart03();
   chart04();
   map01();
-  followingDotCursor();
+ 
 });
+
+if(window.location.pathname === '/'){
+  followingDotCursor();
+}
 
 if (window.location.pathname === '/performance.html') {
   statistics();
