@@ -7,17 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <title>Security</title>
   <style>
-    body.blur {
+    /* body.blur {
       filter: blur(100px);
-      /* Adjust the blur intensity as needed */
+     
       transition: filter 0.5s ease;
-    }
+    } */
 
     /* Add these styles to your existing CSS or create a new style section */
-    .overlay {
+    /* .overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -25,13 +28,13 @@
       width: 100%;
       height: 100%;
       animation: blink 1s infinite;
-      /* Semi-transparent black overlay */
+      
       align-items: center;
       justify-content: center;
       text-align: center;
       z-index: 1000;
-    }
-
+    } */
+    /* 
     @keyframes blink {
       0% {
         background-color: rgba(185, 66, 66, 0.6);
@@ -44,9 +47,9 @@
       100% {
         background-color: rgba(185, 66, 66, 0.6);
       }
-    }
+    } */
 
-    .overlay-content {
+    /* .overlay-content {
       background: rgba(46, 45, 45, 0);
       padding: 50px;
       border-radius: 6px;
@@ -58,7 +61,7 @@
     .overlay button {
       position: absolute;
       top: 2%;
-      /* left: 32%; */
+     
 
       padding: 12px;
 
@@ -68,7 +71,7 @@
       border-radius: 5px;
       cursor: pointer;
       margin-left: 42%;
-    }
+    } */
 
     #glassy-container {
       position: relative;
@@ -196,28 +199,29 @@
   </style>
 
   <script>
-    function playSiren() {
-      var sirenAudio = document.getElementById("sirenAudio");
-      sirenAudio.play();
-    }
-    function stopSiren() {
-      var sirenAudio = document.getElementById("sirenAudio");
-      sirenAudio.pause();
-      sirenAudio.currentTime = 0;
-    }
-    function showErrorOverlay() {
-      document.getElementById("overlay").style.display = "flex";
-      playSiren();
-    }
+    //   function playSiren() {
+    //     var sirenAudio = document.getElementById("sirenAudio");
+    //     sirenAudio.play();
+    //   }
+    //   function stopSiren() {
+    //     var sirenAudio = document.getElementById("sirenAudio");
+    //     sirenAudio.pause();
+    //     sirenAudio.currentTime = 0;
+    //   }
+    //   function showErrorOverlay() {
+    //     document.getElementById("overlay").style.display = "flex";
+    //     playSiren();
+    //   }
 
-    function hideErrorOverlay() {
-      document.getElementById("overlay").style.display = "none";
-      stopSiren();
-    }
-  </script>
+    //   function hideErrorOverlay() {
+    //     document.getElementById("overlay").style.display = "none";
+    //     stopSiren();
+    //   }
+    // </script>
+
   <script>
-    setTimeout(showErrorOverlay, 5000);
-  </script>
+    //   setTimeout(showErrorOverlay, 5000);
+    // </script>
 </head>
 
 <body
@@ -242,7 +246,7 @@
       <include src="./partials/header.html" />
       <!-- ===== Header End ===== -->
       <!-- Error Message -->
-      <div id="overlay" class="overlay">
+      <!-- <div id="overlay" class="overlay">
         <div class="overlay-content">
           <lord-icon src="https://cdn.lordicon.com/abvsilxn.json" trigger="loop" delay="1500" colors="primary:#E5AB24"
             style="width: 350px; height: 350px">
@@ -253,50 +257,104 @@
             <div class="close">Close</div>
           </button>
         </div>
-      </div>
+      </div> -->
       <!-- ===== Main Content Start ===== -->
       <main class="align-center flex w-full flex-col">
         <div class="flex flex-row m-5">
+          <!-- Flex container for OS and HT along with graphs -->
           <div class="flex-1">
-            <!-- <div class="copy-box w-70 h-50 mt-1">
-              <div class="inner">
-                <div class="line left">
-                  <div class="scanner"></div>
-                </div>
-                <div class="line right">
-                  <div class="scanner"></div>
-                </div>
-                <div class="line top">
-                  <div class="scanner"></div>
-                </div>
-                <div class="line bottom">
-                  <div class="scanner"></div>
-                </div>
-                <div> Text Here </div>
-              </div>
-            </div> -->
-            <div id="glassy-container" class="m-3 h-30 rounded-sm">
-              <h1 class="text-black dark:text-white">Text Here</h1>
+            <div id="glassy-container" class="m-3 h-[10rem] rounded-sm">
+              <div id="osData" class="text-black dark:text-white mt-[-0.5rem]"></div>
             </div>
-            <div id="glassy-container" class="m-3 h-30 rounded-sm">
-              <h1 class="text-black dark:text-white">Text Here</h1>
-            </div>
+            <!-- <button class="ml-6">Download</button> -->
           </div>
           <div class="flex-1">
-            <div id="glassy-container" class="m-3 h-30 rounded-sm">
-              <h1 class="text-black dark:text-white">Text Here</h1>
+            <div id="glassy-container" class="m-3 h-[10rem] rounded-sm">
+              <h1 id="osHF" class="text-black dark:text-white"></h1>
             </div>
+
           </div>
           <div class="flex-1">
             <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%] dark:text-white"></div>
-            <div id="heatmap" style="width: 600px; height: 300px" class="ml-10"></div>
+            <div id="securityLine" style="width: 600px; height: 300px" class="ml-10"></div>
+           
           </div>
         </div>
-      </main>
-      <!-- ===== Main Content End ===== -->
+
+        <div id="glassy-container" class="rounded-sm w-[41rem] ml-6 h-90  mt-[-35.75rem]">
+          <h1 id="vData" class="text-black dark:text-white">Vulnerability</h1>
+        </div>
+        <div id="heatmap" style="width: 600px; height: 300px" class="ml-10"></div>
     </div>
-    <!-- ===== Content Area End ===== -->
+    <!-- Flex container for Vulnerability -->
+
+
+
+
+    </main>
+    <!-- ===== Main Content End ===== -->
   </div>
+  <!-- ===== Content Area End ===== -->
+  </div>
+  <script>
+    const socket = io("http://localhost:3001");
+
+    socket.on("operatingSystem", (data) => {
+      const osData = data.data;
+
+      // Assuming there is a div with the id 'osData' to display the information
+      const osDataContainer = $("#osData");
+      const osHFContainer = $("#osHF");
+      // Create a div element for each OS and append it to the container
+      const osInfo = `
+    <div>
+      <p>Name: ${osData.Name}</p>
+      <p>Generation: ${osData.Generation}</p>
+      <p>Build: ${osData.Build}</p>
+      <p>Version: ${osData.Version}</p>
+      <p>Architecture: ${osData.Architecture}</p>
+    </div>
+    
+  `;
+      console.log(osData);
+      osDataContainer.html(osInfo);
+      const osHF = `
+    <div>
+      <ul>
+        ${osData.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
+      </ul>
+    </div>
+    
+  `;
+      console.log(osData);
+      osHFContainer.html(osHF);
+    });
+    const socketer = io("http://localhost:3001");
+
+    socket.on("vData", (data) => {
+      const vData = data.data;
+
+      // Assuming there is a div with the id 'osData' to display the information
+      const vDataContainer = $("#vData");
+      // Create a div element for each OS and append it to the container
+      const vInfo = `
+    <div>
+      <p>Date: ${vData.Date}</p>
+      <p>CVE: ${vData.CVE}</p>
+      <p>KB: ${vData.KB}</p>
+      <p>Title: ${vData.Title}</p>
+      <p>AffectedProduct: ${vData.AffectedProduct}</p>
+      <p>AffectedComponent: ${vData.AffectedComponent}</p>
+      <p>Severity: ${vData.Severity}</p>
+      <p>Impact: ${vData.Impact}</p>
+      <p>Exploit: ${vData.Exploit}</p>
+    </div>
+    
+  `;
+      console.log("VData ",vData);
+      vDataContainer.html(vInfo);
+    });
+  </script>
   <!-- ===== Page Wrapper End ===== -->
 </body>
 

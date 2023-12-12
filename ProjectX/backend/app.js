@@ -59,6 +59,9 @@ io.on('connection', async (socket) => {
     await fetchDataAndEmitArray("server1_clf", "basic_data", "logTableDashboard");
 
     // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
+    await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
+    await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
+    await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
 
   } catch (error) {
     console.error("Error during data fetching and emission:", error);
