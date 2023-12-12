@@ -37,11 +37,39 @@ const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
   }
 };
 
+const setupChangeStream = async (dbName, collectionName, eventName) => {
+  const db = dbInstance.db(dbName);
+  const collection = db.collection(collectionName);
+
+  const changeStream = collection.watch();
+
+  changeStream.on('change', (change) => {
+    console.log('Change detected:', change);
+    fetchDataAndEmitArray(dbName, collectionName, eventName); // Fetch and emit updated data
+  });
+
+  changeStream.on('error', (error) => {
+    console.error('Change stream error:', error);
+  });
+};
+
 const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne();
+    console.log("Got data from MongoDB (${dbName}):", logDataValue);
+    io.emit(eventName, { data: logDataValue });
+  } catch (error) {
+    console.error("Error fetching data from MongoDB (${dbName}):", error);
+  }
+};
+
+const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+    const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
     console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
@@ -75,7 +103,9 @@ io.on('connection', async (socket) => {
 
     await connectToDatabases();
    //DB FETCHES
+    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
     await fetchDataAndEmitArray("server1_clf", "basic_data", "logTableDashboard");
+    await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
     // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
     await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
     await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
@@ -100,6 +130,8 @@ const check = async () => {
   console.log(list);
 }
 check();
+
+
 
 
 server.listen(3001, () => {

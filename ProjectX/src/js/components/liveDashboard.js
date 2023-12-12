@@ -16,6 +16,7 @@ let randomValues = Array.from({ length: numberOfDataPoints }, () =>
 let data = randomValues.map((value, index) => [now - (numberOfDataPoints - index - 1) * oneSecond, value]);
 
 option = {
+  backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
     position: function (pt) {

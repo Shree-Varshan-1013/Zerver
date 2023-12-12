@@ -13,10 +13,20 @@ socket.on('logData', (data) => {
   
     // Check if data.data is an array before using map
     if (Array.isArray(data.data)) {
-      // Extract the last 30 values and reverse the order
-      const last30Logs = data.data.slice(-30).reverse();
-      
-      const rows = last30Logs.map(log => {
+      // Extract the last log value
+      const latestLog = data.data[data.data.length - 1];
+    
+      // Exclude the latest log from the array
+      const otherLogs = data.data.slice(0, -1);
+    
+      // Reverse the order of other logs
+      const reversedLogs = otherLogs.reverse();
+    
+      // Combine the latest log and other logs
+      const allLogs = [latestLog, ...reversedLogs];
+    
+      // Map over all logs and create HTML rows
+      const rows = allLogs.map(log => {
         return `
           <tr>
             <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
@@ -27,13 +37,24 @@ socket.on('logData', (data) => {
           </tr>
         `;
       });
-  
       // Join the rows and append to the table
       tableBody.innerHTML = rows.join('');
     } else {
       console.error("Received data is not in the expected format:", data);
     }
+  
 });
+
+socket.on("summaryData", (data) => {
+  console.log("Received LogTableValue:", JSON.stringify(data));
+  // Assuming you have a <p> element with the id "logEntry"
+  const logEntryElement = document.getElementById("logEntry");
+
+  // Update the content of the <p> tag with the summary property from the received data
+  if (logEntryElement) {
+    logEntryElement.textContent = data.data.summary;
+  }
+})
 
   
   
