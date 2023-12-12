@@ -33,6 +33,7 @@ module.exports = {
       'form-input': '#1d2a39',
       'lavendar': '#BA77F9',
       'lavendar2': '#AF5AFF',
+      'cement': '#cbd5e1',
       'meta-1': '#DC3545',
       'meta-2': '#EFF2F7',
       'meta-3': '#10B981',
