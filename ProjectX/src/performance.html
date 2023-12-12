@@ -138,9 +138,9 @@
         console.log("You connected to Server : " + s.id);
       });
 
-      s.on("logTableDashboard", (data) => {
-        console.log(data);
-      });
+      s.on('operatingSystem', logDataValue => {
+        console.log(JSON.stringify(logDataValue));
+      })
 
 
       const stars = document.querySelector(".stars");

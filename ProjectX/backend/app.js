@@ -113,6 +113,7 @@
 const http = require('http');
 const { Server } = require('socket.io');
 const dbConnect = require('./config/dbConfig');
+const checkDatabaseExistence = require('./config/checkDatabase');
 
 const server = http.createServer();
 const io = new Server(server, {
@@ -155,9 +156,9 @@ io.on('connection', async (socket) => {
 
     await connectToDatabases();
 
-    await fetchDataAndEmit("server1_clf", "basic_data", "logTableDashboard");
+    await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
 
-    await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
+    // await fetchDataAndEmit("server2_db", "cpu_usage", "cpu");
 
   } catch (error) {
     console.error("Error during data fetching and emission:", error);
@@ -167,6 +168,13 @@ io.on('connection', async (socket) => {
     console.log(`Client Disconnected: ${socket.id}`);
   });
 });
+
+const check = async () => {
+  const list = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", "sasad");
+  console.log(list);
+}
+check();
+
 
 server.listen(3001, () => {
   console.log('Server is listening on port 3001');

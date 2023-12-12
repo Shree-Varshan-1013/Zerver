@@ -100,8 +100,9 @@
                 <li>
                   <a
                   class="group relative items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                  href="index.html"
+                  href="dashboard.html"
                     :class="page === 'ecommerce' && '!text-white'"
+                    @click="$store.global.dbName = 'Sanjeevi'"
                     >Server 1</a
                   >
                 </li>
@@ -226,9 +227,7 @@
             </div> -->
             <!-- Dropdown Menu End -->
           </li>
-          <!-- Menu Item Dashboard -->
 
-          <!-- Menu Item Calendar -->
           <li>
             <a
               class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -253,9 +252,6 @@
                 <span>Health</span>
             </a>
           </li>
-          <!-- Menu Item Calendar -->
-
-          <!-- Menu Item Profile -->
           <li>
             <a
               class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -285,8 +281,6 @@
                 <span>Performance</span>
             </a>
           </li>
-          <!-- Menu Item Profile -->
-          <!-- Menu Item Tables -->
           <li>
             <a
               class="lg:hidden group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -586,12 +580,9 @@
                   >
                 </li>
                 <li>
-                  <a
-                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-                    href="signup.html"
-                    :class="page === 'signup' && '!text-white'"
-                    >Sign Up</a
-                  >
+                  <div>
+                    <span class="text-white" x-text="$store.global.dbName"></span>
+                </div>
                 </li>
               </ul>
             </div>
@@ -603,4 +594,11 @@
     </nav>
   </div>
 </aside>
+<script>
+    document.addEventListener('alpine:init', () => {
+  Alpine.store('global', {
+    dbName: Alpine.$persist("shreee")
+  });
+});
+</script>
 </div>
