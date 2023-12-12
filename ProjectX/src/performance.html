@@ -135,11 +135,11 @@
       const s = io("http://localhost:3001");
 
       s.on("connect", () => {
-        console.log("You connected to Server : " + s.id);
+        // console.log("You connected to Server : " + s.id);
       });
 
       s.on('operatingSystem', logDataValue => {
-        console.log(JSON.stringify(logDataValue));
+        // console.log(JSON.stringify(logDataValue));
       })
 
 

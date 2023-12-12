@@ -1,8 +1,8 @@
 import ApexCharts from 'apexcharts';
 
-const updateChart = (chart, newData) => {
-    chart.updateSeries(newData);
-};
+// const updateChart = (chart, newData) => {
+//     chart.updateSeries(newData);
+// };
 const statistics = () => {
     window.Apex = {
         chart: {
@@ -53,7 +53,7 @@ const statistics = () => {
         colors: ['#3366FF', '#33FF57', '#FF5733'],
         series: [{
             name: "Total",
-            data: [11, 15, 26, 20, 33, 27]
+            data: [31, 15, 26, 20, 33, 27]
         },
         {
             name: "Success",
@@ -81,32 +81,32 @@ const statistics = () => {
     );
 
     chartArea.render();
-    const newTotalData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
-    const newSuccessData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
-    const newFailureData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+    // const newTotalData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+    // const newSuccessData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
+    // const newFailureData = Array.from({ length: 6 }, () => Math.floor(Math.random() * 100));
 
-    updateChart(chartArea, [
-        { name: 'Total', data: newTotalData },
-        { name: 'Success', data: newSuccessData },
-        { name: 'Failure', data: newFailureData }
-    ]);
+    // updateChart(chartArea, [
+    //     { name: 'Total', data: newTotalData },
+    //     { name: 'Success', data: newSuccessData },
+    //     { name: 'Failure', data: newFailureData }
+    // ]);
 
-    const fetchData = () => {
-        newTotalData.shift();
-        newTotalData.push(Math.floor(Math.random() * 100));
-        newSuccessData.shift();
-        newSuccessData.push(Math.floor(Math.random() * 100));
-        newFailureData.shift();
-        newFailureData.push(Math.floor(Math.random() * 100));
-        updateChart(chartArea, [
-            { name: 'Total', data: newTotalData },
-            { name: 'Success', data: newSuccessData },
-            { name: 'Failure', data: newFailureData }
-        ]);
-    };
+    // const fetchData = () => {
+        // newTotalData.shift();
+        // newTotalData.push(Math.floor(Math.random() * 100));
+        // newSuccessData.shift();
+        // newSuccessData.push(Math.floor(Math.random() * 100));
+        // newFailureData.shift();
+        // newFailureData.push(Math.floor(Math.random() * 100));
+        // updateChart(chartArea, [
+        //     { name: 'Total', data: newTotalData },
+        //     { name: 'Success', data: newSuccessData },
+        //     { name: 'Failure', data: newFailureData }
+        // ]);
+    // };
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
-    setInterval(fetchData, 10000);
+    // setInterval(fetchData, 10000);
 }
 
 export default statistics;

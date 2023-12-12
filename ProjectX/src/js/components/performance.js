@@ -208,7 +208,7 @@ const performance = () => {
   // Listen for WebSocket messages
   socket.addEventListener('totalStars', (event) => {
     const newData = event.data;
-    console.log("Star",newData);
+    // console.log("Star",newData);
    
     const totalStarsSum = newData.reduce((sum, data) => sum + data.total_stars, 0);
     const maxPossibleValue = 100;
@@ -216,7 +216,7 @@ const performance = () => {
 // Calculate the percentage
 const percentage = (totalStarsSum / 100);
 const roundedPercentage = percentage.toFixed(0);
-console.log("Total Stars Sum (out of 100):", roundedPercentage);
+// console.log("Total Stars Sum (out of 100):", roundedPercentage);
     
     // Update the chart with new data
     chartProgress3.updateSeries([{
@@ -230,7 +230,7 @@ console.log("Total Stars Sum (out of 100):", roundedPercentage);
   });
   socket.addEventListener('cpuUsage', (event) => {
     const newData = event.data;
-    console.log("Cpu",newData);
+    // console.log("Cpu",newData);
    
     const totalCpuSum = newData.reduce((sum, data) => sum + data.cpu_percent, 0);
     const maxPossibleValue = 100;
@@ -238,7 +238,7 @@ console.log("Total Stars Sum (out of 100):", roundedPercentage);
 // Calculate the percentage
 const cpupercentage = (totalCpuSum / 1000);
 const cpuroundedPercentage = cpupercentage.toFixed(0);
-console.log("Total CPU SUM (out of 100):", cpuroundedPercentage);
+// console.log("Total CPU SUM (out of 100):", cpuroundedPercentage);
     
     // Update the chart with new data
     chartProgress1.updateSeries([{
@@ -252,7 +252,7 @@ console.log("Total CPU SUM (out of 100):", cpuroundedPercentage);
   });
   socket.addEventListener('memoryUsage', (event) => {
     const newData = event.data;
-    console.log("memory",newData);
+    // console.log("memory",newData);
    
     const totalMemorySum = newData.reduce((sum, data) => sum + data.percent_used, 0);
     const maxPossibleValue = 100;
@@ -260,7 +260,7 @@ console.log("Total CPU SUM (out of 100):", cpuroundedPercentage);
 // Calculate the percentage
 const memorypercentage = (totalMemorySum / 1000);
 const memoryroundedPercentage = memorypercentage.toFixed(0);
-console.log("Total CPU SUM (out of 100):", memoryroundedPercentage);
+// console.log("Total CPU SUM (out of 100):", memoryroundedPercentage);
     
     // Update the chart with new data
     chartProgress2.updateSeries([{
