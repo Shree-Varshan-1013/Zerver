@@ -25,6 +25,14 @@ const animatedBar = () => {
         autoSelected: 'zoom'
     },
     },
+    title: {
+      text: 'Server Health',
+      align: 'left',
+      style: {
+          fontSize: '18px',
+          color: '#cbd5e1'
+      }
+  },
     dataLabels: {
       enabled: false
     },

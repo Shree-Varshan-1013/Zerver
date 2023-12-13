@@ -5,7 +5,6 @@
     class="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11"
   >
     <div class="flex items-center gap-2 sm:gap-4 lg:hidden">
-      <!-- Hamburger Toggle BTN -->
       <button
         class="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
         @click.stop="sidebarToggle = !sidebarToggle"
@@ -49,7 +48,7 @@
             href="liveDashboard.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected === 'Health' ? '':'Health')"
-            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Health') && (page === 'health') }"
             >Live</a
           >
         </li>
@@ -58,7 +57,7 @@
             href="logs.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected === 'Health' ? '':'Health')"
-            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Health') && (page === 'health') }"
             >Logs</a
           >
         </li>
@@ -67,7 +66,7 @@
             href="health.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected === 'Health' ? '':'Health')"
-            :class="{ 'bg-white dark:bg-meta-4': (selected === 'Health') && (page === 'health') }"
+            :class="{ 'bg-white dark:bg-boxdark': (selected === 'Health') && (page === 'health') }"
             >Health</a
           >
         </li>
@@ -76,7 +75,7 @@
             href="performance.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected === 'Performance' ? '':'Performance')"
-            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Performance') && (page === 'performance') }"
             >Performance</a
           >
         </li>
@@ -85,7 +84,7 @@
             href="security.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected == 'Performance' ? '':'Performance')"
-            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Performance') && (page === 'performance') }"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Performance') && (page === 'performance') }"
             >Security</a
           >
         </li>
@@ -153,7 +152,7 @@
           @click.outside="dropdownOpen = false"
         >
           <a
-            class="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-cement"
+            class="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-boxdark dark:text-cement"
             href="#"
             @click.prevent="dropdownOpen = ! dropdownOpen; notifying = false"
           >
@@ -291,10 +290,7 @@
               </li>
             </ul>
           </div>
-          <!-- Dropdown End -->
         </li>
-        <!-- Notification Menu Area -->
-
       </ul>
     </div>
   </div>
