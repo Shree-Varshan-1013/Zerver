@@ -65,7 +65,7 @@ const statistics = () => {
         }
         ],
         xaxis: {
-            categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2'],
+            categories: ['1', '2', '3', '4', '5', '6'],
         },
         tooltip: {
             followCursor: true
