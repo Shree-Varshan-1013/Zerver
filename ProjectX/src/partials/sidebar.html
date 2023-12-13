@@ -649,22 +649,34 @@
         }
       },
       checkDatabaseAndMonitor: (server) => {
+
+        const showToast = (containerId) => {
+    const toastContainer = document.getElementById(containerId);
+    toastContainer.style.display = 'block';
+
+    // Set a timeout to hide the container after a certain period (e.g., 5000 milliseconds or 5 seconds)
+    setTimeout(() => {
+      toastContainer.style.display = 'none';
+    }, 5000); // Adjust the duration as needed
+  };
   
           const sock = io('http://localhost:3001');
           // console.log(Alpine.store('global').object);
           // Alpine.store('global').object.emit('getServer', server);
           sock.emit("getServer", server);
-          console.log("mapla  " + server)
+          console.log("mapla  " + server);
 
           sock.on('getResponse', (res) => {
             console.log("--------- " + res + " ==========")
             console.log(typeof(res));
+            
             if(res){
-              alert("Congratulations The database is added !!");
+              showToast('success-msg')
             }
             else{
-              alert("Database doesn't exist !!");
+              showToast('error-msg')
             }
+            
           }); 
 
         },
