@@ -10,11 +10,12 @@
       <script src="https://cdn.lordicon.com/lordicon.js"></script>
       <div x-show="!sidebarExpanded" x-transition x-transition:leave="transition-opacity duration-300" x-transition-enter="transition-opacity duration-300" class="pl-5">
         <lord-icon
-          src="https://cdn.lordicon.com/hmqggwrl.json"
-          trigger="loop"
-          delay="2000"
-          style="width: 80px; height: 80px"
-        ></lord-icon>
+            src="https://cdn.lordicon.com/hmqggwrl.json"
+            trigger="loop"
+            delay="2000"
+            colors="primary:#19243d,secondary:#a866ee"
+            style="width:80px;height:80px">
+        </lord-icon>
         </div>
       <a x-show="sidebarExpanded" href="index.html" x-transition x-transition-enter="transition-opacity duration-300" x-transition:leave="transition-opacity duration-300" x-cloak>
         <img x-show="sidebarExpanded" src="./images/logo/logoZ.png" alt="Logo" width="250px" class="mb-4"/>
@@ -618,10 +619,11 @@
     </div>
     
   </aside>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
   <script>
     document.addEventListener('alpine:init', () => {
       Alpine.store('global', {
-        dbName: Alpine.$persist("sample"),
+      dbName: Alpine.$persist("sample"),
       dynamicValues: Alpine.$persist(['Server1']),
       verified: Alpine.$persist(false),
       updateDynamicValues: async (server) => {
@@ -638,8 +640,34 @@
       },
       getDbName: () => {
         const val = Alpine.store('global').dbName;
-        sock.emit('getDBName', val);
-      }
+        try{
+          const sock = io('http://localhost:3001');
+          sock.emit('getDBName', val);
+        }
+        catch(err){
+          console.log(err.message);
+        }
+      },
+      checkDatabaseAndMonitor: (server) => {
+  
+          const sock = io('http://localhost:3001');
+          // console.log(Alpine.store('global').object);
+          // Alpine.store('global').object.emit('getServer', server);
+          sock.emit("getServer", server);
+          console.log("mapla  " + server)
+
+          sock.on('getResponse', (res) => {
+            console.log("--------- " + res + " ==========")
+            console.log(typeof(res));
+            if(res){
+              alert("Congratulations The database is added !!");
+            }
+            else{
+              alert("Database doesn't exist !!");
+            }
+          }); 
+
+        },
     });
     // Alpine.store('global').emptyDynamicValues();
     // const verified = Alpine.store('global').verified;
@@ -649,12 +677,6 @@
       //   }
       Alpine.store('global').getDbName();
   });
-  
-  const sock = io('http://localhost:3001');
-  sock.on('connect', () => {
-    console.log("connected to server !!!" + sock.id);
-  })
-  
   
   </script>
   </div>
