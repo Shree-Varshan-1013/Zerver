@@ -30,7 +30,7 @@ const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.find().toArray();
-    console.log("Got data from MongoDB (${dbName}):", logDataValue);
+    // console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -45,7 +45,7 @@ const fetchDataAndEmitReverseArray = async (dbName, collectionName, eventName) =
     // Use sort to get data in reverse order based on timestamp
     const logDataValue = await logsCollection.find().sort({ timestamp: -1 }).toArray();
     
-    console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+    // console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error(`Error fetching data from MongoDB (${dbName}):`, error);
@@ -59,7 +59,7 @@ const setupChangeStream = async (dbName, collectionName, eventName) => {
   const changeStream = collection.watch();
 
   changeStream.on('change', (change) => {
-    console.log('Change detected:', change);
+    // console.log('Change detected:', change);
     fetchDataAndEmitReverseArray(dbName, collectionName, eventName); // Fetch and emit updated data
   });
 
@@ -73,7 +73,7 @@ const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne();
-    console.log("Got data from MongoDB (${dbName}):", logDataValue);
+    // console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -85,7 +85,7 @@ const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } }); 
-    console.log("Got data from MongoDB (${dbName}):", logDataValue);
+    // console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -100,7 +100,7 @@ const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, lim
     // Use the limit method to fetch the first 'limit' documents
     const logDataValue = await logsCollection.find().limit(limit).toArray();
     
-    console.log("Got data from 7 (${dbName}):", logDataValue);
+    // console.log("Got data from 7 (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -114,6 +114,13 @@ io.on('connection', async (socket) => {
     console.log("database name " + dbName);
   })
 
+  var res = null;
+  socket.on("getServer", async (server) => {
+    res = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", server);
+    io.emit("getResponse", res);
+  })
+
+
   try {
 
     await connectToDatabases();
@@ -121,13 +128,13 @@ io.on('connection', async (socket) => {
 
    // total request and changes in graph
    setupChangeStreamCount('server1_clf', 'basic_data', 'request');
-   await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
+  //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
    //check and emit logtable data in sameorder
-    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-    await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
-    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
-    await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
+    // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
+    // await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+    // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+    // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
     // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
     await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
     await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
@@ -146,22 +153,6 @@ io.on('connection', async (socket) => {
     console.log(`Client Disconnected: ${socket.id}`);
   });
 });
-
-const check = async () => {
-  const list = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", "sasad");
-  console.log(list);
-}
-check();
-
-
-
-
-server.listen(3001, () => {
-  console.log('Server is listening on port 3001');
-});
-
-
-
 
 /// <============ integer values for  request and logTable count ========>
 
@@ -212,5 +203,10 @@ const setupChangeStreamCount = async (dbName, collectionName, eventName) => {
 
 // Use setInterval to fetch and emit count every second
 setInterval(() => {
-  fetchDataAndEmitCount('server1_clf', 'basic_data', 'request');
+  // fetchDataAndEmitCount('server1_clf', 'basic_data', 'request');
 }, 1000); // Fetch and emit count every second
+
+
+server.listen(3001, () => {
+  console.log('Server is listening on port 3001');
+});
