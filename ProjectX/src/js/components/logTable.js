@@ -1,6 +1,9 @@
 const socket = io('http://localhost:3001');
 
-socket.on('logTableDashboard', (data) => {
+let sortingState = 'None';
+let sortingInProgress = false;
+
+socket.on('logTableDashboardReverse', (data) => {
   console.log("Received LogTableValue:", JSON.stringify(data));
 
   // Check if sorting is in progress
@@ -15,8 +18,6 @@ socket.on('logTableDashboard', (data) => {
 
   // Check if data.data is an array before using map
   if (Array.isArray(data.data)) {
-    // Extract the last 30 values and reverse the order
-    // const last30Logs = data.data.slice(-30).reverse();
 
     const rows = data.data.map(log => {
       return `
@@ -38,8 +39,7 @@ socket.on('logTableDashboard', (data) => {
 });
 
 
-  let sortingState = 'None';
-  let sortingInProgress = false;
+
   
 
   function sortTable(columnIndex) {

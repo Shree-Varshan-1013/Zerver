@@ -4,7 +4,7 @@ socket.on('logData', (data) => {
   })
 
   
-  socket.on('logTableDashboard', (data) => {
+  socket.on('logTableDashboardReverse', (data) => {
     console.log("Received LogTableValue:", JSON.stringify(data));
   
     const tableBody = document.getElementById('logTableBody');
@@ -13,20 +13,11 @@ socket.on('logData', (data) => {
   
     // Check if data.data is an array before using map
     if (Array.isArray(data.data)) {
-      // Extract the last log value
-      const latestLog = data.data[data.data.length - 1];
-    
-      // Exclude the latest log from the array
-      const otherLogs = data.data.slice(0, -1);
-    
-      // Reverse the order of other logs
-      const reversedLogs = otherLogs.reverse();
-    
-      // Combine the latest log and other logs
-      const allLogs = [latestLog, ...reversedLogs];
+      // Take the first 25 logs
+      const logsToDisplay = data.data.slice(0, 25);
     
       // Map over all logs and create HTML rows
-      const rows = allLogs.map(log => {
+      const rows = logsToDisplay.map(log => {
         return `
           <tr>
             <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
@@ -46,7 +37,7 @@ socket.on('logData', (data) => {
 });
 
 socket.on("summaryData", (data) => {
-  console.log("Received LogTableValue:", JSON.stringify(data));
+  console.log("Received summaryData:", JSON.stringify(data));
   // Assuming you have a <p> element with the id "logEntry"
   const logEntryElement = document.getElementById("logEntry");
 
@@ -54,7 +45,61 @@ socket.on("summaryData", (data) => {
   if (logEntryElement) {
     logEntryElement.textContent = data.data.summary;
   }
+});
+
+socket.on("request", (data) => {
+  console.log("Receied counts", JSON.stringify(data));
+  
 })
+
+
+// const socket = io('http://localhost:3001');
+
+// Retrieve the count from local storage on page load
+documentsAddedCount = parseInt(localStorage.getItem('documentsAddedCount')) || 0;
+
+// Update the UI with the initial count
+updateUI(documentsAddedCount);
+
+socket.on('request', (data) => {
+  console.log('Received counts', JSON.stringify(data));
+
+  // Update documentsAddedCount based on the received data
+  documentsAddedCount += data.addedDocumentsCount;
+
+  // Reset the count to zero at 12:00 AM
+  const now = new Date();
+  const isMidnight = now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0;
+  if (isMidnight) {
+    documentsAddedCount = 0;
+  }
+
+  // Save the updated count to local storage
+  localStorage.setItem('documentsAddedCount', documentsAddedCount);
+
+  // Handle the updated count as needed, e.g., update the UI
+  updateUI(documentsAddedCount);
+});
+
+// Function to update the UI with the current count
+function updateUI(count) {
+  // Implement your UI update logic here
+  // console.log('Current count:', count);
+  const requestElement = document.getElementById("dataValue");
+
+  // Update the content of the <p> tag with the summary property from the received data
+  if (requestElement) {
+    requestElement.textContent = count;
+  }
+}
+
+function getCurrentDay() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
 
   
   

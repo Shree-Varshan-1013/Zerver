@@ -1,19 +1,30 @@
 var dom = document.getElementById('chart-container');
 var myChart = echarts.init(dom, 'dark', {
   renderer: 'canvas',
-  useDirtyRect: false
+  useDirtyRect: true
 });
 
 var option;
 
-let now = new Date();
 let oneSecond = 1000;
-let numberOfDataPoints = 60;
-let randomValues = Array.from({ length: numberOfDataPoints }, () =>
-  Math.round(Math.abs((Math.random(1,1000) + 0.5) * 20))
-);
+let numberOfDataPoints = 86400;
+let storedValues = JSON.parse(localStorage.getItem('storedValues')) || [];
+let now = new Date();
+let randomValues = storedValues.length === numberOfDataPoints ? storedValues : generateRandomValues();
 
-let data = randomValues.map((value, index) => [now - (numberOfDataPoints - index - 1) * oneSecond, value]);
+function generateRandomValues() {
+  return Array.from({ length: numberOfDataPoints }, () =>
+    Math.round(Math.abs((Math.random(1, 1000) + 0.5) * 20))
+  );
+}
+
+function updateLocalStorage(newData) {
+  storedValues.push(newData);
+  if (storedValues.length > numberOfDataPoints) {
+    storedValues.shift(); // Keep the array length within the limit
+  }
+  localStorage.setItem('storedValues', JSON.stringify(storedValues));
+}
 
 option = {
   backgroundColor: 'transparent',
@@ -47,11 +58,11 @@ option = {
   dataZoom: [
     {
       type: 'inside',
-      start: 80,
+      start: 99,
       end: 100
     },
     {
-      start: 80,
+      start: 99,
       end: 100
     }
   ],
@@ -60,25 +71,23 @@ option = {
       name: 'Log Data',
       type: 'line',
       showSymbol: false,
-      lineStyle: {  // Set the line style here
-        width: 1  // Adjust the width as needed
+      lineStyle: {
+        width: 1
       },
-      data: data
+      data: randomValues.map((value, index) => [now - (numberOfDataPoints - index - 1) * oneSecond, value])
     }
   ]
 };
-
 
 myChart.setOption(option);
 
 // Socket.io connection
 const socket = io('http://localhost:3001');
 
-
-socket.on('dataFromServer', (data) => {
-
+socket.on('request', (data) => {
   let newTimestamp = +new Date();
-  randomValues.push(data.value);
+  const newValue = Math.max(1, data.value); // Ensure the value is at least 1
+  randomValues.push(newValue);
   randomValues.shift();
   myChart.setOption({
     series: [
@@ -87,9 +96,9 @@ socket.on('dataFromServer', (data) => {
       }
     ]
   });
+
+  // Update stored values in local storage
+  updateLocalStorage(data.value);
 });
+
 window.addEventListener('resize', myChart.resize);
-
-
-
-

@@ -37,6 +37,21 @@ const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
   }
 };
 
+const fetchDataAndEmitReverseArray = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+    
+    // Use sort to get data in reverse order based on timestamp
+    const logDataValue = await logsCollection.find().sort({ timestamp: -1 }).toArray();
+    
+    console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+    io.emit(eventName, { data: logDataValue });
+  } catch (error) {
+    console.error(`Error fetching data from MongoDB (${dbName}):`, error);
+  }
+};
+
 const setupChangeStream = async (dbName, collectionName, eventName) => {
   const db = dbInstance.db(dbName);
   const collection = db.collection(collectionName);
@@ -45,7 +60,7 @@ const setupChangeStream = async (dbName, collectionName, eventName) => {
 
   changeStream.on('change', (change) => {
     console.log('Change detected:', change);
-    fetchDataAndEmitArray(dbName, collectionName, eventName); // Fetch and emit updated data
+    fetchDataAndEmitReverseArray(dbName, collectionName, eventName); // Fetch and emit updated data
   });
 
   changeStream.on('error', (error) => {
@@ -69,7 +84,7 @@ const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
-    const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
+    const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } }); 
     console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
@@ -103,8 +118,15 @@ io.on('connection', async (socket) => {
 
     await connectToDatabases();
    //DB FETCHES
+
+   // total request and changes in graph
+   setupChangeStreamCount('server1_clf', 'basic_data', 'request');
+   await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
+
+   //check and emit logtable data in sameorder
     setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-    await fetchDataAndEmitArray("server1_clf", "basic_data", "logTableDashboard");
+    await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
     await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
     // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
     await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
@@ -137,3 +159,58 @@ check();
 server.listen(3001, () => {
   console.log('Server is listening on port 3001');
 });
+
+
+
+
+/// <============ integer values for  request and logTable count ========>
+
+let documentsAddedCount = 0;
+
+// let documentsAddedCount = 0;
+
+const fetchDataAndEmitCount = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+
+    // Use sort to get data in reverse order based on timestamp
+    const logDataValue = await logsCollection.find().sort({ timestamp: -1 }).toArray();
+
+    // console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+
+    // Get the count of added documents
+    const addedDocumentsCount = logDataValue.length - documentsAddedCount;
+
+    // Update the documentsAddedCount
+    documentsAddedCount = logDataValue.length;
+
+    // Emit the count of added documents to the frontend only if documents are added
+    if (addedDocumentsCount >= 0) {
+      io.emit(eventName, { addedDocumentsCount });
+    }
+  } catch (error) {
+    console.error(`Error fetching data from MongoDB (${dbName}):`, error);
+  }
+};
+
+const setupChangeStreamCount = async (dbName, collectionName, eventName) => {
+  const db = dbInstance.db(dbName);
+  const collection = db.collection(collectionName);
+
+  const changeStream = collection.watch();
+
+  changeStream.on('change', (change) => {
+    console.log('Change detected:', change);
+
+    // Increment the count when a document is added
+    if (change.operationType === 'insert') {
+      documentsAddedCount += 1;
+    }
+  });
+};
+
+// Use setInterval to fetch and emit count every second
+setInterval(() => {
+  fetchDataAndEmitCount('server1_clf', 'basic_data', 'request');
+}, 1000); // Fetch and emit count every second
