@@ -1,56 +1,33 @@
 var dom = document.getElementById('live-movement-graph');
-var myChart = echarts.init(dom, 'dark', {
+var myChart = echarts.init(dom, 'light', {
   renderer: 'canvas',
-  useDirtyRect: false
+  useDirtyRect: true
 });
 
 var option;
 
-let now = new Date();
 let oneSecond = 1000;
-let maxLength = 86400; // Set the desired maximum length for the array
-let data = [];
+let numberOfDataPoints = 86400;
+let storedValues = JSON.parse(localStorage.getItem('storedValues')) || [];
+let now = new Date();
+let randomValues = storedValues.length === numberOfDataPoints ? storedValues : generateRandomValues();
 
-// WebSocket connection
-const socket = io('http://localhost:3001');
+function generateRandomValues() {
+  return Array.from({ length: numberOfDataPoints }, () =>
+    Math.round(Math.abs((Math.random(1, 1000) + 0.5) * 20))
+  );
+}
 
-// Listen for the initial data
-socket.on('initialDataFromServer', (initialData) => {
-  // Ensure the data array doesn't exceed the maximum length
-  data = initialData.slice(-maxLength);
-
-  // Update the chart with the fetched data
-  myChart.setOption({
-    series: [
-      {
-        data: data.map((value, index) => [now - (data.length - index - 1) * oneSecond, value])
-      }
-    ]
-  });
-});
-
-// Listen for real-time updates
-socket.on('dataFromServer', (newData) => {
-  let newTimestamp = +new Date();
-  data.push(newData.value);
-
-  // Ensure the data array doesn't exceed the maximum length
-  data = data.slice(-maxLength);
-
-  // Update local storage
-  localStorage.setItem('chartData', JSON.stringify(data));
-
-  // Update the chart with the new data
-  myChart.setOption({
-    series: [
-      {
-        data: data.map((value, index) => [newTimestamp - (data.length - index - 1) * oneSecond, value])
-      }
-    ]
-  });
-});
+function updateLocalStorage(newData) {
+  storedValues.push(newData);
+  if (storedValues.length > numberOfDataPoints) {
+    storedValues.shift(); // Keep the array length within the limit
+  }
+  localStorage.setItem('storedValues', JSON.stringify(storedValues));
+}
 
 option = {
+  backgroundColor: 'transparent',
   tooltip: {
     trigger: 'axis',
     position: function (pt) {
@@ -97,26 +74,31 @@ option = {
       lineStyle: {
         width: 1
       },
-      data: data
+      data: randomValues.map((value, index) => [now - (numberOfDataPoints - index - 1) * oneSecond, value])
     }
   ]
 };
 
 myChart.setOption(option);
 
-// Load data from local storage on page load
-const storedData = localStorage.getItem('chartData');
+// Socket.io connection
+const socket = io('http://localhost:3001');
 
-if (storedData) {
-  // Ensure the stored data array doesn't exceed the maximum length
-  data = JSON.parse(storedData).slice(-maxLength);
+socket.on('request', (data) => {
+  let newTimestamp = +new Date();
+  const newValue = Math.max(1, data.value); // Ensure the value is at least 1
+  randomValues.push(newValue);
+  randomValues.shift();
   myChart.setOption({
     series: [
       {
-        data: data.map((value, index) => [now - (data.length - index - 1) * oneSecond, value])
+        data: randomValues.map((value, index) => [newTimestamp - (numberOfDataPoints - index - 1) * oneSecond, value])
       }
     ]
   });
-}
+
+  // Update stored values in local storage
+  updateLocalStorage(data.value);
+});
 
 window.addEventListener('resize', myChart.resize);
