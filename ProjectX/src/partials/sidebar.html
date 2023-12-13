@@ -651,13 +651,15 @@
       checkDatabaseAndMonitor: (server) => {
 
         const showToast = (containerId) => {
-    const toastContainer = document.getElementById(containerId);
-    toastContainer.style.display = 'block';
-
-    // Set a timeout to hide the container after a certain period (e.g., 5000 milliseconds or 5 seconds)
+          
+          const toastContainer = document.getElementById(containerId);
+          toastContainer.style.display = 'block';
+   
+    
+   
     setTimeout(() => {
       toastContainer.style.display = 'none';
-    }, 5000); // Adjust the duration as needed
+    }, 5000); 
   };
   
           const sock = io('http://localhost:3001');

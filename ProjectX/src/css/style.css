@@ -5961,14 +5961,14 @@ header h2 {
 .toast-container-success {
   display: none;
   position: fixed;
-  top: 20px;
+  top: 70px;
   right: 20px;
   z-index: 9999;
 }
 .toast-container-error {
   display: none;
   position: fixed;
-  top: 20px;
+  top: 70px;
   right: 20px;
   z-index: 9999;
 }
