@@ -47,6 +47,14 @@ const statistics = () => {
                 autoSelected: 'zoom'
             },
         },
+        title: {
+            text: 'Log Performance',
+            align: 'left',
+            style: {
+                fontSize: '18px',
+                color: '#cbd5e1'
+            }
+        },
         stroke: {
             curve: 'straight'
         },
