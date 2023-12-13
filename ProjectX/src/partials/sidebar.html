@@ -638,7 +638,13 @@
       },
       getDbName: () => {
         const val = Alpine.store('global').dbName;
-        sock.emit('getDBName', val);
+        try{
+          const sock = io('http://localhost:3001');
+          sock.emit('getDBName', val);
+        }
+        catch(err){
+          console.log(err);
+        }
       }
     });
     // Alpine.store('global').emptyDynamicValues();
@@ -649,12 +655,6 @@
       //   }
       Alpine.store('global').getDbName();
   });
-  
-  const sock = io('http://localhost:3001');
-  sock.on('connect', () => {
-    console.log("connected to server !!!" + sock.id);
-  })
-  
   
   </script>
   </div>
