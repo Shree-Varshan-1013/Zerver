@@ -1,10 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 const checkDatabaseExistence = async (mongoURI, dbNameToCheck) => {
-  const client = new MongoClient(mongoURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const client = new MongoClient(mongoURI);
 
   try {
     await client.connect();

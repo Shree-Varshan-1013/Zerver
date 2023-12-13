@@ -44,7 +44,7 @@
     const changeStream = collection.watch();
 
     changeStream.on('change', (change) => {
-      console.log('Change detected:', change);
+      // console.log('Change detected:', change);
       fetchDataAndEmitLast(dbName, collectionName, eventName); // Fetch and emit updated data
     });
 
@@ -97,6 +97,21 @@
 
     socket.on("getDBName", (dbName) => {
       console.log("database name " + dbName);
+    })
+
+    socket.on("getDBName", (dbName) => {
+      console.log("database name " + dbName);
+    })
+    var res = null;
+    socket.on("getServer", async (server) => {
+      try{
+        res = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", server);
+        console.log("===== " + res);
+        io.emit("getResponse", res);
+      }
+      catch(err){
+        console.log(err);
+      }
     })
 
     try {

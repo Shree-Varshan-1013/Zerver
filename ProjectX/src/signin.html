@@ -80,7 +80,8 @@
                     >
                       Link your Zerver
                     </h2>
-                    <form x-data="{server: null}">
+                    <!-- <form x-data="{server: null}"> -->
+                      <div x-data="{server: null}">
                       <div class="mb-4">
                         <label
                           class="mb-2.5 block font-medium text-black dark:text-cement"
@@ -114,14 +115,15 @@
                       </div>
                       <div class="mb-5">
                         <button
-                          type="submit"
-                          @click="$store.global.updateDynamicValues(server)"
+                          @click="$store.global.checkDatabaseAndMonitor(server)"
                           class="w-full cursor-pointer rounded-lg border border-lavendar2 bg-lavendar p-4 font-medium text-white transition hover:bg-opacity-90"
                         >
                           Monitor Now
                         </button>
                       </div>
-                    </form>
+                      </div>
+
+                    <!-- </form> -->
                   </div>
                 </div>
               </div>
