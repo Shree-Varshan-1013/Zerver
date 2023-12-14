@@ -142,9 +142,9 @@ io.on('connection', async (socket) => {
     await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
     await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
     await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
-    await fetchDataAndEmitArray("server1_clf", "total_stars", "totalStars");
-    await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuUsage");
-    await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryUsage");
+    await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+    await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
+    await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
 
 
   } catch (error) {
