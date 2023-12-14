@@ -241,7 +241,7 @@
     <!-- ===== Sidebar End ===== -->
     <audio id="sirenAudio" src="./images/ship-siren-137067.mp3"></audio>
     <!-- ===== Content Area Start ===== -->
-    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"> 
       <!-- ===== Header Start ===== -->
       <include src="./partials/header.html" />
       <!-- ===== Header End ===== -->
@@ -260,62 +260,79 @@
       </div> -->
       <!-- ===== Main Content Start ===== -->
       <main class="align-center flex w-full flex-col">
-        <div class="flex flex-row m-5">
-          <!-- Flex container for OS and HT along with graphs -->
-          <div class="flex-1">
-            <div style="box-shadow: rgba(104, 88, 88, 0.4) 0px 2px 4px,rgba(104, 88, 88, 0.4)  0px 7px 13px -3px, rgba(104, 88, 88, 0.4)  0px -3px 0px inset;" class="m-3 w-[28.75rem] h-[10rem] rounded-sm">
-              <div id="osData" class="text-black dark:text-cement p-3 text-center"></div>
-            </div>
-            <!-- <button class="ml-6">Download</button> -->
+        <include src="./partials/chatbot.html"></include>
+       <div class="grid grid-cols-2 gap-8 m-5">
+        <div class="hovering rounded-sm border border-stroke bg-white py-6 px-7.5 mass-shadow dark:border-strokedark dark:bg-boxdark">
+          <div id="heatmap" style="width: 600px; height: 300px"></div>
+        </div>
+        <div class="hovering rounded-sm border border-stroke bg-white py-6 px-7.5 mass-shadow dark:border-strokedark dark:bg-boxdark">
+          <div id="piechart" style="width: 600px; height: 400px"></div>
+        </div>
+      </div>
+        <div class="hovering m-5 rounded-sm border border-stroke bg-white py-6 px-7.5 mass-shadow dark:border-strokedark dark:bg-boxdark">
+          <div id="securityLine" style="width: 100%; height: 300px" class="ml-5"></div>
+        </div>
+        <div class="m-5 grid grid-cols-3 gap-4">
+          <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <h1>OS Data</h1>
+            <div id="osData" class="text-black dark:text-cement p-3 text-center"></div>
           </div>
-          <div class="flex-1">
-            <div style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;" class="m-3 h-[10rem] rounded-sm">
-              <h1 id="osHF" class="text-black dark:text-cement p-3 text-center"></h1>
-            </div>
-
+          <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <h1>Data HF</h1>
+            <h1 id="osHF" class="text-black dark:text-cement p-3 text-center"></h1>
           </div>
-          <div class="flex-1">
-            <div id="piechart" style="width: 600px; height: 400px" class="ml-5 mt-[4%] dark:text-cement"></div>
-            <div id="securityLine" style="width: 600px; height: 300px" class="ml-10"></div>
+          <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark"">
+            <h1>Vulnerability</h1>
+            <div id="vData" class="text-black dark:text-cement p-6 ">Vulnerability</div>
           </div>
         </div>
-
-        <div style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;" class="rounded-sm w-[41rem] ml-6 h-[20.5rem]  mt-[-35.75rem]">
-          <h1 id="vData" class="text-black dark:text-cement p-6 text-center">Vulnerability</h1>
-        </div>
-        <div id="heatmap" style="width: 600px; height: 300px" class="ml-10 mt-20"></div>
+      </main>
     </div>
-    <!-- Flex container for Vulnerability -->
-
-
-
-
-    </main>
-    <!-- ===== Main Content End ===== -->
   </div>
-  <!-- ===== Content Area End ===== -->
-  </div>
+  
   <script>
     const socket = io("http://localhost:3001");
 
     socket.on("operatingSystem", (data) => {
       const osData = data.data;
 
-      // Assuming there is a div with the id 'osData' to display the information
       const osDataContainer = $("#osData");
       const osHFContainer = $("#osHF");
-      // Create a div element for each OS and append it to the container
+
       const osInfo = `
-    <div>
-      <p>Name: ${osData.Name}</p>
-      <p>Generation: ${osData.Generation}</p>
-      <p>Build: ${osData.Build}</p>
-      <p>Version: ${osData.Version}</p>
-      <p>Architecture: ${osData.Architecture}</p>
-    </div>
-    
+    <table class="table-auto w-full">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>${osData.Name}</td>
+        </tr>
+        <tr>
+          <td>Generation</td>
+          <td>${osData.Generation}</td>
+        </tr>
+        <tr>
+          <td>Build</td>
+          <td>${osData.Build}</td>
+        </tr>
+        <tr>
+          <td>Version</td>
+          <td>${osData.Version}</td>
+        </tr>
+        <tr>
+          <td>Architecture</td>
+          <td>${osData.Architecture}</td>
+        </tr>
+      </tbody>
+    </table>
   `;
-      // console.log(osData);
+
+
       osDataContainer.html(osInfo);
       const osHF = `
     <div>
@@ -333,28 +350,52 @@
     socket.on("vData", (data) => {
       const vData = data.data;
 
-      // Assuming there is a div with the id 'osData' to display the information
       const vDataContainer = $("#vData");
-      // Create a div element for each OS and append it to the container
+
       const vInfo = `
-    <div>
-      <p>Date: ${vData.Date}</p>
-      <p>CVE: ${vData.CVE}</p>
-      <p>KB: ${vData.KB}</p>
-      <p>Title: ${vData.Title}</p>
-      <p>AffectedProduct: ${vData.AffectedProduct}</p>
-      <p>AffectedComponent: ${vData.AffectedComponent}</p>
-      <p>Severity: ${vData.Severity}</p>
-      <p>Impact: ${vData.Impact}</p>
-      <p>Exploit: ${vData.Exploit}</p>
-    </div>
-    
-  `;
+  <table class="table-auto w-full">
+    <tr>
+      <td>Date</td>
+      <td>${vData.Date}</td>
+    </tr>
+    <tr>
+      <td>CVE</td>
+      <td>${vData.CVE}</td>
+    </tr>
+    <tr>
+      <td>KB</td>
+      <td>${vData.KB}</td>
+    </tr>
+    <tr>
+      <td>Title</td>
+      <td>${vData.Title}</td>
+    </tr>
+    <tr>
+      <td>Affected Product</td>
+      <td>${vData.AffectedProduct}</td>
+    </tr>
+    <tr>
+      <td>Affected Component</td>
+      <td>${vData.AffectedComponent}</td>
+    </tr>
+    <tr>
+      <td>Severity</td>
+      <td>${vData.Severity}</td>
+    </tr>
+    <tr>
+      <td>Impact</td>
+      <td>${vData.Impact}</td>
+    </tr>
+    <tr>
+      <td>Exploit</td>
+      <td>${vData.Exploit}</td>
+    </tr>
+  </table>
+`;
       // console.log("VData ",vData);
       vDataContainer.html(vInfo);
     });
   </script>
-  <!-- ===== Page Wrapper End ===== -->
 </body>
 
 </html>

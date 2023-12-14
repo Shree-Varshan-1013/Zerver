@@ -208,7 +208,7 @@ const performance = () => {
   // Listen for WebSocket messages
   socket.addEventListener('totalStars', (event) => {
     const newData1 = event.data;
-    // console.log("Star",newData);
+    console.log("Star",newData1);
    
    
 // console.log("T1otal Stars Sum (out of 100):", roundedPercentage);
@@ -242,7 +242,7 @@ const performance = () => {
   });
   socket.addEventListener('memoryUsage', (event) => {
     const newData3 = event.data;
-    // console.log("memory",newData);
+    console.log("memory",newData3);
    
    
 // console.log("Total CPU SUM (out of 100):", memoryroundedPercentage);

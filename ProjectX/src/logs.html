@@ -1,236 +1,237 @@
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
-      <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
-      <link rel="stylesheet" href="../src/css/style.css" />
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="../src/css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <title>Logs</title>
 
-      <link
-        href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
-        rel="stylesheet"
-      />
-      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-      <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+      .datetime-input[disabled] {
+        background-color: #f2f2f2;
+      }
+      .rotate180 {
+        transform: rotate(180deg);
+        transition: transform 0.5s ease;
+      }
+      .sort-icon {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+      }
+      .sort-icon.rotated {
+        transform: rotate(90deg);
+      }
 
-      <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+      .date-input {
+        border: 1px solid #ccc;
+        padding: 8px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
 
-      <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
-      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script> -->
-      <title>Logs</title>
-      <style>
-        .datetime-input[disabled] {
-          background-color: #f2f2f2;
-        }
-      </style>
-      <style>
-        .rotate180 {
-          transform: rotate(180deg);
-          transition: transform 0.5s ease; /* Adjust the duration and easing as needed */
-        }
-      </style>
-      <style>
-        /* Add your existing styles here */
-        /* Add a new class for the sorting icon */
-        .sort-icon {
-          width: 16px;
-          height: 16px;
-          transition: transform 0.3s ease;
-        }
-
-        /* Add styling for the rotated icon */
-        .sort-icon.rotated {
-          transform: rotate(90deg);
-        }
-
-        /* Add styling for the date input */
-        .date-input {
-          border: 1px solid #ccc;
-          padding: 8px;
-          border-radius: 4px;
-        }
-      </style>
-    </head>
-
-    <body
-      x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-      x-init="
+  <body
+    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+    x-init="
             darkMode = JSON.parse(localStorage.getItem('darkMode'));
             $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-      :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-    >
-      <include src="./partials/preloader.html"></include>
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <include src="./partials/preloader.html"></include>
 
-      <div class="flex h-screen overflow-hidden">
-        <include src="./partials/sidebar.html"></include>
+    <div class="flex h-screen overflow-hidden">
+      <include src="./partials/sidebar.html"></include>
 
-        <div
-          class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <include src="./partials/header.html" />
+
+        <main
+          class="align-center flex h-fit flex-col bg-whiten dark:bg-boxdark-2"
         >
-          <include src="./partials/header.html" />
-
-          <main
-            class="align-center flex h-fit flex-col bg-whiten dark:bg-boxdark-2"
-          >
-            <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
-              <div class="mx-auto">
-                <div
-                  class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+          <include src="./partials/chatbot.html"></include>
+          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto">
+              <div
+                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2
+                  class="text-title-md2 font-bold text-black dark:text-cement"
                 >
-                  <h2 class="text-title-md2 font-bold text-black dark:text-cement">
-                    Logs
-                  </h2>
-                  <nav>
-                    <ol class="flex items-center gap-2">
-                      <li>
-                        <a class="font-medium" href="index.html">Dashboard /</a>
-                      </li>
-                      <li class="text-primary">Logs</li>
-                    </ol>
-                  </nav>
-                </div>
-                <div>
-                  <div
-                    class="mass-shadow m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
-                  >
-                    <div class="m-10">
-                      <div class="bg-gray-700 mt-3 flex text-black">
-                        <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
-                        <select
-                          id="searchColumn"
-                          class="border-gray-700 border text-center"
-                        >
-                          <option class="text-red" value="search">
-                            Search By
-                          </option>
-                          <option class="text-red" value="all">All</option>
-                          <!-- <option class="text-red" value="log_id">Log ID</option> -->
-                          <!-- <option value="log_time">Log Time</option> -->
-                          <option value="timestamp">Timestamp</option>
-                          <option value="ip_address">IP Address</option>
-                          <option value="http_method">HTTP Method</option>
-                          <option value="requested_path">Request URL</option>
-                          <option value="status_code">Status Code</option>
-                        </select>
-                        <!-- <div class="flex bg-transparent"> -->
-                        <input
-                          type="text"
-                          id="search"
-                          class="border-gray-700 ml-10 border text-black"
-                          placeholder="Search..."
+                  Logs
+                </h2>
+                <nav>
+                  <ol class="flex items-center gap-2">
+                    <li>
+                      <a class="font-medium" href="index.html">Dashboard /</a>
+                    </li>
+                    <li class="text-primary">Logs</li>
+                  </ol>
+                </nav>
+              </div>
+              <div>
+                <div
+                  class="shadow-default m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-boxdark"
+                >
+                  <div class="m-10">
+                    <div class="bg-gray-700 mt-3 flex text-black">
+                      <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
+                      <select
+                        id="searchColumn"
+                        class="border-gray-700 border text-center"
+                      >
+                        <option class="text-red" value="search">
+                          Search By
+                        </option>
+                        <option class="text-red" value="all">All</option>
+                        <!-- <option class="text-red" value="log_id">Log ID</option> -->
+                        <!-- <option value="log_time">Log Time</option> -->
+                        <option value="timestamp">Timestamp</option>
+                        <option value="ip_address">IP Address</option>
+                        <option value="http_method">HTTP Method</option>
+                        <option value="requested_path">Request URL</option>
+                        <option value="status_code">Status Code</option>
+                      </select>
+                      <!-- <div class="flex bg-transparent"> -->
+                      <input
+                        type="text"
+                        id="search"
+                        class="border-gray-700 ml-10 border text-black"
+                        placeholder="Search..."
+                      />
+                      <svg
+                        class="text-gray-800 reset-search-svg h-6 w-6 p-1 dark:text-cement"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                         />
-                        <svg
-                          class="text-gray-800 reset-search-svg h-6 w-6 p-1 dark:text-cement"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 14 14"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                          />
-                        </svg>
-                        
-                      </div>
+                      </svg>
                     </div>
-                    <!-- date inputs -->
-                    <div class="mt-13">
-                      <!-- date inputs -->
-                      <div date-range-picker class="flex text-black">
-                        <div class="  ">
-                          <span class="mr-4 text-black dark:text-cement"
-                            >From</span
-                          >
-                          <input
-                            name="start"
-                            id="st-time"
-                            type="datetime-local"
-                            class="datetime-input bg-white text-black"
-                          />
-                        </div>
-                        <div class="">
-                          <span class="ml-4 mr-4 text-black dark:text-cement"
-                            >To</span
-                          >
-                          <input
-                            name="end"
-                            id="en-time"
-                            type="datetime-local"
-                            class="datetime-input bg-white text-black"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
                   </div>
-                  <div
-                    class="mass-shadow m-5 rounded-sm border border-stroke bg-whiten dark:border-none"
-                  >
-                    <!-- <div class=" py-3 shadow-default dark:border-strokedark dark:bg-meta-4"
+                  <!-- date inputs -->
+                  <div class="mt-13">
+                    <!-- date inputs -->
+                    <div date-range-picker class="flex text-black">
+                      <div class="  ">
+                        <span class="mr-4 text-black dark:text-cement"
+                          >From</span
+                        >
+                        <input
+                          name="start"
+                          id="st-time"
+                          type="datetime-local"
+                          class="datetime-input bg-white text-black"
+                        />
+                      </div>
+                      <div class="">
+                        <span class="ml-4 mr-4 text-black dark:text-cement"
+                          >To</span
+                        >
+                        <input
+                          name="end"
+                          id="en-time"
+                          type="datetime-local"
+                          class="datetime-input bg-white text-black"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="shadow-default m-5 rounded-sm border border-stroke bg-whiten dark:border-none"
+                >
+                  <!-- <div class=" py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
                       id="live-movement-graph"
                       style="width: 100; height: 300%"
                     ></div> -->
-                    <div class="mass-shadow">
-                      <div class="mt-5 pl-4 rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-meta-4" id="live-movement-graph" style="width: 100%; height: 300px" ></div>
-                      </div>
-                    <!-- <script src="./js/logsPage/logsChart.js"></script> -->
-                    <!-- <div id="chart-container"></div> -->
-                    
+                  <div>
+                    <div
+                      class="mt-5 rounded-sm border border-stroke bg-white py-3 pl-4 shadow-default dark:border-strokedark dark:bg-boxdark"
+                      id="live-movement-graph"
+                      style="width: 100%; height: 300px"
+                    ></div>
                   </div>
-                  <table class="w-full table-auto">
-                    <thead>
-                      <tr class="bg-gray-2 text-left dark:bg-meta-4  " >
-                        <th onclick="sortTable(0)" data-icon-id="timestampSortIcon" class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement">
-                          Timestamp
-                          <p>(None)</p>
-                          
-                        </th>
-                        <th  onclick="sortTable(1)" data-icon-id="timestampSortIcon" class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement">
-                          IP Address
-                          <p>(None)</p>
-                          
-                        </th>
-                        <th  onclick="sortTable(2)" data-icon-id="timestampSortIcon" class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-cement">
-                          Http Method
-                          <p>(None)</p>
-                          
-                        </th>
-                        <th  onclick="sortTable(3)" data-icon-id="timestampSortIcon" class="py-4 px-4 font-medium text-black dark:text-cement">
-                          Request URL
-                          <p>(None)</p>
-                          
-                        </th>
-                        <th  onclick="sortTable(4)" data-icon-id="timestampSortIcon" class="py-4 px-4 font-medium text-black dark:text-cement">
-                          Status Code 
-                          <p>(None)</p>
-                          
-                        </th>
-                      </tr>
-                    </thead>
-                    <!-- <tbody> -->
-                      <tbody class=" dark:bg-boxdark-2" id="logTableBody1"></tbody>
-                      
-                  </table>
+                  <!-- <script src="./js/logsPage/logsChart.js"></script> -->
+                  <!-- <div id="chart-container"></div> -->
                 </div>
+                <table class="w-full table-auto">
+                  <thead>
+                    <tr class="bg-gray-2 text-left dark:bg-boxdark">
+                      <th
+                        onclick="sortTable(0)"
+                        data-icon-id="timestampSortIcon"
+                        class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement"
+                      >
+                        Timestamp
+                        <p>(None)</p>
+                      </th>
+                      <th
+                        onclick="sortTable(1)"
+                        data-icon-id="timestampSortIcon"
+                        class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement"
+                      >
+                        IP Address
+                        <p>(None)</p>
+                      </th>
+                      <th
+                        onclick="sortTable(2)"
+                        data-icon-id="timestampSortIcon"
+                        class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-cement"
+                      >
+                        Http Method
+                        <p>(None)</p>
+                      </th>
+                      <th
+                        onclick="sortTable(3)"
+                        data-icon-id="timestampSortIcon"
+                        class="py-4 px-4 font-medium text-black dark:text-cement"
+                      >
+                        Request URL
+                        <p>(None)</p>
+                      </th>
+                      <th
+                        onclick="sortTable(4)"
+                        data-icon-id="timestampSortIcon"
+                        class="py-4 px-4 font-medium text-black dark:text-cement"
+                      >
+                        Status Code
+                        <p>(None)</p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <!-- <tbody> -->
+                  <tbody class="dark:bg-boxdark-2" id="logTableBody1"></tbody>
+                </table>
               </div>
             </div>
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
+    </div>
 
-      <script src="./js/components/logPageGraph.js"></script>
-      <script src="./js/components/logTableScript.js"></script>
-      <!-- <script src="./js/components/logTableSort.js"></script> -->
-      <!-- <script src="./js/components/liveDashboard1.js"></script> -->
-      <script src="./js/components/logTable.js"></script>
-
-    </body>
-  </html>
+    <script src="./js/components/logPageGraph.js"></script>
+    <script src="./js/components/logTableScript.js"></script>
+    <!-- <script src="./js/components/logTableSort.js"></script> -->
+    <!-- <script src="./js/components/liveDashboard1.js"></script> -->
+    <script src="./js/components/logTable.js"></script>
+  </body>
+</html>

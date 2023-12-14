@@ -26,6 +26,7 @@
         <include src="./partials/header.html" />
 
         <main>
+          <include src="./partials/chatbot.html"></include>
           <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
             <div class="mx-auto">
               <div
@@ -46,7 +47,7 @@
 
               <div class="flex gap-8">
                 <div
-                  class="mass-shadow m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
                 >
                   <div class="stars" data-rating="4"></div>
                   <div>
@@ -56,7 +57,7 @@
                   </div>
                 </div>
                 <div
-                  class="mass-shadow m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
                 >
                   <div>
                     <h5>Calculations of Star rating</h5>
@@ -65,7 +66,7 @@
 
                 <div>
                   <div
-                    class="mass-shadow m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-meta-4"
+                    class="m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark"
                   >
                     <h2>
                       Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -86,7 +87,8 @@
                 </div>
               </div>
               <div
-                class="mass-shadow m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-meta-4"
+                class="mass-shadow hovering m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark mb-6"
+
               >
                 <div class="w-full">
                   <div id="areachart"></div>
@@ -94,7 +96,7 @@
               </div>
               <div>
                 <div
-                  class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-meta-4"
+                  class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark hovering mb-6"
                 >
                   <div class="col-md-7">
                     <button id="combineButton">Download Chart</button>
@@ -105,24 +107,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="m-3 p-10 dark:bg-meta-4">
-                  <h5>Requests</h5>
-                  <h5>Requests</h5>
-                  <h5>Requests</h5>
-                  <h5>Requests</h5>
-                  <h5>Requests</h5>
-                </div>
               </div>
               <div
-                class="mass-shadow w-50 rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
+                class="mass-shadow hovering flex content-center max-w-fit rounded-sm border border-stroke dark:border-none dark:bg-boxdark"
               >
-                <div class="rotate">
-                  <img src="./images/logo/logoFan.png" alt="fan" width="100%" />
-                </div>
+              <div class="m-3 p-10 dark:bg-boxdark">
+                <h5>Heat</h5>
+                <h5>Requests</h5>
+                <h5>Requests</h5>
+                <h5>Requests</h5>
+                <h5>Requests</h5>
               </div>
-              <div
-                class="mass-shadow w-50 rounded-sm border border-stroke dark:border-none dark:bg-meta-4"
-              >
                 <div id="chart"></div>
               </div>
             </div>
