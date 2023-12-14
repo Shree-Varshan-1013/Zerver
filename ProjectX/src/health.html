@@ -1,186 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Health</title>
-    <style>
-      #glassy-container {
-        position: relative;
-        background-color: rgba(255, 255, 255, 0);
-        border-radius: 10px;
-        border: 1px solid rgba(95, 63, 63, 0.516);
-        padding: 20px;
-        animation: shadow-pulse 2s infinite alternate;
-        box-shadow: rgba(76, 197, 36, 0.699) 0px 4px 4px,
-          rgba(209, 22, 22, 0.845) 0px 4px 4px;
-        overflow: hidden;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health</title>
+  <style>
+    #glassy-container {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0);
+      border-radius: 10px;
+      border: 1px solid rgba(95, 63, 63, 0.516);
+      padding: 20px;
+      animation: shadow-pulse 2s infinite alternate;
+      box-shadow: rgba(76, 197, 36, 0.699) 0px 4px 4px,
+        rgba(209, 22, 22, 0.845) 0px 4px 4px;
+      overflow: hidden;
+    }
+
+    #glassy-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      /* background: linear-gradient(to right, transparent, #4CAF50, transparent); */
+      animation: neonMove 2s linear infinite;
+      z-index: -1;
+      border-radius: 10px;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
       }
 
-      #glassy-container::before {
-        content: "";
-        position: absolute;
+      100% {
+        transform: scale(1.02);
+      }
+    }
+
+    @keyframes shadow-pulse {
+      0% {
+        box-shadow: rgba(210, 34, 34, 0.687) 0px 6px 6px,
+          rgba(28, 172, 33, 0.1) 0px 6px 6px;
+      }
+
+      100% {
+        box-shadow: rgba(200, 236, 24, 0.5) 0px 4px 4px,
+          rgba(204, 19, 152, 0.3) 0px 4px 4px;
+      }
+    }
+
+    .copy-box {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto;
+      width: 200px;
+      color: #333333;
+      font-family: sans-serif;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .copy-box .line {
+      position: absolute;
+      background-color: aqua;
+      box-shadow: 0px 0px 12px aqua;
+      width: 4px;
+      height: calc(100% - 20px);
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .copy-box .line.left {
+      top: 5px;
+      left: 2px;
+      height: 96%;
+    }
+
+    .copy-box .line.right {
+      top: 10px;
+      right: 2px;
+    }
+
+    .copy-box .line.top {
+      top: 2px;
+      left: 10px;
+      height: 4px;
+      width: calc(100% - 20px);
+    }
+
+    .copy-box .line.bottom {
+      bottom: 2px;
+      left: 4px;
+      height: 4px;
+      width: calc(100% - 6px);
+    }
+
+    .copy-box .line .scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: white;
+      width: 100%;
+      height: 20px;
+      border-radius: 50%;
+      animation: scanner-loop 3s ease-in-out infinite;
+    }
+
+    @keyframes scanner-loop {
+      0% {
         top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* background: linear-gradient(to right, transparent, #4CAF50, transparent); */
-        animation: neonMove 2s linear infinite;
-        z-index: -1;
-        border-radius: 10px;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-
-        100% {
-          transform: scale(1.02);
-        }
+      50% {
+        top: 100%;
       }
 
-      @keyframes shadow-pulse {
-        0% {
-          box-shadow: rgba(210, 34, 34, 0.687) 0px 6px 6px,
-            rgba(28, 172, 33, 0.1) 0px 6px 6px;
-        }
-
-        100% {
-          box-shadow: rgba(200, 236, 24, 0.5) 0px 4px 4px,
-            rgba(204, 19, 152, 0.3) 0px 4px 4px;
-        }
-      }
-
-      .copy-box {
-        position: relative;
-        display: inline-block;
-        margin: 0 auto;
-        width: 200px;
-        color: #333333;
-        font-family: sans-serif;
-        padding: 20px;
-        border-radius: 10px;
-      }
-
-      .copy-box .line {
-        position: absolute;
-        background-color: aqua;
-        box-shadow: 0px 0px 12px aqua;
-        width: 4px;
-        height: calc(100% - 20px);
-        border-radius: 50%;
-        overflow: hidden;
-      }
-
-      .copy-box .line.left {
-        top: 5px;
-        left: 2px;
-        height: 96%;
-      }
-
-      .copy-box .line.right {
-        top: 10px;
-        right: 2px;
-      }
-
-      .copy-box .line.top {
-        top: 2px;
-        left: 10px;
-        height: 4px;
-        width: calc(100% - 20px);
-      }
-
-      .copy-box .line.bottom {
-        bottom: 2px;
-        left: 4px;
-        height: 4px;
-        width: calc(100% - 6px);
-      }
-
-      .copy-box .line .scanner {
-        position: absolute;
+      100% {
         top: 0;
-        left: 0;
-        background: white;
-        width: 100%;
-        height: 20px;
-        border-radius: 50%;
-        animation: scanner-loop 3s ease-in-out infinite;
       }
+    }
 
-      @keyframes scanner-loop {
-        0% {
-          top: 0;
-        }
+    .copy-box .inner {
+      padding: 30px;
+    }
+  </style>
+</head>
 
-        50% {
-          top: 100%;
-        }
-
-        100% {
-          top: 0;
-        }
-      }
-
-      .copy-box .inner {
-        padding: 30px;
-      }
-    </style>
-  </head>
-
-  <body
-    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-    x-init="
+<body
+  x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+  x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-  >
-    <include src="./partials/preloader.html"></include>
+  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <include src="./partials/preloader.html"></include>
 
-    <div class="flex h-screen overflow-hidden">
-      <include src="./partials/sidebar.html"></include>
+  <div class="flex h-screen overflow-hidden">
+    <include src="./partials/sidebar.html"></include>
 
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <include src="./partials/header.html" />
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <include src="./partials/header.html" />
 
-        <main>
-          <include src="./partials/chatbot.html"></include>
-          <div class="grid">
+      <main>
+        <include src="./partials/chatbot.html"></include>
+        <div class="grid">
+          <div
+            class="m-5 hovering rounded-sm border border-stroke bg-white py-6 px-7.5 mass-shadow dark:border-strokedark dark:bg-boxdark">
+            <div id="animatedbar" style="width: 100%;"></div>
+          </div>
+        </div>
+        <div class="m-5 grid grid-cols-2 gap-5">
+          <div>
             <div
-              class="m-5 hovering rounded-sm border border-stroke bg-white py-6 px-7.5 mass-shadow dark:border-strokedark dark:bg-boxdark"
-            >
-              <div id="animatedbar" style="width: 100%;"></div>
-            </div>
-          </div>
-          <div class="m-5 grid grid-cols-2 gap-5">
-            <div>
-              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-                <h1 class="text-black dark:text-cement">Text Here</h1>
-              </div>
-            </div>
-            <div>
-              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-                <h1 class="text-black dark:text-cement">Text Here</h1>
-              </div>
-            </div>
-            <div>
-              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-                <h1 class="text-black dark:text-cement">Text Here</h1>
-              </div>
-            </div>
-            <div>
-              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-                <h1 class="text-black dark:text-cement">Text Here</h1>
+              class="rounded-sm border h-[30.9rem] border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div class="flex gap-7">
+                <div class="flex-1">
+                  <div id="cpuUsage"
+                    class="rounded-sm border h-[20.9rem] border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  CPU
+                  </div>
+                </div>
+                <div class="flex-1">  
+                  <div id="memoryUsage"
+                    class="rounded-sm border h-[20.9rem] border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  Memory
+                  </div>
+
+                </div>
+                <div class="flex-1">
+                  <div id="errorCount"
+                    class="rounded-sm border h-[20.9rem] border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  Error Log Count
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
-        </main>
-      </div>
+          <div>
+            <div
+              class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+              <!-- <h1 class="text-black dark:text-cement">Pie</h1> -->
+              <div id="healthpie"></div>
+            </div>
+          </div>
+          <!-- <div>
+              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <h1 class="text-black dark:text-cement">Text Here</h1>
+              </div>
+            </div>
+            <div>
+              <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <h1 class="text-black dark:text-cement">Text Here</h1>
+              </div>
+            </div> -->
+        </div>
+      </main>
     </div>
-    <script src="./js/components/animatedbar.js"></script>
-  </body>
+  </div>
+  <script src="./js/components/animatedbar.js"></script>
+  <script>
+   const socket = io("http://localhost:3001");
+   socket.on("cpuUsage", (data) => {
+
+    // console.log(data.data.cpu_percent);
+    document.getElementById('cpuUsage').innerText = `${data.data.cpu_percent}`;
+   });
+   socket.on("memoryUsage", (data) => {
+
+    // console.log(data.data.percent_used);
+    document.getElementById('memoryUsage').innerText = `${data.data.percent_used}`;
+   });
+   socket.on("error_count", (data) => {
+
+    console.log("Error",data.count);
+    document.getElementById('errorCount').innerText = `${data.count}`;
+   });
+  </script>
+</body>
+
 </html>

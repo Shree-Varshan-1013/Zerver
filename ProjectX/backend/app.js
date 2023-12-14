@@ -69,6 +69,21 @@ const setupChangeStream = async (dbName, collectionName, eventName) => {
     console.error('Change stream error:', error);
   });
 };
+const setupChangeStreamArray = async (dbName, collectionName, eventName) => {
+  const db = dbInstance.db(dbName);
+  const collection = db.collection(collectionName);
+
+  const changeStream = collection.watch();
+
+  changeStream.on('change', (change) => {
+    // console.log('Change detected:', change);
+    fetchDataAndEmitArray(dbName, collectionName, eventName); // Fetch and emit updated data
+  });
+
+  changeStream.on('error', (error) => {
+    console.error('Change stream error:', error);
+  });
+};
 
 const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
   try {
@@ -109,6 +124,22 @@ const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, lim
   }
 };
 
+const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+
+    // Use the countDocuments method to get the total count of documents in the collection
+    const dataSize = await logsCollection.countDocuments();
+
+    console.log(`Got data count from ${dbName}:`, dataSize);
+
+    io.emit(eventName, { count: dataSize });
+  } catch (error) {
+    console.error(`Error fetching data count from MongoDB (${dbName}):`, error);
+  }
+};
+
 io.on('connection', async (socket) => {
   console.log(`Client Connected: ${socket.id}`);
 
@@ -145,6 +176,11 @@ io.on('connection', async (socket) => {
     await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
     await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
     await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
+    await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
+    await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
+    await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
+    await fetchDataAndEmitArrayCount("server1_clf","error_logs","error_count");
+
 
 
   } catch (error) {

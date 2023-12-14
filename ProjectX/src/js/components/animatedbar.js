@@ -1,38 +1,39 @@
 import ApexCharts from 'apexcharts';
-
 const animatedBar = () => {
-
   var options = {
-    series: [{
-      name: 'series1',
-      data: [31, 40, 28, 51, 42, 109, 100]
-    }, {
-      name: 'series2',
-      data: [11, 32, 45, 32, 34, 52, 41]
-    }],
+    series: [
+      {
+        name: 'CPU',
+        data: []
+      },
+      {
+        name: 'MEMORY',
+        data: []
+      }
+    ],
     chart: {
       height: 350,
       type: 'area',
       toolbar: {
-        show: true, 
+        show: true,
         tools: {
-            download: true, 
-            selection: true,
-            zoom: true,
-            pan: true,
-            reset: true,
+          download: true,
+          selection: true,
+          zoom: true,
+          pan: true,
+          reset: true,
         },
         autoSelected: 'zoom'
-    },
+      },
     },
     title: {
       text: 'Server Health',
       align: 'left',
       style: {
-          fontSize: '18px',
-          color: '#cbd5e1'
+        fontSize: '28px',
+        color: '#cbd5e1'
       }
-  },
+    },
     dataLabels: {
       enabled: false
     },
@@ -41,7 +42,7 @@ const animatedBar = () => {
     },
     xaxis: {
       type: 'datetime',
-      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+      categories: []
     },
     tooltip: {
       x: {
@@ -52,7 +53,23 @@ const animatedBar = () => {
 
   var chart = new ApexCharts(document.querySelector("#animatedbar"), options);
   chart.render();
+  // const socket = io("http://localhost:3001");
+ 
+  // socket.addEventListener('cpuArray', (event) => {
+   
+  //   console.log("Cpu",event.data);
+ 
+    
+  // });
 
+  // socket.addEventListener('memoryArray', (event1) => {
+  
+  //    console.log("Memory",event1.data);
+   
+  // });
+  
+  
+ 
 }
 
 export default animatedBar;
