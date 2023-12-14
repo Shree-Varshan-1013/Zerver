@@ -367,8 +367,8 @@ socket.on('requestUserAndLogsForecast', async () => {
     const collection2 = db.collection('logs_estimation_forecast');
 
     // Update the date range for fetching data from 2023 until the future available date
-    const startOf2023 = new Date('2023-01-01T00:00:00.000Z');
-    const endOfFuture = new Date('2100-01-01T00:00:00.000Z'); // You can adjust this date accordingly
+    const startOf2023 = new Date('2023-12-09T00:00:00.000Z');
+    const endOfFuture = new Date('2023-12-31T00:00:00.000Z'); // You can adjust this date accordingly
 
     const userData = await collection.find({
       ds: {

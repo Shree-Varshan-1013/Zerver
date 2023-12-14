@@ -88,6 +88,15 @@
             >Security</a
           >
         </li>
+        <li class="pr-5">
+          <a
+            href="../analysis.html"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
+            @click="selected = (selected == 'Performance' ? '':'Performance')"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Performance') && (page === 'performance') }"
+            >Analysis</a
+          >
+        </li>
       </div>
     </div>
 
