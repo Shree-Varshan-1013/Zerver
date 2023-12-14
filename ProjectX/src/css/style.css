@@ -2419,6 +2419,11 @@ input[type="search"]::-webkit-search-results-decoration {
   margin-bottom: 1.5rem;
 }
 
+.cr8dw-dup {
+  /* margin-bottom: 1.5rem; */
+  margin-top: 30px;
+}
+
 .cpvtt {
   margin-bottom: 2rem;
 }
