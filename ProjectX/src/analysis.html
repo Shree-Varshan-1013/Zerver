@@ -32,7 +32,9 @@
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
                 <h1>Cost Estimation</h1>
+                <p x-text="$store.analysis.costEstimation"></p>
               </div>
+
               <div
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
@@ -57,6 +59,7 @@
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
                 <h1>Daily User Forecast</h1>
+                <p x-text="$store.analysis.userForecast"></p>
               </div>
             </div>
             <div class="mt-10 grid grid-cols-2">
@@ -64,6 +67,7 @@
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
                 <h1>Log Estimation</h1>
+                <p x-text="$store.analysis.logEstimation"></p>
               </div>
               <div
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
@@ -100,6 +104,44 @@
       </div>
     </div>
     <script>
+      document.addEventListener("alpine:init", () => {
+        Alpine.store("analysis", {
+          costEstimation: Alpine.$persist(null),
+          userForecast: Alpine.$persist(null),
+          logEstimation: Alpine.$persist(null),
+        });
+        const soc = io('http://localhost:3001');
+
+        soc.on('costEstimation', msg => {
+          // console.log(msg.data);
+          try{
+            Alpine.store('analysis').costEstimation = msg.data.yhat; 
+          }
+          catch(err){
+            console.log(err);
+          }
+        })
+
+        soc.on('userForecast', msg => {
+          console.log(msg.data);
+          try{
+            Alpine.store('analysis').userForecast = msg.data.yhat; 
+          }
+          catch(err){
+            console.log(err);
+          }
+        })
+        
+        soc.on('logEstimation', msg => {
+          console.log(msg.data.yhat + "===log");
+          try{
+            Alpine.store('analysis').logEstimation = msg.data.yhat; 
+          }
+          catch(err){
+            console.log(err);
+          }
+        })
+      });
       function trigger() {
         Swal.fire({
           title: "Enter the IP address",
@@ -143,7 +185,7 @@
             Swal.fire({
               icon: "error",
               title: "Error",
-              text: error.message || "An error occurred",
+              text: "An error occurred",
             });
           });
       }

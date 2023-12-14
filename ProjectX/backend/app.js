@@ -199,6 +199,9 @@ try {
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
   await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
+  await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
+  await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
+  await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
 
 } catch (error) {
   console.error("Error during data fetching and emission:", error);
