@@ -529,6 +529,7 @@
             toastContainer.style.display = 'none';
           }, 3000); 
           if(label === "success"){
+              Alpine.store('global').dbName = server;
               window.location.href = "dashboard.html";
           }
   };
