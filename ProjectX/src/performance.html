@@ -1,116 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Performance</title>
-    <script src="./js/components/cdn-scripts.js"></script>
-  </head>
 
-  <body
-    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-    x-init="
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance</title>
+  <script src="./js/components/cdn-scripts.js"></script>
+</head>
+
+<body
+  x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+  x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-  >
-    <include src="./partials/preloader.html"></include>
+  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <include src="./partials/preloader.html"></include>
 
-    <div class="flex h-screen overflow-hidden">
-      <include src="./partials/sidebar.html"></include>
+  <div class="flex h-screen overflow-hidden">
+    <include src="./partials/sidebar.html"></include>
 
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <include src="./partials/header.html" />
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <include src="./partials/header.html" />
 
-        <main>
-          <include src="./partials/chatbot.html"></include>
-          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
-            <div class="mx-auto">
+      <main>
+        <include src="./partials/chatbot.html"></include>
+        <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+          <div class="mx-auto">
+            <div class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 class="text-title-md2 font-bold text-black dark:text-cement">
+                Performance
+              </h2>
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="index.html">Dashboard /</a>
+                  </li>
+                  <li class="text-primary">Performance</li>
+                </ol>
+              </nav>
+            </div>
+
+            <div class="flex gap-8">
               <div
-                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <h2 class="text-title-md2 font-bold text-black dark:text-cement">
-                  Performance
-                </h2>
-                <nav>
-                  <ol class="flex items-center gap-2">
-                    <li>
-                      <a class="font-medium" href="index.html">Dashboard /</a>
-                    </li>
-                    <li class="text-primary">Performance</li>
-                  </ol>
-                </nav>
-              </div>
-
-              <div class="flex gap-8">
-                <div
-                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div class="stars" data-rating="4"></div>
-                  <div>
-                    <h4 class="text-black dark:text-cement">
-                      This is because it is performing good
-                    </h4>
-                  </div>
-                </div>
-                <div
-                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div>
-                    <h5>Calculations of Star rating</h5>
-                  </div>
-                </div>
-
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark">
+                <div class="stars" data-rating></div>
                 <div>
-                  <div
-                    class="m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark"
-                  >
-                    <h2>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Eum laboriosam reprehenderit rem adipisci sit facere
-                      mollitia modi porro consectetur saepe.
-                    </h2>
-                    <h2>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Eum laboriosam reprehenderit rem adipisci sit facere
-                      mollitia modi porro consectetur saepe.
-                    </h2>
-                    <h2>
-                      Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                      Eum laboriosam reprehenderit rem adipisci sit facere
-                      mollitia modi porro consectetur saepe.
-                    </h2>
-                  </div>
+                  <h4 class="text-black dark:text-cement">
+                    This is because it is performing good
+                  </h4>
                 </div>
               </div>
               <div
-                class="mass-shadow hovering m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark mb-6"
-
-              >
-                <div class="w-full">
-                  <div id="areachart"></div>
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark">
+                <div>
+                  <h5>Calculations of Star rating</h5>
                 </div>
               </div>
+
               <div>
                 <div
-                  class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark hovering mb-6"
-                >
-                  <div class="col-md-7">
-                    <button id="combineButton">Download Chart</button>
-                    <div id="chartsContainer">
-                      <div id="progress1"></div>
-                      <div id="progress2"></div>
-                      <div id="progress3"></div>
-                    </div>
+                  class="m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark">
+                  <h2>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Eum laboriosam reprehenderit rem adipisci sit facere
+                    mollitia modi porro consectetur saepe.
+                  </h2>
+                  <h2>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Eum laboriosam reprehenderit rem adipisci sit facere
+                    mollitia modi porro consectetur saepe.
+                  </h2>
+                  <h2>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Eum laboriosam reprehenderit rem adipisci sit facere
+                    mollitia modi porro consectetur saepe.
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div
+              class="mass-shadow hovering m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark mb-6">
+              <div class="w-full">
+                <div id="areachart"></div>
+              </div>
+            </div>
+            <div>
+              <div
+                class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark hovering mb-6">
+                <div class="col-md-7">
+                  <button id="combineButton">Download Chart</button>
+                  <div id="chartsContainer">
+                    <div id="progress1"></div>
+                    <div id="progress2"></div>
+                    <div id="progress3"></div>
                   </div>
                 </div>
               </div>
-              <div
-                class="mass-shadow hovering flex content-center max-w-fit rounded-sm border border-stroke dark:border-none dark:bg-boxdark"
-              >
+            </div>
+            <div
+              class="mass-shadow hovering flex content-center max-w-fit rounded-sm border border-stroke dark:border-none dark:bg-boxdark">
               <div class="m-3 p-10 dark:bg-boxdark">
                 <h5>Heat</h5>
                 <h5>Requests</h5>
@@ -118,29 +107,36 @@
                 <h5>Requests</h5>
                 <h5>Requests</h5>
               </div>
-                <div id="chart"></div>
-              </div>
+              <div id="chart"></div>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script>
-      const s = io("http://localhost:3001");
+  <script>
+    const s = io("http://localhost:3001");
 
-      s.on("connect", () => {
-        // console.log("You connected to Server : " + s.id);
-      });
-
-      s.on('operatingSystem', logDataValue => {
-        // console.log(JSON.stringify(logDataValue));
-      })
-
-
+    s.on("connect", () => {
+      // console.log("You connected to Server : " + s.id);
+    });
+    s.on("totalStars", (event) => {
+      console.log("Stars : ", (event.data.total_stars));
+      const starValue = event.data.total_stars;
       const stars = document.querySelector(".stars");
-      const rating = parseInt(stars.getAttribute("data-rating"));
-      stars.style.setProperty("--rating", (rating / 5) * 100 + "%");
-    </script>
-  </body>
+      stars.style.setProperty("--rating", ((starValue) / 1) + "%");
+    });
+
+    s.on('operatingSystem', logDataValue => {
+      // console.log(JSON.stringify(logDataValue));
+    })
+
+
+    // const stars = document.querySelector(".stars");
+    // const rating = parseInt(stars.getAttribute("data-rating"));
+    // stars.style.setProperty("--rating", (rating / 5) * 100 + "%");
+  </script>
+</body>
+
 </html>
