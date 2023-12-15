@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200;400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +8,7 @@
 @layer base {
   body {
     /* @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body; */
-    font-family: Inter, sans-serif;
+    font-family: 'Lexend', sans-serif;
   }
 }
 
@@ -283,7 +284,6 @@ span.flatpickr-weekday,
   width: 35%;
   margin-left: 60px;
   text-align: center;
-  border-left: #e6e4e4 1px solid;
 }
 
 .form-group {
@@ -325,15 +325,15 @@ span.flatpickr-weekday,
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #7a00ff;
-  border: #f9ca24 5px solid;
+  background: #8e61bd;
+  border: #cdb4d8 5px solid;
   cursor: pointer;
   -webkit-transition: background 0.15s ease-in-out;
   transition: background 0.15s ease-in-out;
 }
 
 .range__slider [type="range"]::-webkit-slider-thumb:hover {
-  background: #f0932b;
+  background: #b22bf0;
 }
 
 .range__slider [type="range"]::-moz-range-thumb {
@@ -341,15 +341,15 @@ span.flatpickr-weekday,
   height: 20px;
   border: 0;
   border-radius: 50%;
-  background: #f0932b;
-  border: #f9ca24 5px solid;
+  background: #cc2bf0;
+  border: #c8bdd2 5px solid;
   cursor: pointer;
   -webkit-transition: background 0.15s ease-in-out;
   transition: background 0.15s ease-in-out;
 }
 
 .range__slider [type="range"]::-moz-range-thumb:hover {
-  background: #f9ca24;
+  background: #c724f9;
 }
 
 /* remove border */
@@ -2417,6 +2417,15 @@ input[type="search"]::-webkit-search-results-decoration {
 .cr8dw {
   margin-bottom: 1.5rem;
 }
+.cr8dw2 {
+  /* --tw-shadow: 0 25px 50px -12px red; */
+  box-shadow: var(--tw-shadow);
+}
+
+.cr8dw-dup {
+  /* margin-bottom: 1.5rem; */
+  margin-top: 30px;
+}
 
 .cpvtt {
   margin-bottom: 2rem;
@@ -3418,7 +3427,10 @@ input[type="search"]::-webkit-search-results-decoration {
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
-
+.colil2 {
+  background: rgb(186,119,249);
+background: linear-gradient(90deg, rgba(186,119,249,1) 0%, rgba(175,90,255,1) 100%);
+}
 .cfcmr {
   --tw-gradient-to: rgb(226 232 240 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from),
@@ -4177,6 +4189,10 @@ input[type="search"]::-webkit-search-results-decoration {
 .cfhua {
   background: linear-gradient(#a855f7, #a855f7) padding-box,
     linear-gradient(#a855f7, #e9d5ff 75%, transparent 100%) border-box;
+}
+.cfhua2 {
+  background: linear-gradient(#f75555, #f75555) padding-box,
+    linear-gradient(#f75555, #ffd5d5 75%, transparent 100%) border-box;
 }
 
 .ce7ho {
@@ -6020,4 +6036,8 @@ header h2 {
   .chatbot header span {
     display: block;
   }
+}
+
+.dropshadow{
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(157, 0, 255, 0.521) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }

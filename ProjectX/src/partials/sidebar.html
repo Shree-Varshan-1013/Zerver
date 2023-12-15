@@ -495,6 +495,7 @@
       dbName: Alpine.$persist("sample"),
       dynamicValues: Alpine.$persist(['Server1']),
       verified: Alpine.$persist(false),
+      email: Alpine.$persist(null),
       updateDynamicValues: server => {
         
         const dynamicValues = Alpine.store('global').dynamicValues;
@@ -529,6 +530,46 @@
             toastContainer.style.display = 'none';
           }, 3000); 
           if(label === "success"){
+              Alpine.store('global').dbName = server;
+              window.location.href = "dashboard.html";
+          }
+  };
+  
+          const sock = io('http://localhost:3001');
+          // console.log(Alpine.store('global').object);
+          // Alpine.store('global').object.emit('getServer', server);
+          sock.emit("getServer", server);
+          console.log("mapla  " + server);
+
+          sock.on('getResponse', (res) => {
+            console.log("--------- " + res + " ==========")
+            console.log(typeof(res));
+            
+            if(res){
+              Alpine.store('global').updateDynamicValues(server);
+              showToast('success-msg', 'success');
+            }
+            else{
+              showToast('error-msg', 'error');
+            }
+            
+          }); 
+
+        },
+      checkDatabaseAndMonitorSave: (server, email) => {
+
+        const showToast = (containerId, label) => {
+          
+          const toastContainer = document.getElementById(containerId);
+          toastContainer.style.display = 'block';
+   
+          
+          setTimeout(() => {
+            toastContainer.style.display = 'none';
+          }, 3000); 
+          if(label === "success"){
+              Alpine.store('global').dbName = server;
+              Alpine.store('global').email = email;
               window.location.href = "dashboard.html";
           }
   };
@@ -561,7 +602,7 @@
     // if(verified){
       //     Alpine.store('global').updateDynamicValues();
       //   }
-      Alpine.store('global').getDbName();
+      // Alpine.store('global').getDbName();
   });
   
   </script>
