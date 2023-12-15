@@ -184,8 +184,8 @@ try {
 
   //check and emit logtable data in sameorder
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-  // await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
-  // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+  await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+  setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
   await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
@@ -460,7 +460,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
     const collection = db.collection(collectionName);
 
     const startDate = new Date('2023-12-10T12:00:00.000Z');
-    const endDate = new Date('2023-12-10T14:00:00.000Z');
+    const endDate = new Date('2023-12-20T14:00:00.000Z');
 
     const result = await collection.find({
       timestamp: {
