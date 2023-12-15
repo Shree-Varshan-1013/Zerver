@@ -1,10 +1,10 @@
 var options = {
     series: [{
       name: 'success',
-      data: [44, 55, 41, 67, 22, 43 ]    
+      data: []    
     }, {
       name: 'failed',
-      data: [13, 23, 20, 8, 13, 27]
+      data: []
     }],
     chart: {
       type: 'bar',

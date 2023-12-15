@@ -23,8 +23,9 @@ function updateUserEstimationChart(data) {
       data: data.seriesData
     }],
     chart: {
+      height: 450,
+      width: 800,
       type: 'area',
-      height: 350,
       zoom: {
         enabled: false
       }
@@ -71,7 +72,8 @@ function updateUserEstimationChart(data) {
   chart.render();
 }
 
-
-
-// Call the function to fetch and update the chart
-fetchUserEstimationData();
+document.addEventListener('DOMContentLoaded', function () {
+  // Your chart initialization code here
+  fetchUserEstimationData();
+  // fetchUserAndLogsEstimationData();
+});

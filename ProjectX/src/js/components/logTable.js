@@ -40,34 +40,43 @@ socket.on('logTableDashboardReverse', (data) => {
 
 
 
-  
+function sortTable(columnIndex) {
+  // Check if sorting is already in progress
+  if (sortingInProgress) {
+    return;
+  }
 
-  function sortTable(columnIndex) {
-    // Check if sorting is already in progress
-    if (sortingInProgress) {
-      return;
-    }
+  // Set the flag to indicate sorting is in progress
+  sortingInProgress = true;
 
-    // Set the flag to indicate sorting is in progress
-    sortingInProgress = true;
+  // Determine the new sorting state based on the current state
+  if (sortingState === 'None') {
+    sortingState = 'A_Z';
+  } else if (sortingState === 'A_Z') {
+    sortingState = 'Z_A';
+  } else {
+    sortingState = 'None';
+  }
 
-    // Determine the new sorting state based on the current state
-    if (sortingState === 'None') {
-      sortingState = 'A_Z';
-    } else if (sortingState === 'A_Z') {
-      sortingState = 'Z_A';
-    } else {
-      sortingState = 'None';
-    }
+  // Update the content of the <p> tag based on sorting state
+  updateParagraphContent(columnIndex, sortingState);
 
-    // Update the content of the <p> tag based on sorting state
-    updateParagraphContent(columnIndex, sortingState);
+  // Your existing sorting logic here
+  const table = document.querySelector('table');
+  const rows = Array.from(table.rows).slice(1); // Exclude the header row
+  const isAscending = sortingState === 'A_Z';
 
-    // Your existing sorting logic here
-    const table = document.querySelector('table');
-    const rows = Array.from(table.rows).slice(1); // Exclude the header row
-    const isAscending = table.classList.contains('asc');
+  // If sorting state is 'None', reset to the original order
+  if (sortingState === 'None') {
+    // Reset the sorting order for all header cells
+    document.querySelectorAll('th[onclick]').forEach(cell => {
+      cell.classList.remove('asc', 'desc');
+      cell.querySelector('p').textContent = '(None)';
+    });
 
+    // Update the table with the original order
+    rows.forEach(row => table.appendChild(row));
+  } else {
     // Sort the rows based on the selected column
     rows.sort((a, b) => {
       const aValue = a.cells[columnIndex].textContent.trim();
@@ -84,38 +93,40 @@ socket.on('logTableDashboardReverse', (data) => {
 
     // Toggle sorting order for the specific header cell
     const headerCell = document.querySelectorAll('th')[columnIndex];
-    headerCell.classList.toggle('asc', !isAscending);
+    headerCell.classList.toggle('asc', isAscending);
+    headerCell.classList.toggle('desc', !isAscending);
 
     // Update the table with the sorted rows
     rows.forEach(row => table.appendChild(row));
-
-    // Reset the flag after sorting is complete
-    sortingInProgress = false;
   }
 
-  function updateParagraphContent(columnIndex, sortingState) {
-    // Get the <p> tag adjacent to the header
-    const paragraphTag = document.querySelectorAll('th')[columnIndex].querySelector('p');
+  // Reset the flag after sorting is complete
+  sortingInProgress = false;
+}
 
-    if (sortingState === 'A_Z') {
-      paragraphTag.textContent = '(A_Z)';
-    } else if (sortingState === 'Z_A') {
-      paragraphTag.textContent = '(Z_A)';
-    } else {
-      paragraphTag.textContent = '(None)';
-    }
+function updateParagraphContent(columnIndex, sortingState) {
+  // Get the <p> tag adjacent to the header
+  const paragraphTag = document.querySelectorAll('th')[columnIndex].querySelector('p');
+
+  if (sortingState === 'A_Z') {
+    paragraphTag.textContent = '(A_Z)';
+  } else if (sortingState === 'Z_A') {
+    paragraphTag.textContent = '(Z_A)';
+  } else {
+    paragraphTag.textContent = '(None)';
   }
+}
 
-  // Add event listeners for each table header
-  document.addEventListener('DOMContentLoaded', function () {
-    const headerCells = document.querySelectorAll('th[onclick]');
-    headerCells.forEach((cell, index) => {
-      cell.addEventListener('click', function () {
-        // Call the sortTable function with the column index
-        sortTable(index);
-      });
+// Add event listeners for each table header
+document.addEventListener('DOMContentLoaded', function () {
+  const headerCells = document.querySelectorAll('th[onclick]');
+  headerCells.forEach((cell, index) => {
+    cell.addEventListener('click', function () {
+      // Call the sortTable function with the column index
+      sortTable(index);
     });
   });
+});
 
 // Function to update the log table based on data
 function updateLogTable(data) {

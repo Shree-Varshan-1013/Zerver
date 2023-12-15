@@ -67,7 +67,7 @@
                 <div class="p-5 items-center rounded-sm w-[50%] flex flex-col" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                   <p class="text-black dark:text-cement">Requests</p>
                   <!-- <h1 id="requestCount" class="text-green-status font-extrabold text-4xl">2000</h1> -->
-                  <h1 id="dataValue" class="text-green-status font-extrabold text-4xl"></h1>
+                  <h1 id="dataValue" class="text-green-status font-extrabold text-4xl">0</h1>
                 </div>
                 <div class="p-5 ml-5  items-center rounded-sm w-[50%] flex flex-col" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;">
                   <p class="text-black dark:text-cement">Dummy</p>
@@ -186,17 +186,17 @@
   <script src="./js/components/liveDashboard.js"></script>
   <script src="./js/components/liveDashboard1.js"></script>
   <script>
-    const socketer = io('http://localhost:3001');
+    // const socketer = io('http://localhost:3001');
 
     // socketer.on('logData', (data) => {
     //   console.log(data);
     // })
-    socketer.on('dataFromServer', (data) => {
-      // console.log(data);
-      if (data && data.value !== undefined) {
-        document.getElementById('dataValue').innerText = `${data.value}`;
-      }
-    });
+    // socketer.on('dataFromServer', (data) => {
+    //   // console.log(data);
+    //   if (data && data.value !== undefined) {
+    //     document.getElementById('dataValue').innerText = `${data.value}`;
+    //   }
+    // });
 
   </script>
   <!-- <script src="./js/components/logTableScript.js"></script> -->

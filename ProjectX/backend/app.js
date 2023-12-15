@@ -130,12 +130,12 @@ io.on('connection', async (socket) => {
 
    // total request and changes in graph
    setupChangeStreamCount('server1_clf', 'basic_data', 'request');
-  //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
+   await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
    //check and emit logtable data in sameorder
     // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-    // await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
-    // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+    await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
     // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
     // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
     await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
@@ -352,7 +352,7 @@ io.on('connection', async (socket) => {
 
 
 //  ========== logs and Users count =============
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   console.log('A user connected');
 
 
@@ -391,10 +391,62 @@ socket.on('requestUserAndLogsForecast', async () => {
     client.close();
   } catch (error) {
     console.error(error);
-    // Emit an error event to the connected client
     socket.emit('error', { message: 'Internal Server Error' });
-  }
+  };
 });
+
+
+//  ========== log graph at logs page value ======= 
+const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const collection = db.collection(collectionName);
+
+    const startDate = new Date('2023-12-10T12:00:00.000Z');
+    const endDate = new Date('2023-12-10T14:00:00.000Z');
+
+    const result = await collection.find({
+      timestamp: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).toArray();
+    // this is the request count in live dashboard
+    const total_logs = await collection.aggregate([
+      {
+        $match: {
+          timestamp: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalLogsCount: {
+            $sum: '$logs_count',
+          },
+        },
+      },
+    ]).toArray();
+    
+    const sumOfTotalLogs = total_logs.length > 0 ? total_logs[0].totalLogsCount : 0;
+
+    const chartData = {
+      data: result, 
+    };
+
+    io.emit(eventName, chartData);
+    io.emit('total_logs_count', sumOfTotalLogs);
+    console.log(chartData);
+  } catch (error) {
+    console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
+  }
+};
+
+// Example usage
+fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
 
 
 

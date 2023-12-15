@@ -14,7 +14,7 @@ socket.on('logData', (data) => {
     // Check if data.data is an array before using map
     if (Array.isArray(data.data)) {
       // Take the first 25 logs
-      const logsToDisplay = data.data.slice(0, 25);
+      const logsToDisplay = data.data.slice(0, 20);
     
       // Map over all logs and create HTML rows
       const rows = logsToDisplay.map(log => {
@@ -47,59 +47,66 @@ socket.on("summaryData", (data) => {
   }
 });
 
-socket.on("request", (data) => {
-  console.log("Receied counts", JSON.stringify(data));
+socket.on('total_logs_count', (data) => {
+  const total_logs = document.getElementById('dataValue');
+  if(total_logs) {
+    total_logs.textContent = data;
+  }
+}) 
+
+// socket.on("request", (data) => {
+//   console.log("Receied counts", JSON.stringify(data));
   
-})
+// })
 
 
 // const socket = io('http://localhost:3001');
 
 // Retrieve the count from local storage on page load
-documentsAddedCount = parseInt(localStorage.getItem('documentsAddedCount')) || 0;
+// documentsAddedCount = parseInt(localStorage.getItem('documentsAddedCount')) || 0;
 
-// Update the UI with the initial count
-updateUI(documentsAddedCount);
+// // Update the UI with the initial count
+// updateUI(documentsAddedCount);
 
-socket.on('request', (data) => {
-  console.log('Received counts', JSON.stringify(data));
+// socket.on('request', (data) => {
+//   console.log('Received counts', JSON.stringify(data));
 
-  // Update documentsAddedCount based on the received data
-  documentsAddedCount += data.addedDocumentsCount;
+//   // Update documentsAddedCount based on the received data
+//   documentsAddedCount += data.addedDocumentsCount;
 
-  // Reset the count to zero at 12:00 AM
-  const now = new Date();
-  const isMidnight = now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0;
-  if (isMidnight) {
-    documentsAddedCount = 0;
-  }
+//   // Reset the count to zero at 12:00 AM
+//   const now = new Date();
+//   const isMidnight = now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0;
+//   if (isMidnight) {
+//     documentsAddedCount = 0;
+//   }
 
-  // Save the updated count to local storage
-  localStorage.setItem('documentsAddedCount', documentsAddedCount);
+//   // Save the updated count to local storage
+//   localStorage.setItem('documentsAddedCount', documentsAddedCount);
 
-  // Handle the updated count as needed, e.g., update the UI
-  updateUI(documentsAddedCount);
-});
+//   // Handle the updated count as needed, e.g., update the UI
+//   updateUI(documentsAddedCount);
+// });
 
-// Function to update the UI with the current count
-function updateUI(count) {
-  // Implement your UI update logic here
-  // console.log('Current count:', count);
-  const requestElement = document.getElementById("dataValue");
+// // Function to update the UI with the current count
+// function updateUI(count) {
+//   // Implement your UI update logic here
+//   // console.log('Current count:', count);
+//   const requestElement = document.getElementById("dataValue");
 
-  // Update the content of the <p> tag with the summary property from the received data
-  if (requestElement) {
-    requestElement.textContent = count;
-  }
-}
+//   // Update the content of the <p> tag with the summary property from the received data
+//   if (requestElement) {
+//     requestElement.textContent = count;
+//   }
+// }
 
-function getCurrentDay() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+// function getCurrentDay() {
+//   const today = new Date();
+//   const year = today.getFullYear();
+//   const month = String(today.getMonth() + 1).padStart(2, '0');
+//   const day = String(today.getDate()).padStart(2, '0');
+//   return `${year}-${month}-${day}`;
+// }
 
   
   
@@ -119,21 +126,21 @@ function getCurrentDay() {
   const statusText = document.getElementById('statusText');
   
   // Function to update the status
-  function updateStatus(isOn) {
-      if (isOn) {
-          statusIndicator.classList.remove('bg-red-status');
-          statusIndicator.classList.add('bg-green-status');
-          statusText.textContent = 'ON';
-      } else {
-          statusIndicator.classList.remove('bg-green-status');
-          statusIndicator.classList.add('bg-red-status');
-          statusText.textContent = 'OFF';
-      }
-  }
+  // function updateStatus(isOn) {
+  //     if (isOn) {
+  //         statusIndicator.classList.remove('bg-red-status');
+  //         statusIndicator.classList.add('bg-green-status');
+  //         statusText.textContent = 'ON';
+  //     } else {
+  //         statusIndicator.classList.remove('bg-green-status');
+  //         statusIndicator.classList.add('bg-red-status');
+  //         statusText.textContent = 'OFF';
+  //     }
+  // }
   
   
-  setTimeout(() => {
-      updateStatus(true);
-      // change();
-  }, 2000);
+  // setTimeout(() => {
+  //     updateStatus(true);
+  //     // change();
+  // }, 2000);
   
