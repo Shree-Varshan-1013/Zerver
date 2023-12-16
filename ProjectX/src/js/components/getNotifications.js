@@ -1,4 +1,3 @@
-
 import io from "socket.io-client";
 const getNotifications = () => {
     const sock = io('http://localhost:3001');
@@ -7,12 +6,13 @@ const getNotifications = () => {
     sock.on('getNotifications', data => {
         console.log(data);
     })
-
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('darkMode', {
-            
+    
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('notification', {
+                messages: Alpine.$persist([])
+            })
+            console.log(Alpine.store('notification').messages);
         })
-    })
 }
 
 export default getNotifications;

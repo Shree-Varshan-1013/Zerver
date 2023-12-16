@@ -127,6 +127,11 @@
               <a
                 class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                 href="customize.html"
+                x-init="$watch('selected', value => {
+                  if(value === 'Customize'){
+                    window.location.href = 'customize.html'
+                  }
+                })" 
                 @click.prevent="selected = (selected === 'Customize' ? '':'Customize')"
                 :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Customize') }"
               >
@@ -496,6 +501,13 @@
       dynamicValues: Alpine.$persist(['Server1']),
       verified: Alpine.$persist(false),
       email: Alpine.$persist(null),
+      customize: ["hllo"],
+      checkIfSelected: () => {
+        if(!Alpine.store('global').customize){
+          window.location.href = "customize.html";
+        }
+      }
+      ,
       updateDynamicValues: server => {
         
         const dynamicValues = Alpine.store('global').dynamicValues;
