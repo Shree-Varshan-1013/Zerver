@@ -2,9 +2,15 @@ const socket = io('http://localhost:3001');
 
 let sortingState = 'None';
 let sortingInProgress = false;
+let logsData = [];
 
 socket.on('logTableDashboardReverse', (data) => {
   console.log("Received LogTableValue:", JSON.stringify(data));
+  logsData = data.data.map(log => {
+    // Exclude the "_id" property
+    const { _id, ...logWithoutId } = log;
+    return logWithoutId;
+  });
 
   // Check if sorting is in progress
   if (sortingInProgress) {
@@ -152,33 +158,31 @@ function updateLogTable(data) {
   }
 }
 
-function toggleSocketConnection(isConnected) {
-  if (isConnected) {
-    socket.connect();
-  } else {
-    socket.disconnect();
-  }
-}
+// function toggleSocketConnection(isConnected) {
+//   if (isConnected) {
+//     socket.connect();
+//   } else {
+//     socket.disconnect();
+//   }
+// }
 
-// Function to reset the search, time inputs, and disable time picker
 function resetSearch() {
-  document.getElementById('search').value = ''; // Reset the search input
-  document.getElementById('searchColumn').value = 'all'; // Reset the column dropdown
+  document.getElementById('search').value = ''; 
+  document.getElementById('searchColumn').value = 'all';
 
   const startDatetimeInput = document.querySelector('input[name="start"]');
   const endDatetimeInput = document.querySelector('input[name="end"]');
 
-  startDatetimeInput.value = ''; // Clear the start datetime input
-  endDatetimeInput.value = ''; // Clear the end datetime input
+  startDatetimeInput.value = '';
+  endDatetimeInput.value = '';
 
-  startDatetimeInput.disabled = true; // Disable the start datetime input
-  endDatetimeInput.disabled = true; // Disable the end datetime input
-  toggleSocketConnection(true);
+  startDatetimeInput.disabled = true;
+  endDatetimeInput.disabled = true;
+  // toggleSocketConnection(true);
 
-  renderTable('', 'all'); // Render the table without any search query
+  renderTable('', 'all');
 }
 
-// Function to handle search based on query
 function handleSearch() {
   const searchColumn = document.getElementById('searchColumn').value;
   const searchQuery = document.getElementById('search').value.toLowerCase();
@@ -202,22 +206,17 @@ function handleTimestampChange() {
   });
 }
 
-// Function to render the table based on search query and column
-let logsData = []; // Declare a global variable to store log data
+
 
 // Event listener for the logTableDashboard event
 socket.on('logTableDashboard', (data) => {
   // console.log("Received LogTableValue:", JSON.stringify(data));
 
   // Assuming data.data contains the log information
-  logsData = data.data.map(log => {
-    // Exclude the "_id" property
-    const { _id, ...logWithoutId } = log;
-    return logWithoutId;
-  });
+  
 
   // Call the renderTable function with the appropriate parameters
-  renderTable('', 'all', logsData);
+  // renderTable('', 'all', logsData);
 });
 
 // Function to render the table based on search query and column
@@ -296,7 +295,7 @@ renderTable('', 'all', logsData);
 document.getElementById('search').addEventListener('input', function () {
   const searchQuery = this.value.trim();
   const searchColumn = document.getElementById('searchColumn').value;
-  toggleSocketConnection(false);
+  // toggleSocketConnection(false);
   renderTable(searchQuery, searchColumn,logsData);
 });
 

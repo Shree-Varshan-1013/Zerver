@@ -500,7 +500,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 
     io.emit(eventName, chartData);
     io.emit('total_logs_count', sumOfTotalLogs);
-    // console.log(chartData);
+    console.log("logPage Graph",chartData);
     client.close();
   } catch (error) {
     console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
