@@ -15,7 +15,8 @@ var options = {
       legend: {
         position: 'bottom'
       }
-    }
+    },
+   
   }]
   };
 
