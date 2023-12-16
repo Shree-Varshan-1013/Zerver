@@ -144,7 +144,7 @@ const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName) => 
     // Use the countDocuments method to get the total count of documents in the collection
     const dataSize = await logsCollection.countDocuments();
 
-    console.log(`Got data count from ${dbName}:`, dataSize);
+    // console.log(`Got data count from ${dbName}:`, dataSize);
 
     io.emit(eventName, { count: dataSize });
   } catch (error) {
@@ -153,7 +153,7 @@ const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName) => 
 };
 
 io.on('connection', async (socket) => {
-  console.log(`Client Connected: ${socket.id}`);
+  // console.log(`Client Connected: ${socket.id}`);
 
   socket.on("getDBName", (dbName) => {
     console.log("database name " + dbName);
@@ -166,7 +166,7 @@ io.on('connection', async (socket) => {
   })
 
   socket.on('checkIp', async (ip) => {
-    console.log(ip + "==== ip")
+    // console.log(ip + "==== ip")
     const res = await fetchDataByCompareIp("server1_clf", "ip_status", "ipStatus", ip)  
     io.emit('ipStatus', res);
   }
@@ -199,9 +199,9 @@ try {
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
   await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
-  await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
-  await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
-  await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
+  // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
+  // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
+  // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
 
 } catch (error) {
   console.error("Error during data fetching and emission:", error);
@@ -282,7 +282,7 @@ const setupChangeStreamCount = async (dbName, collectionName, eventName) => {
 
 // ============ip Analysis data =============
 io.on("connection", (socket) => {
-  console.log("Socket connected:", socket.id);
+  // console.log("Socket connected:", socket.id);
 
   socket.on("fetchChartData", async (data) => {
     const { ipAddress } = data;
@@ -344,7 +344,7 @@ io.on("connection", (socket) => {
 //  ========== user forecast ===========
 
 io.on('connection', async (socket) => {
-  console.log(`Client Connected to userforecast: ${socket.id}`);
+  // console.log(`Client Connected to userforecast: ${socket.id}`);
 
   try {
     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
@@ -353,7 +353,7 @@ io.on('connection', async (socket) => {
     // await connectToDatabases();
     const db = dbInstance.db('server1_clf');
     const collection = db.collection('cost_estimation_forecast');
-    console.log("above the result page");
+    // console.log("above the result page");
 
     // Perform aggregation to calculate the monthly average
     const result = await collection.aggregate([
@@ -409,7 +409,7 @@ io.on('connection', async (socket) => {
 
 //  ========== logs and Users count =============
 io.on('connection', async (socket) => {
-  console.log('A user connected');
+  // console.log('A user connected');
 
 
   // Example: Sending user data when requested
@@ -442,7 +442,7 @@ io.on('connection', async (socket) => {
 
       // Emit user data to the connected client with the correct structure
       socket.emit('userAndLogsForecast', { userForecast: userData, logsForecast: logData });
-      console.log('Data sent from 2023 until the future available date');
+      // console.log('Data sent from 2023 until the future available date');
 
       client.close();
     } catch (error) {
@@ -456,10 +456,12 @@ io.on('connection', async (socket) => {
 //  ========== log graph at logs page value ======= 
 const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
   try {
+    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+    const client = await MongoClient.connect(mongouri);
     const db = dbInstance.db(dbName);
     const collection = db.collection(collectionName);
 
-    const startDate = new Date('2023-12-10T12:00:00.000Z');
+    const startDate = new Date('2023-12-08T12:00:00.000Z');
     const endDate = new Date('2023-12-20T14:00:00.000Z');
 
     const result = await collection.find({
@@ -496,7 +498,8 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 
     io.emit(eventName, chartData);
     io.emit('total_logs_count', sumOfTotalLogs);
-    console.log(chartData);
+    // console.log(chartData);
+    client.close();
   } catch (error) {
     console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
   }
@@ -508,6 +511,62 @@ fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
 
 
   socket.on('disconnect', () => {
-    console.log('User disconnected');
+    // console.log('User disconnected');
   });
+});
+
+
+
+
+//  =========== top 5 IP's ==============
+io.on('requestTopIPs', async () => {
+  try {
+    console.log("Request received for top ip");
+    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+    const client = await MongoClient.connect(mongouri);
+
+    const dbInstance = client.db('server1_clf');
+    const logsCollection = dbInstance.collection('basic_data'); // Replace with your actual collection name
+
+    // Update the date range for fetching data from 2023 until the future available date
+    const startOf2023 = new Date('2023-12-04T00:00:00.000Z');
+    const endOfFuture = new Date('2023-12-31T00:00:00.000Z'); // You can adjust this date accordingly
+
+    // Aggregate to count the occurrences of each IP address
+    const pipeline = [
+      {
+        $match: {
+          ds: {
+            $gte: startOf2023,
+            $lte: endOfFuture,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: '$ip_address',
+          count: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { count: -1 }, // Sort in descending order to get the top IPs first
+      },
+      {
+        $limit: 5, // Get the top 5 IPs
+      },
+    ];
+
+    const topIPs = await logsCollection.aggregate(pipeline).toArray();
+
+    // Emit top IPs to the connected client
+    socket.emit('topIPs', topIPs);
+    console.log(topIPs);
+    // console.log('Top IPs sent from 2023 until the future available date');
+
+    client.close();
+  } catch (error) {
+    console.error(error);
+    // Emit an error event to the connected client
+    socket.emit('error', { message: 'Internal Server Error' });
+  }
 });
