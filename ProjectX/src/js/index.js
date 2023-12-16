@@ -4,7 +4,6 @@ import "../css/style.css";
 
 import Alpine from "alpinejs";
 import persist from '@alpinejs/persist'
-import io from "socket.io-client";
 import flatpickr from "flatpickr";
 import performance from "./components/performance";
 import chart01 from "./components/chart-01";
@@ -20,6 +19,7 @@ import animatedBar from "./components/animatedbar";
 import { followingDotCursor } from "./components/followingDotCursor";
 import securityLine from "./components/securitylinechart";
 import healthPie from "./components/healthpie";
+import getNotifications from "./components/getNotifications";
 // import healthBar from "./components/animatedbar";
 
 Alpine.plugin(persist)
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   chart03();
   chart04();
   map01();
- 
+  getNotifications();
 });
 
 if(window.location.pathname === '/'){
