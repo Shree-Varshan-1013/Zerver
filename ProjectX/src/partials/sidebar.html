@@ -539,7 +539,6 @@
           // console.log(Alpine.store('global').object);
           // Alpine.store('global').object.emit('getServer', server);
           sock.emit("getServer", server);
-          console.log("mapla  " + server);
 
           sock.on('getResponse', (res) => {
             console.log("--------- " + res + " ==========")

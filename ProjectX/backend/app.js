@@ -46,8 +46,21 @@ const fetchDataAndEmitReverseArray = async (dbName, collectionName, eventName) =
 
     // Use sort to get data in reverse order based on timestamp
     const logDataValue = await logsCollection.find().sort({ timestamp: -1 }).toArray();
+// const logDataValue = await logsCollection.find().sort({ _id: -1 }).toArray();
+// console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+io.emit(eventName, { data: logDataValue });
+  } catch (error) {
+    console.error(`Error fetching data from MongoDB (${dbName}):`, error);
+  }
+};
 
-    // console.log(`Got data from MongoDB (${dbName}):`, logDataValue);
+const fetchDataAndEmitReverseArrayNotification = async (dbName, collectionName, eventName) => {
+  try {
+    const db = dbInstance.db(dbName);
+    const logsCollection = db.collection(collectionName);
+
+    const logDataValue = await logsCollection.find().sort({ _id: -1 }).toArray();
+
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error(`Error fetching data from MongoDB (${dbName}):`, error);
@@ -172,7 +185,7 @@ io.on('connection', async (socket) => {
   }
 );
 
-
+let notificationsFetched = false;
 try {
 
   await connectToDatabases();
@@ -202,6 +215,11 @@ try {
   // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
   // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
   // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
+  if (!notificationsFetched) {
+    await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
+    notificationsFetched = true;
+  }
+
 
 } catch (error) {
   console.error("Error during data fetching and emission:", error);
@@ -211,22 +229,6 @@ socket.on('disconnect', () => {
   console.log(`Client Disconnected: ${socket.id}`);
 });
 });
-
-const check = async () => {
-  const list = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", "sasad");
-  // console.log(list);
-}
-check();
-
-
-
-
-server.listen(3001, () => {
-  console.log('Server is listening on port 3001');
-});
-
-
-
 
 /// <============ integer values for  request and logTable count ========>
 
@@ -570,3 +572,8 @@ io.on('requestTopIPs', async () => {
     socket.emit('error', { message: 'Internal Server Error' });
   }
 });
+
+server.listen(3001, () => {
+  console.log('Server is listening on port 3001');
+});
+
