@@ -206,18 +206,26 @@ function handleTimestampChange() {
   });
 }
 
+// Function to filter logs based on timestamp and search query
+function filterLogsByTimestamp(logs, startTimestamp, endTimestamp, searchQuery) {
+  return logs.filter(log => {
+    // Convert log timestamp to Date object
+    const logTimestamp = new Date(log.timestamp);
 
+    // Check if the log timestamp is within the specified range
+    const isWithinRange = (!startTimestamp || logTimestamp >= startTimestamp) &&
+                          (!endTimestamp || logTimestamp <= endTimestamp);
 
-// Event listener for the logTableDashboard event
-socket.on('logTableDashboard', (data) => {
-  // console.log("Received LogTableValue:", JSON.stringify(data));
+    // Check if the search query exists in any column
+    const matchesSearchQuery = Object.values(log).some(value => {
+      return value !== undefined && value.toString().toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
-  // Assuming data.data contains the log information
-  
+    // Return true if the log satisfies both conditions
+    return isWithinRange && matchesSearchQuery;
+  });
+}
 
-  // Call the renderTable function with the appropriate parameters
-  // renderTable('', 'all', logsData);
-});
 
 // Function to render the table based on search query and column
 function renderTable(searchQuery, searchColumn, logs) {
@@ -251,10 +259,27 @@ function renderTable(searchQuery, searchColumn, logs) {
             return value !== undefined && value.toString().toLowerCase().includes(searchQuery.toLowerCase());
           });
         } else if (searchColumn === 'timestamp') {
-          const st_time = new Date(document.getElementById('st-time').value);
-          const en_time = new Date(document.getElementById('en-time').value);
-          const logTimestamp = new Date(log['timestamp']);
-          return logTimestamp >= st_time && logTimestamp <= en_time;
+          // Get start and end timestamps from the date-time inputs
+          const startTimestampInput = document.querySelector('input[name="start"]');
+          const endTimestampInput = document.querySelector('input[name="end"]');
+          const startTimestamp = startTimestampInput.value ? new Date(startTimestampInput.value) : null;
+          const endTimestamp = endTimestampInput.value ? new Date(endTimestampInput.value) : null;
+    
+          // Use the filter function for timestamp-based search
+          const filteredLogs = filterLogsByTimestamp(logs, startTimestamp, endTimestamp, searchQuery);
+    
+          // Populate the table with filtered logs, excluding log_id and log_time
+          filteredLogs.forEach(log => {
+            const row = tableBody.insertRow();
+    
+            // Exclude log_id and log_time from the displayed columns
+            const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+    
+            columnsToDisplay.forEach(key => {
+              const cell = row.insertCell();
+              cell.textContent = log[key];
+            });
+          });
         }else {
           // if (searchColumn === 'request_url') {
           //   // For 'requested_url' column, check if the search query is present in the URL
