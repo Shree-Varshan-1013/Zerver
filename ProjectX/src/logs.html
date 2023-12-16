@@ -86,7 +86,7 @@
                   class="shadow-default m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-boxdark"
                 >
                   <div class="m-10">
-                    <div class="bg-gray-700 mt-3 flex text-black">
+                    <div class="bg-gray-700 mt-3 flex text-black bg-transparent">
                       <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
                       <select
                         id="searchColumn"
@@ -105,27 +105,29 @@
                         <option value="status_code">Status Code</option>
                       </select>
                       <!-- <div class="flex bg-transparent"> -->
-                      <input
+                      <div class="relative">
+                        <input
                         type="text"
                         id="search"
-                        class="border-gray-700 ml-10 border text-black"
+                        class="border-gray-700 pl-10 pr-4 border text-black"
                         placeholder="Search..."
-                      />
-                      <svg
-                        class="text-gray-800 reset-search-svg h-6 w-6 p-1 dark:text-cement"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 14 14"
-                      >
-                        <path
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                         />
-                      </svg>
+                          <svg
+                            class="absolute top-2 left-[88%]  text-gray-800 reset-search-svg h-6 w-6 p-1 bg-white "
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 14 14"
+                          >
+                            <path
+                              stroke="currentColor"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                            />
+                          </svg>
+                      </div>
                     </div>
                   </div>
                   <!-- date inputs -->
