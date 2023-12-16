@@ -461,7 +461,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const collection = db.collection(collectionName);
 
-    const startDate = new Date('2023-12-08T12:00:00.000Z');
+    const startDate = new Date('2023-12-01T12:00:00.000Z');
     const endDate = new Date('2023-12-20T14:00:00.000Z');
 
     const result = await collection.find({
@@ -519,18 +519,21 @@ fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
 
 
 //  =========== top 5 IP's ==============
-io.on('requestTopIPs', async () => {
+// Connect to the server using socket.io
+io.on('connection', async (socket) => {
   try {
-    console.log("Request received for top ip");
+    console.log('New client connected');
+    // Your MongoDB connection details
     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
     const client = await MongoClient.connect(mongouri);
-
+    
+    // Your MongoDB database and collection details
     const dbInstance = client.db('server1_clf');
-    const logsCollection = dbInstance.collection('basic_data'); // Replace with your actual collection name
+    const logsCollection = dbInstance.collection('basic_data');
 
-    // Update the date range for fetching data from 2023 until the future available date
-    const startOf2023 = new Date('2023-12-04T00:00:00.000Z');
-    const endOfFuture = new Date('2023-12-31T00:00:00.000Z'); // You can adjust this date accordingly
+    // Date range for fetching data from 2023 until the future available date
+    const startOf2023 = new Date('2007-12-01T00:00:00.000Z');
+    const endOfFuture = new Date('2043-12-31T00:00:00.000Z');
 
     // Aggregate to count the occurrences of each IP address
     const pipeline = [
@@ -549,10 +552,10 @@ io.on('requestTopIPs', async () => {
         },
       },
       {
-        $sort: { count: -1 }, // Sort in descending order to get the top IPs first
+        $sort: { count: -1 },
       },
       {
-        $limit: 5, // Get the top 5 IPs
+        $limit: 5,
       },
     ];
 
@@ -560,9 +563,9 @@ io.on('requestTopIPs', async () => {
 
     // Emit top IPs to the connected client
     socket.emit('topIPs', topIPs);
-    console.log(topIPs);
-    // console.log('Top IPs sent from 2023 until the future available date');
+    console.log('Top IPs sent to the connected client');
 
+    // Close the MongoDB connection when done
     client.close();
   } catch (error) {
     console.error(error);
@@ -570,3 +573,5 @@ io.on('requestTopIPs', async () => {
     socket.emit('error', { message: 'Internal Server Error' });
   }
 });
+
+

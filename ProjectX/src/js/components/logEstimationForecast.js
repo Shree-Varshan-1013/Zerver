@@ -12,43 +12,55 @@ function updateChart(userForecast, logsForecast) {
   today.setHours(0, 0, 0, 0);
 
   var options = {
-    series: [
-      {
-        name: 'User Forecast',
-        data: userForecast.map(entry => ({
-          x: new Date(entry.ds).getTime(),
-          y: entry.yhat, // Replace with the actual property for the user value
-        })),
-      },
-      {
-        name: 'Logs Forecast',
-        data: logsForecast.map(entry => ({
-          x: new Date(entry.ds).getTime(),
-          y: entry.yhat, // Replace with the actual property for the logs value
-        })),
+  series: [
+    {
+      name: 'User Forecast',
+      data: userForecast.map(entry => ({
+        x: new Date(entry.ds).getTime(),
+        y: entry.yhat, // Replace with the actual property for the user value
+      })),
+    },
+    {
+      name: 'Logs Forecast',
+      data: logsForecast.map(entry => ({
+        x: new Date(entry.ds).getTime(),
+        y: entry.yhat, // Replace with the actual property for the logs value
+      })),
+    }
+  ],
+  chart: {
+    height: 450,
+    width: 800,
+    type: 'area'
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'smooth'
+  },
+  xaxis: {
+    type: 'datetime',
+    categories: userForecast.map(entry => new Date(entry.ds).getTime()),
+    // Add markers for the current day
+    markers: [{
+      x: today.getTime(), // Assuming 'today' is defined and represents the current day
+      strokeDashArray: 0,
+      label: {
+        borderColor: "#00E396",
+        offsetY: -10,
+        style: { color: "#00E396", background: "#00E396" },
+        text: 'Today'
       }
-    ],
-    chart: {
-      height: 450,
-      width: 800,  
-      type: 'area'
+    }]
+  },
+  tooltip: {
+    x: {
+      format: 'dd/MM/yy HH:mm'
     },
-    dataLabels: {
-      enabled: false
-    },
-    stroke: {
-      curve: 'smooth'
-    },
-    xaxis: {
-      type: 'datetime',
-      categories: userForecast.map(entry => new Date(entry.ds).getTime()),
-    },
-    tooltip: {
-      x: {
-        format: 'dd/MM/yy HH:mm'
-      },
-    },
-  };
+  },
+};
+
 
   // Check if the chart instance already exists
   if (chart1) {
