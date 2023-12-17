@@ -142,12 +142,16 @@ if (window.location.pathname === '/') {
 
 if (window.location.pathname === '/performance.html') {
   statistics();
-  progress();
+  // progress();
   performance();
 }
 
 if (window.location.pathname === '/customize.html') {
   statistics();
+  performance();
+}
+
+if (window.location.pathname === '/dashboard.html') {
   performance();
 }
 
