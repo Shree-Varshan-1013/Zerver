@@ -1,72 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script> -->
-  <!-- <link rel="stylesheet" href="../src/css/style.css" ></link> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script> -->
+    <!-- <link rel="stylesheet" href="../src/css/style.css" ></link> -->
 
-  <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
+    <!-- <script src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script> -->
 
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist"></script>
-  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@alpinejs/persist"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-  <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
-  <title>Report Generation</title>
-</head>
-<body>
-
-  <!-- <include src="" ></include> -->
-    <div >
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    <title>Report Generation</title>
+  </head>
+  <body>
+    <!-- <include src="" ></include> -->
+    <div>
       <button id="downloadPdfButton">Download PDF</button>
 
-        <h1 class="text-center font-extrabold text-4xl text-slate-700">Logs Data Report Generation</h1>
-        <h1 class="ml-[10%] font-bold">Generated At:</h1>
-        <div class="mt-6 w-4/5 ml-[10%]  flex flex-col border-2" >
-            <h1 class=" ">Recent Log Graph:</h1>
-            <div class="mt-5 pl-4 rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark" id="chart-container" style="width: 100%; height: 350px"></div>
-        </div>
-        <div class="mt-6 w-4/5 ml-[10%]  flex flex-col border-2">
-            <h1>Recent Logs:</h1>
-            <include src="./partials/logTableDemo.html"></include>
-        </div>
-        <div  class="mt-6 w-4/5 ml-[10%]  flex flex-col border-2">
-          <h1>Log Estimation:</h1>
-          <div  class="mt-5 pl-4 rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"  id="log-estimation-forecast" id="log-estimation-forecast" style="width: 100%; height: 600px"></div>
+      <h1 class="text-slate-700 text-center text-4xl font-extrabold">
+        Logs Data Report Generation
+      </h1>
+      <h1 class="ml-[10%] font-bold">Generated At:</h1>
+      <div class="mt-6 ml-[10%] flex w-4/5 flex-col border-2">
+        <h1 class="m-5 text-3xl font-bold text-lavendar3 dark:text-lavendar2">
+          Recent Log Graph
+        </h1>
+        <div
+          class="mt-5 rounded-sm border border-stroke bg-white py-3 pl-4 shadow-default dark:border-strokedark dark:bg-boxdark"
+          id="chart-container"
+          style="width: 100%; height: 350px"
+        ></div>
       </div>
-        
-        <div class="mt-6 w-4/5 ml-[10%]  flex flex-col border-2">
-          <h1>Cost Estimation Forecast</h1>
-              <div  class="mt-5 pl-4 rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"  id="user-estimation-forecast" style="width: 100%; height: 600px"></div>
-        </div>
-        
+      <div class="mt-6 ml-[10%] flex w-4/5 flex-col border-2">
+        <h1 class="m-5 text-3xl font-bold text-lavendar3 dark:text-lavendar2">
+          Recent Logs
+        </h1>
+        <include src="./partials/logTableDemo.html"></include>
+      </div>
+      <div class="mt-6 ml-[10%] flex w-4/5 flex-col border-2">
+        <h1 class="m-5 text-3xl font-bold text-lavendar3 dark:text-lavendar2">
+          Log Estimation:
+        </h1>
+        <div
+          class="mt-5 rounded-sm border border-stroke bg-white py-3 pl-4 shadow-default dark:border-strokedark dark:bg-boxdark"
+          id="log-estimation-forecast"
+          id="log-estimation-forecast"
+          style="width: 100%; height: 600px"
+        ></div>
+      </div>
+
+      <div class="ml-[10%] flex w-4/5 flex-col border-2 pl-10">
+        <h1 class="mt-6 text-3xl font-bold text-lavendar3 dark:text-lavendar2">
+          Cost Estimation Forecast
+        </h1>
+        <div
+          class="mt-5 rounded-sm border border-stroke bg-white py-3 pl-4 shadow-default dark:border-strokedark dark:bg-boxdark"
+          id="user-estimation-forecast"
+          style="width: 100%; height: 600px"
+        ></div>
+      </div>
     </div>
-    <script  src="./js/components/liveDashboard.js"></script>
+    <script src="./js/components/liveDashboard.js"></script>
     <script src="./js/components/liveDashboard1.js"></script>
     <script src="./js/components/logEstimationForecast.js"></script>
     <script src="./js/components/userEstimationForecast.js"></script>
     <!-- <script  src="./js/components/ipAnalysis.js"></script> -->
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('downloadPdfButton').addEventListener('click', function () {
-          const element = document.body;
-          html2pdf(element, {
-            margin: 10,
-            filename: 'report.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
-          });
-        });
-      });
+  document.getElementById('downloadPdfButton').addEventListener('click', function () {
+    // Get the current date and time
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString();
+
+    // Create a div element with the date string
+    const dateDiv = document.createElement('div');
+    dateDiv.innerHTML = `<p style="font-size: 12px; margin-bottom: 5px;">Report generated on: ${formattedDate}</p>`;
+
+    // Append the date div to the content container
+    const contentContainer = document.body;
+    contentContainer.appendChild(dateDiv);
+
+    // Use html2pdf to generate the PDF
+    html2pdf(contentContainer, {
+      margin: 10,
+      filename: 'report.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
+    });
+
+    // Remove the date div after generating the PDF
+    contentContainer.removeChild(dateDiv);
+  });
+});
+  
     </script>
-    
-</body>
+  </body>
 </html>

@@ -128,7 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   })
   Alpine.store('notification').getNotification();
-  // Alpine.store('notification').emptyNotifications();
+
+ // Alpine.store('notification').emptyNotifications();
   chart01();
   chart02();
   chart03();

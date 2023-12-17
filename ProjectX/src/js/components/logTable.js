@@ -25,12 +25,29 @@ socket.on('logTableDashboardReverse', (data) => {
   // Check if data.data is an array before using map
   if (Array.isArray(data.data)) {
 
+    
+
     const rows = data.data.map(log => {
+
+      let methodClass = '';
+
+  // Determine the appropriate class based on the HTTP method
+  if (log.http_method === 'GET') {
+    methodClass = 'text-center rounded-full bg-success bg-opacity-10 py-1 px-1 text-sm font-medium text-success';
+  } else if (log.http_method === 'PUT') {
+    methodClass = 'text-center rounded-full bg-warning bg-opacity-10 py-1 px-1 text-sm font-medium text-warning';
+  } else if (log.http_method === 'POST') {
+    methodClass = 'text-center rounded-full bg-primary bg-opacity-10 py-1 px-1 text-sm font-medium text-primary';
+  } else if (log.http_method === 'DELETE') {
+    methodClass = 'w-1 min-w-min text-center rounded-full bg-danger bg-opacity-10 py-1 px-1 text-sm font-medium text-danger';
+  } else {
+    methodClass = 'bg-black';
+  }
       return `
         <tr>
           <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.timestamp}</td>
           <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.ip_address}</td>
-          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.http_method}</td>
+          <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark ${methodClass}">${log.http_method}</td>
           <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.requested_path}</td>
           <td class="border-b border-[#eee] py-5 px-4 dark:border-strokedark">${log.status_code}</td>
         </tr>
