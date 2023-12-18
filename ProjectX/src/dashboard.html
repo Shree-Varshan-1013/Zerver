@@ -143,12 +143,14 @@
     </div>
   </div>
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
     window.soc.on("totalStars", (event) => {
       // console.log("Stars : ", (event.data.total_stars));
       const starValue = event.data.total_stars;
       const stars = document.querySelector(".stars");
       stars.style.setProperty("--rating", ((starValue) / 1) + "%");
     });
+  });
   </script>
 
 </body>
