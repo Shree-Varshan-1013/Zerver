@@ -224,6 +224,9 @@ try {
   setInterval(() => {
     // Fetch data from MongoDB
    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+     fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+     fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
+     fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
   }, 5000);
   // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
   //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");

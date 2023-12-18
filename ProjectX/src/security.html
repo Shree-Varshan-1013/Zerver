@@ -304,14 +304,14 @@
   </div>
 
   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      window.soc.on("operatingSystem", (data) => {
+        const osData = data.data;
 
-    window.soc.on("operatingSystem", (data) => {
-      const osData = data.data;
+        const osDataContainer = $("#osData");
+        const osHFContainer = $("#osHF");
 
-      const osDataContainer = $("#osData");
-      const osHFContainer = $("#osHF");
-
-      const osInfo = `
+        const osInfo = `
     <table class="table-auto w-full">
       <thead>
         <tr>
@@ -345,8 +345,8 @@
   `;
 
 
-      osDataContainer.html(osInfo);
-      const osHF = `
+        osDataContainer.html(osInfo);
+        const osHF = `
     <div>
       <ul>
         ${osData.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
@@ -354,16 +354,16 @@
     </div>
     
   `;
-      // console.log(osData);
-      osHFContainer.html(osHF);
-    });
+        // console.log(osData);
+        osHFContainer.html(osHF);
+      });
 
-    window.soc.on("vData", (data) => {
-      const vData = data.data;
+      window.soc.on("vData", (data) => {
+        const vData = data.data;
 
-      const vDataContainer = $("#vData");
+        const vDataContainer = $("#vData");
 
-      const vInfo = `
+        const vInfo = `
   <table class="table-auto w-full">
     <tr>
       <td>Date</td>
@@ -403,8 +403,9 @@
     </tr>
   </table>
 `;
-      // console.log("VData ",vData);
-      vDataContainer.html(vInfo);
+        // console.log("VData ",vData);
+        vDataContainer.html(vInfo);
+      });
     });
   </script>
 </body>
