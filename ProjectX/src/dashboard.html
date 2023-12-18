@@ -36,27 +36,30 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10 gap-10">
 
           <div class="grid grid-cols-3 gap-10">
-        
+
             <!-- Server Name -->
-            <div class="col-span-1 rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
+            <div
+              class="col-span-1 rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Server Name</h1>
               </div>
               <div class="mt-4 flex justify-center">
-                <p class="font-medium text-black dark:text-cement" x-text="$store.global.dbName" style="font-size: 30px;"></p>
+                <p class="font-medium text-black dark:text-cement" x-text="$store.global.dbName"
+                  style="font-size: 30px;"></p>
               </div>
             </div>
-        
+
             <!-- Server IP -->
             <div class="rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Server IP</h1>
               </div>
               <div class="mt-4 flex items-center justify-center">
-                <h4 class="font-extrabold text-black dark:text-cement" style="font-size: 30px;margin-bottom: 43px;">192.168.0.7</h4>
+                <h4 class="font-extrabold text-black dark:text-cement" style="font-size: 30px;margin-bottom: 43px;">
+                  192.168.0.7</h4>
               </div>
             </div>
-        
+
             <!-- CPU Logical Count -->
             <div class="rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
@@ -66,7 +69,7 @@
                 <h4 class="font-extrabold text-black dark:text-cement" style="font-size: 30px;">8</h4>
               </div>
             </div>
-            
+
             <!-- Machine Type -->
             <div class="rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
@@ -76,7 +79,7 @@
                 <h4 class="font-medium text-black dark:text-cement" style="font-size: 30px;">AMD64</h4>
               </div>
             </div>
-        
+
             <!-- Processor Name -->
             <div class="rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
@@ -88,7 +91,7 @@
                 </h4>
               </div>
             </div>
-        
+
             <!-- OS Architecture -->
             <div class="rounded-sm border border-stroke dark:border-strokedark bg-white p-6 dropshadow dark:bg-boxdark">
               <div class="flex items-center justify-center">
@@ -98,13 +101,14 @@
                 <h4 class="font-medium text-black dark:text-cement" style="font-size: 30px;">Windows</h4>
               </div>
             </div>
-        
+
           </div>
-        
+
           <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-5.5">
-        
+
             <!-- Summary -->
-            <div class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div
+              class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
               <div class="flex items-start justify-start">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Summary</h1>
               </div>
@@ -112,45 +116,41 @@
               <h1>Sample</h1>
               <h1></h1>
             </div>
-        
+
             <!-- Star -->
-            <div class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div
+              class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
               <div class="flex items-start justify-start">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Star</h1>
                 <div class="stars" data-rating="4"></div>
               </div>
             </div>
-        
+
           </div>
-        
+
           <div class="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
             <!-- Memory Statistics -->
-            <div class="rounded-sm border border-stroke bg-white col-span-7 p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div
+              class="rounded-sm border border-stroke bg-white col-span-7 p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
               <div class="flex items-start justify-start">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Memory Statistics</h1>
               </div>
             </div>
           </div>
-        
+
         </div>
       </main>
     </div>
-  </div> 
+  </div>
   <script>
-    const s = io("http://localhost:3001");
-
-    s.on("connect", () => {
-      // console.log("You connected to Server : " + s.id);
-    });
-    s.on("totalStars", (event) => {
+    window.soc.on("totalStars", (event) => {
       // console.log("Stars : ", (event.data.total_stars));
       const starValue = event.data.total_stars;
       const stars = document.querySelector(".stars");
       stars.style.setProperty("--rating", ((starValue) / 1) + "%");
     });
+  </script>
 
-  </script> 
-  
 </body>
 
 </html>

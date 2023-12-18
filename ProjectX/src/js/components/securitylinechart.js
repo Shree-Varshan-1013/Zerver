@@ -20,7 +20,12 @@ var options = {
   },
   title: {
     text: 'Error Counts',
-    align: 'left'
+    align: 'left',
+    style: {
+      color: '#af5aff', // Text color
+      fontSize: '24px', // Font size
+   
+    }
   },
   grid: {
     row: {
@@ -35,10 +40,9 @@ var options = {
 
   var chart = new ApexCharts(document.querySelector("#securityLine"), options);
   chart.render();
-  const socket = io("http://localhost:3001");
-
+  
   // Listen for WebSocket messages
-  socket.addEventListener('vLimit', (event) => {
+  window.soc.addEventListener('vLimit', (event) => {
     const newData = event.data;
     console.log("Limit",newData);
     const timestamp=newData.timestamp;

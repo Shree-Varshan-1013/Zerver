@@ -65,7 +65,7 @@
 
 //   var socket = io('http://localhost:3001');
 
-//   socket.on('request', function (data) {
+//   window.soc.on('request', function (data) {
 //     var newData = data.data;
 
 //     var dates = newData.map(function (entry) {
@@ -84,8 +84,6 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  // WebSocket connection
-  const socket = io('http://localhost:3001');
 
   // Function to initialize the chart with options
   function initializeChart() {
@@ -178,19 +176,17 @@ function updateChart(data) {
   }]);
 }
 
-
-
   // WebSocket connection status
-  socket.on('connect', () => {
+  window.soc.on('connect', () => {
     console.log('WebSocket connected');
   });
 
-  socket.on('disconnect', () => {
+  window.soc.on('disconnect', () => {
     console.log('WebSocket disconnected');
   });
 
   // Listen for 'emitLogsCount' event from the server
-  socket.on('request', (data) => {
+  window.soc.on('request', (data) => {
     console.log('Logs chart data:', JSON.stringify(data));
     updateChart(data);
   });

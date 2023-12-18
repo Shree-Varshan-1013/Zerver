@@ -124,9 +124,8 @@ const statistics = () => {
           series: newData
         });
       }
-    const socket = io("http://localhost:3001");
 
-    socket.addEventListener('status_code', (event) => {
+    window.soc.addEventListener('status_code', (event) => {
         const dataArray = event.data;
       
         if (Array.isArray(dataArray) && dataArray.length > 0) {

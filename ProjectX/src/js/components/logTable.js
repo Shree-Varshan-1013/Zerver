@@ -1,10 +1,8 @@
-const socket = io('http://localhost:3001');
-
 let sortingState = 'None';
 let sortingInProgress = false;
 let logsData = [];
 
-socket.on('logTableDashboardReverse', (data) => {
+window.soc.on('logTableDashboardReverse', (data) => {
   console.log("Received LogTableValue:", JSON.stringify(data));
   logsData = data.data.map(log => {
     // Exclude the "_id" property
@@ -177,9 +175,9 @@ function updateLogTable(data) {
 
 // function toggleSocketConnection(isConnected) {
 //   if (isConnected) {
-//     socket.connect();
+//     window.soc.connect();
 //   } else {
-//     socket.disconnect();
+//     window.soc.disconnect();
 //   }
 // }
 

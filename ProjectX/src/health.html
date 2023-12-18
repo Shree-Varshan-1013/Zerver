@@ -166,14 +166,16 @@
                   </div>
                 </div>
                 <div class="flex-1">
-                  <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div
+                    class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                     <h1 class="text-1xl font-bold text-lavendar3 dark:text-lavendar2">Memory Usage</h1>
                     <div id="memoryUsage" class="text-black dark:text-cement p-3 text-center"></div>
                   </div>
 
                 </div>
                 <div class="flex-1">
-                  <div class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                  <div
+                    class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                     <h1 class="text-1xl font-bold text-lavendar3 dark:text-lavendar2">Error Log Count</h1>
                     <div id="errorCount" class="text-black dark:text-cement p-3 text-center"></div>
                   </div>
@@ -205,23 +207,23 @@
   </div>
   <script src="./js/components/animatedbar.js"></script>
   <script>
-    const socket = io("http://localhost:3001");
-    socket.on("cpuUsage", (data) => {
+document.addEventListener("DOMContentLoaded", () => {
+    window.soc.on("cpuUsage", (data) => {
 
-      // console.log(data.data.cpu_percent);
+      console.log(data.data.cpu_percent);
       document.getElementById('cpuUsage').innerText = `${data.data.cpu_percent}`;
     });
-    socket.on("memoryUsage", (data) => {
+    window.soc.on("memoryUsage", (data) => {
 
-      // console.log(data.data.percent_used);
+      console.log(data.data.percent_used);
       document.getElementById('memoryUsage').innerText = `${data.data.percent_used}`;
     });
-    socket.on("error_count", (data) => {
+    window.soc.on("error_count", (data) => {
 
       console.log("Error", data.count);
       document.getElementById('errorCount').innerText = `${data.count}`;
     });
-
+  });
   </script>
 </body>
 

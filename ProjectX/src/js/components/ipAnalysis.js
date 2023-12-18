@@ -58,17 +58,14 @@ var options = {
   var chart = new ApexCharts(document.getElementById("ip-analysis-chart"), options);
   chart.render();
   
-
-
-  const socket = io('http://localhost:3001');
   function fetchChartData() {
     var ipAddress = document.getElementById("ipInput").value;
   
     // Make a socket connection to the backend to fetch data for the given IP address
-    socket.emit("fetchChartData", { ipAddress });
+    window.soc.emit("fetchChartData", { ipAddress });
   
     // Listen for the response from the backend
-    socket.on("chartData", (data) => {
+    window.soc.on("chartData", (data) => {
         console.log('chardata', data);
       // Update the chart with the received data
       updateChart(data);

@@ -34,9 +34,7 @@ var options = {
   var chart = new ApexCharts(document.querySelector("#charthealth"), options);
   chart.render();
 
-  const socket = io("http://localhost:3001");
- 
-  socket.addEventListener('virtualMemory', (event) => {
+  window.soc.addEventListener('virtualMemory', (event) => {
     const free=event.data.virtual_memory_info.free;
     const used=event.data.virtual_memory_info.used;
     console.log("VM",free);

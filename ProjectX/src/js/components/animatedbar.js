@@ -53,36 +53,54 @@ const animatedBar = () => {
 
   var chart = new ApexCharts(document.getElementById("animatedbar"), options);
   chart.render();
-  const socket = io("http://localhost:3001");
- 
-  socket.addEventListener('twoArray', (event) => {
-   
-    console.log("Two",event.data);
-    const newData = event.data.map(item => ({
-      x: new Date(item.timestamp).getTime(), 
-      y: item.cpu_percentage,
-    }));
 
-    const newMemoryData = event.data.map(item => ({
-      x: new Date(item.timestamp).getTime(),
-      y: item.memory_percentage,
-    }));
-
+  window.soc.addEventListener('twoArray', (event) => {
+    console.log("Two", event.data);
+  
+    // Initialize empty arrays for CPU and MEMORY data
+    let allCPUData = [];
+    let allMemoryData = [];
+    let allCategories = [];
+  
+    // Process each array in event.data
+    event.data.forEach((arrayItem) => {
+      // Ensure arrayItem is an array or convert it to a single-item array
+      const dataArray = Array.isArray(arrayItem) ? arrayItem : [arrayItem];
+  
+      // Map the data for CPU and MEMORY
+      const cpuData = dataArray.map((item) => ({
+        x: new Date(item.timestamp).getTime(),
+        y: item.cpu_percentage,
+      }));
+  
+      const memoryData = dataArray.map((item) => ({
+        x: new Date(item.timestamp).getTime(),
+        y: item.memory_percentage,
+      }));
+  
+      // Concatenate the data to the existing arrays
+      allCPUData = allCPUData.concat(cpuData);
+      allMemoryData = allMemoryData.concat(memoryData);
+  
+      // Extract unique timestamps (assuming timestamps are same for all arrays)
+      const timestamps = dataArray.map((item) => new Date(item.timestamp).getTime());
+      allCategories = allCategories.concat(timestamps);
+    });
+  
     // Update series data
     chart.updateSeries([
-      { name: 'CPU', data: newData },
-      { name: 'MEMORY', data: newMemoryData },
+      { name: 'CPU', data: allCPUData },
+      { name: 'MEMORY', data: allMemoryData },
     ]);
-
+    
     // Update x-axis categories
-    const newCategories = event.data.map(item => new Date(item.timestamp).getTime());
     chart.updateOptions({
       xaxis: {
-        categories: newCategories,
+        categories: allCategories,
       },
     });
-    
   });
+  
 
   
   
