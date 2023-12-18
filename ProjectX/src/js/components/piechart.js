@@ -14,6 +14,13 @@ const pieChartSecurity = () => {
   ];
 
   option = {
+    title: {
+      text: 'Security Risk Levels', // Add your desired title here
+      left: '0',
+      textStyle: {
+        color: darkMode ? 'purple' : 'black',
+      },
+    },
     tooltip: {
       trigger: 'item',
     },
