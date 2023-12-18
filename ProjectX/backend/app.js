@@ -189,9 +189,6 @@ let notificationsFetched = false;
 try {
 
   await connectToDatabases();
-  //DB FETCHES
-
-  // total request and changes in graph
   setupChangeStreamCount('server1_clf', 'basic_data', 'request');
   //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
@@ -266,19 +263,11 @@ const setupChangeStreamCount = async (dbName, collectionName, eventName) => {
   const changeStream = collection.watch();
 
   changeStream.on('change', (change) => {
-    // console.log('Change detected:', change);
-
-    // Increment the count when a document is added
     if (change.operationType === 'insert') {
       documentsAddedCount += 1;
     }
   });
 };
-
-// Use setInterval to fetch and emit count every second
-// setInterval(() => {
-//   fetchDataAndEmitCount('server1_clf', 'basic_data', 'request');
-// }, 1000); // Fetch and emit count every second
 
 
 
@@ -288,8 +277,8 @@ io.on("connection", (socket) => {
 
   socket.on("fetchChartData", async (data) => {
     const { ipAddress } = data;
-    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
     try {
+      const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
       const client = await MongoClient.connect(mongouri);
 
       // await connectToDatabases();
@@ -333,6 +322,7 @@ io.on("connection", (socket) => {
 
       // Emit the chart data to the frontend
       socket.emit("chartData", { series });
+      console.log("ip Success and failure rate",series);
 
       client.close();
     } catch (error) {
@@ -357,38 +347,33 @@ io.on('connection', async (socket) => {
     const collection = db.collection('cost_estimation_forecast');
     // console.log("above the result page");
 
+    const currentDate = new Date();
+
+    // Calculate the date for 10 days ago
+    const tenDaysAgo = new Date(currentDate);
+    tenDaysAgo.setDate(currentDate.getDate() - 20);
+
+    // Calculate the date for 10 days from now
+    const tenDaysFromNow = new Date(currentDate);
+    tenDaysFromNow.setDate(currentDate.getDate() + 20);
     // Perform aggregation to calculate the monthly average
     const result = await collection.aggregate([
       {
-        $group: {
-          _id: {
-            year: { $year: { $toDate: "$ds" } },
-            month: { $month: { $toDate: "$ds" } }
-          },
-          avgYhat: { $avg: "$yhat" }
+        $match: {
+          ds: { $gte: tenDaysAgo, $lte: tenDaysFromNow }
         }
       },
       {
         $project: {
           _id: 0,
-          date: {
-            $dateFromParts: {
-              year: "$_id.year",
-              month: "$_id.month",
-              day: 1,
-              hour: 0,
-              minute: 0,
-              second: 0,
-              millisecond: 0
-            }
-          },
-          avgYhat: 1
+          date: "$ds" // Keep the original date field
         }
       },
       {
         $sort: { date: 1 }
       }
     ]).toArray();
+    
 
     // Extract labels and series data for ApexCharts
     const labels = result.map(entry => entry.date.toISOString().split('T')[0]);

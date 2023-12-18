@@ -54,23 +54,24 @@ function updateUserEstimationChart(data) {
     legend: {
       horizontalAlign: 'left'
     },
-    fill: {
-      type: 'gradient',
-      gradient: {
-        shade: 'dark',
-        shadeIntensity: 1,
-        inverseColors: false,
-        opacityFrom: 0.7,
-        opacityTo: 0,
-        stops: [0, today <= new Date(data.labels[0]) ? 100 : 0],
-      }
-    },
-    colors: [today <= new Date(data.labels[0]) ? '#008000' : '#FF0000'], // Green for past, Red for future
+    // fill: {
+    //   type: 'gradient',
+    //   gradient: {
+    //     shade: 'dark',
+    //     shadeIntensity: 1,
+    //     inverseColors: false,
+    //     opacityFrom: 1,
+    //     opacityTo: 0,
+    //     stops: [0, today <= new Date(data.labels[0]) ? 100 : 0],
+    //   }
+    // },
+    colors: ['#FF0000'], // Red color
   };
 
   var chart = new ApexCharts(document.getElementById('user-estimation-forecast'), options);
   chart.render();
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
   // Your chart initialization code here
