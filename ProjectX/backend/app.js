@@ -212,6 +212,9 @@ try {
   // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
   // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
   // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
+  await fetchDataAndEmitArray("69571Web", "dual_graph", "twoArray");
+  await fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+  await fetchDataAndEmitArray("server1_clf", "status_codes", "status_code");
   if (!notificationsFetched) {
     await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
     notificationsFetched = true;
