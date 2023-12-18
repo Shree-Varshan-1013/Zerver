@@ -156,7 +156,13 @@ if (window.location.pathname === '/dashboard.html') {
   performance();
 }
 
-if (window.location.pathname === '/security.html' || window.location.pathname === '/customize.html') {
+if (window.location.pathname === '/security.html') {
+  pieChartSecurity();
+  heatMap();
+  securityLine();
+}
+
+if (window.location.pathname === '/customize.html') {
   pieChartSecurity();
   heatMap();
   securityLine();

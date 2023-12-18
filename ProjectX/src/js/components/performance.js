@@ -184,25 +184,25 @@ const performance = () => {
     chartProgress3.render();
 
     
-    const combineButton = document.getElementById('combineButton');
-    combineButton.addEventListener('click', () => {
-        const chartsContainer = document.getElementById('chartsContainer');
+    // const combineButton = document.getElementById('combineButton');
+    // combineButton.addEventListener('click', () => {
+    //     const chartsContainer = document.getElementById('chartsContainer');
 
-        domtoimage.toBlob(chartsContainer)
-            .then((blob) => {
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = 'server-performance.png';
+    //     domtoimage.toBlob(chartsContainer)
+    //         .then((blob) => {
+    //             const link = document.createElement('a');
+    //             link.href = window.URL.createObjectURL(blob);
+    //             link.download = 'server-performance.png';
 
-                document.body.appendChild(link);
-                link.click();
+    //             document.body.appendChild(link);
+    //             link.click();
 
-                document.body.removeChild(link);
-            })
-            .catch((error) => {
-                console.error('Error combining charts:', error);
-            });
-    });
+    //             document.body.removeChild(link);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error combining charts:', error);
+    //         });
+    // });
     const socket = io("http://localhost:3001");
 
   // Listen for WebSocket messages
