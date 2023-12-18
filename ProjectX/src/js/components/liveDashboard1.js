@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 window.soc.on('logData', (data) => {
     console.log(data);
-  })
+  });
 
   
   window.soc.on('logTableDashboardReverse', (data) => {
