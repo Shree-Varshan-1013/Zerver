@@ -145,7 +145,7 @@ const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
-    // console.log("Got data from MongoDB (${dbName}):", logDataValue);
+    console.log("Got data from MongoDB "+dbName+":", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -232,7 +232,7 @@ try {
   //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
   //check and emit logtable data in sameorder
-  // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
+  setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
   setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
@@ -382,9 +382,8 @@ io.on('connection', async (socket) => {
   try {
     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
     const client = await MongoClient.connect(mongouri);
-    
-    const db = dbInstance.db('server1_clf');
-    const collection = db.collection('cost_estimation_forecast');
+    const dbInstance = client.db('server1_clf');
+    const collection = dbInstance.collection('cost_estimation_forecast');
 
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 10);
@@ -415,7 +414,7 @@ io.on('connection', async (socket) => {
 
     socket.emit('userForecast', { labels, seriesData });
     console.log('labels',labels);
-    console.log('seriesData',seriesData);
+    // console.log('seriesData',seriesData);
 
     client.close();
   } catch (error) {
@@ -433,10 +432,6 @@ io.on('connection', async (socket) => {
 
 //  ========== logs and Users count =============
 io.on('connection', async (socket) => {
-  // console.log('A user connected');
-
-
-  // Example: Sending user data when requested
   socket.on('requestUserAndLogsForecast', async () => {
     try {
       const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
@@ -445,10 +440,8 @@ io.on('connection', async (socket) => {
       const db = dbInstance.db('server1_clf');
       const collection = db.collection('daily_users forecast');
       const collection2 = db.collection('logs_estimation_forecast');
-
-      // Update the date range for fetching data from 2023 until the future available date
       const startOf2023 = new Date('2023-12-09T00:00:00.000Z');
-      const endOfFuture = new Date('2023-12-31T00:00:00.000Z'); // You can adjust this date accordingly
+      const endOfFuture = new Date('2023-12-31T00:00:00.000Z');
 
       const userData = await collection.find({
         ds: {
@@ -463,15 +456,10 @@ io.on('connection', async (socket) => {
           $lte: endOfFuture,
         }
       }).toArray();
-
-      // Emit user data to the connected client with the correct structure
       socket.emit('userAndLogsForecast', { userForecast: userData, logsForecast: logData });
-      // console.log('Data sent from 2023 until the future available date');
-
       client.close();
     } catch (error) {
       console.error(error);
-      // Emit an error event to the connected client
       socket.emit('error', { message: 'Internal Server Error' });
     }
   });
@@ -495,8 +483,8 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
   try {
     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
     const client = await MongoClient.connect(mongouri);
-    const db = dbInstance.db(dbName);
-    const collection = db.collection(collectionName);
+    const dbInstance = client.db(dbName);
+    const collection = dbInstance.collection(collectionName);
 
     // const startDate = new Date('2023-12-01T12:00:00.000Z');
     // const endDate = new Date('2023-12-20T14:00:00.000Z');
@@ -516,7 +504,6 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
         $lte: endDate,
       },
     }).toArray();
-    // this is the request count in live dashboard
     const total_logs = await collection.aggregate([
       {
         $match: {
@@ -562,9 +549,10 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
   try {
     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
     const client = await MongoClient.connect(mongouri);
-    const db = dbInstance.db(dbName);
-    const collection = db.collection(collectionName);
-    const twentyFourHoursAgo = new Date();
+    // const db = dbInstance.db(dbName);
+    const dbInstance = client.db(dbName);
+    const collection = dbInstance.collection(collectionName);
+    // const twentyFourHoursAgo = new Date();
     // const startDate = new Date('2023-12-01T12:00:00.000Z');
     // const endDate = new Date('2023-12-20T14:00:00.000Z');
 
