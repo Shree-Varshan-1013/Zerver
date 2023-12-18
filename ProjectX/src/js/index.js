@@ -19,7 +19,6 @@ import animatedBar from "./components/animatedbar";
 import { followingDotCursor } from "./components/followingDotCursor";
 import securityLine from "./components/securitylinechart";
 import healthPie from "./components/healthpie";
-import getNotifications from "./components/getNotifications";
 // import healthBar from "./components/animatedbar";
 
 Alpine.plugin(persist)
@@ -114,26 +113,46 @@ flatpickr(".datepicker", {
 
 // Document Loaded
 document.addEventListener("DOMContentLoaded", () => {
+  Alpine.store('notification', {
+    messages: Alpine.$persist([]),
+    getNotification: function () {
+      const sock = io('http://localhost:3001');
+    
+      sock.on('getNotifications', data => {
+        console.log(data);
+        this.messages = data;
+      })
+    },
+    emptyNotifications: function() {
+      this.messages = [];
+    },
+  })
+  Alpine.store('notification').getNotification();
+
+ // Alpine.store('notification').emptyNotifications();
   chart01();
   chart02();
   chart03();
   chart04();
   map01();
-  getNotifications();
 });
 
-if(window.location.pathname === '/'){
+if (window.location.pathname === '/') {
   followingDotCursor();
 }
 
 if (window.location.pathname === '/performance.html') {
   statistics();
-  progress();
+  // progress();
   performance();
 }
 
 if (window.location.pathname === '/customize.html') {
   statistics();
+  performance();
+}
+
+if (window.location.pathname === '/dashboard.html') {
   performance();
 }
 
