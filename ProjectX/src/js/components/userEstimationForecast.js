@@ -19,7 +19,7 @@ function updateUserEstimationChart(data) {
 
   var options = {
     series: [{
-      name: 'STOCK ABC',
+      name: 'Cost',
       data: data.seriesData
     }],
     chart: {
@@ -37,11 +37,11 @@ function updateUserEstimationChart(data) {
       curve: 'straight'
     },
     title: {
-      text: 'Fundamental Analysis of Stocks',
+      text: 'Cost Estimation Forecasting',
       align: 'left'
     },
     subtitle: {
-      text: 'Price Movements',
+      text: 'Cost Estimations',
       align: 'left'
     },
     labels: data.labels,
@@ -54,18 +54,7 @@ function updateUserEstimationChart(data) {
     legend: {
       horizontalAlign: 'left'
     },
-    // fill: {
-    //   type: 'gradient',
-    //   gradient: {
-    //     shade: 'dark',
-    //     shadeIntensity: 1,
-    //     inverseColors: false,
-    //     opacityFrom: 1,
-    //     opacityTo: 0,
-    //     stops: [0, today <= new Date(data.labels[0]) ? 100 : 0],
-    //   }
-    // },
-    colors: ['#FF0000'], // Red color
+    colors: ['#FF0000'], 
   };
 
   var chart = new ApexCharts(document.getElementById('user-estimation-forecast'), options);

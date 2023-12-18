@@ -29,7 +29,7 @@
       <h1 class="text-slate-700 text-center text-4xl font-extrabold">
         Logs Data Report Generation
       </h1>
-      <h1 class="ml-[10%] font-bold">Generated At:</h1>
+      <h1 class="ml-[10%] font-bold">Generated At:<span id="date-time-generation"></span></h1>
       <div class="mt-6 ml-[10%] flex w-4/5 flex-col border-2">
         <h1 class="m-5 text-3xl font-bold text-lavendar3 dark:text-lavendar2">
           Recent Log Graph
@@ -76,33 +76,36 @@
     <!-- <script  src="./js/components/ipAnalysis.js"></script> -->
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('downloadPdfButton').addEventListener('click', function () {
-    // Get the current date and time
-    const currentDate = new Date();
-    const formattedDate = currentDate.toLocaleString();
-
-    // Create a div element with the date string
-    const dateDiv = document.createElement('div');
-    dateDiv.innerHTML = `<p style="font-size: 12px; margin-bottom: 5px;">Report generated on: ${formattedDate}</p>`;
-
-    // Append the date div to the content container
-    const contentContainer = document.body;
-    contentContainer.appendChild(dateDiv);
-
-    // Use html2pdf to generate the PDF
-    html2pdf(contentContainer, {
-      margin: 10,
-      filename: 'report.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
+      document.getElementById('downloadPdfButton').addEventListener('click', function () {
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleString();
+        const dateDiv = document.createElement('div');
+        dateDiv.innerHTML = `<p style="font-size: 12px; margin-bottom: 5px;">Report generated on: ${formattedDate}</p>`;
+        const contentContainer = document.body;
+        contentContainer.appendChild(dateDiv);
+        html2pdf(contentContainer, {
+          margin: 10,
+          filename: 'report.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'mm', format: 'a3', orientation: 'landscape' }
+        });
+        contentContainer.removeChild(dateDiv);
+      });
     });
-
-    // Remove the date div after generating the PDF
-    contentContainer.removeChild(dateDiv);
-  });
-});
-  
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const dateTimeSpan = document.getElementById('date-time-generation');
+        function updateDateTime() {
+          const currentDate = new Date();
+          const formattedDateTime = currentDate.toLocaleString();
+          dateTimeSpan.textContent = formattedDateTime;
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+      });
+    </script>
+    
   </body>
 </html>
