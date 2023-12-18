@@ -203,10 +203,9 @@ const performance = () => {
     //             console.error('Error combining charts:', error);
     //         });
     // });
-    const socket = io("http://localhost:3001");
 
   // Listen for WebSocket messages
-  socket.addEventListener('totalStars', (event) => {
+  window.soc.addEventListener('totalStars', (event) => {
     const newData1 = event.data;
     console.log("Star",newData1);
    
@@ -223,7 +222,7 @@ const performance = () => {
         }
     });
   });
-  socket.addEventListener('cpuUsage', (event) => {
+  window.soc.addEventListener('cpuUsage', (event) => {
     const newData2 = event.data;
     // console.log("Cpu",newData.cpu_percent);
    
@@ -240,7 +239,7 @@ const performance = () => {
         }
     });
   });
-  socket.addEventListener('memoryUsage', (event) => {
+  window.soc.addEventListener('memoryUsage', (event) => {
     const newData3 = event.data;
     console.log("memory",newData3);
    

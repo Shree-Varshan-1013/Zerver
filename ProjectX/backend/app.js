@@ -12,6 +12,21 @@ const io = new Server(server, {
   },
 });
 
+const page1Namespace = io.of('/performance.html');
+page1Namespace.on('connection', async (socket) => {
+  // Handle events specific to page 1
+  console.log('Client connected to page 1:', socket.id);
+
+  // Example: Emit data for page 1
+  await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+  await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
+  await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
+  // ... (other events)
+
+  socket.on('disconnect', () => {
+    console.log(`Client Disconnected from page 1: ${socket.id}`);
+  });
+});
 let dbInstance; // Declare a variable to store the database instance globally
 
 const connectToDatabases = async () => {
@@ -98,6 +113,21 @@ const setupChangeStreamArray = async (dbName, collectionName, eventName) => {
   });
 };
 
+const setupChangeStreamLast = async (dbName, collectionName, eventName) => {
+  const db = dbInstance.db(dbName);
+  const collection = db.collection(collectionName);
+
+  const changeStream = collection.watch();
+
+  changeStream.on('change', (change) => {
+    // console.log('Change detected:', change);
+    fetchDataAndEmitLast(dbName, collectionName, eventName); // Fetch and emit updated data
+  });
+
+  changeStream.on('error', (error) => {
+    console.error('Change stream error:', error);
+  });
+};
 const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
   try {
     const db = dbInstance.db(dbName);
@@ -186,9 +216,15 @@ io.on('connection', async (socket) => {
 );
 
 let notificationsFetched = false;
+
+
 try {
 
   await connectToDatabases();
+  setInterval(() => {
+    // Fetch data from MongoDB
+   fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+  }, 5000);
   // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
   //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
@@ -196,15 +232,14 @@ try {
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
   setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+  // setupChangeStreamLast("telegraf","cpu","cpugraf");
   await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
   await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
   await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
   await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
-  await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
-  await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
-  await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
+
   await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
@@ -499,7 +534,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 
     io.emit(eventName, chartData);
     io.emit('total_logs_count', sumOfTotalLogs);
-    console.log("logPage Graph",chartData);
+    // console.log("logPage Graph",chartData);
     client.close();
   } catch (error) {
     console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
@@ -562,7 +597,7 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
     
     io.emit(eventName, chartData);
     // io.emit('total_logs_count', sumOfTotalLogs);
-    console.log("Dashboard",chartData);
+    // console.log("Dashboard",chartData);
     client.close();
   } catch (error) {
     console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);

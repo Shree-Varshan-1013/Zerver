@@ -79,8 +79,8 @@ const heatMap = () => {
   title: {
     text: "Yearly Error Logs",
     style: {
-      // color: 'blue', // Text color
-      fontSize: '28px', // Font size
+      color: '#af5aff', // Text color
+      fontSize: '24px', // Font size
    
     }
   },

@@ -7,10 +7,10 @@ const pieChartSecurity = () => {
 
   // Initialize with dummy data
   var initialData = [
-    { value: 0, name: 'Critical' },
+    { value: 0, name: 'Low' },
     { value: 0, name: 'Important' },
     { value: 0, name: 'Moderate' },
-    { value: 0, name: 'Low' },
+    { value: 0, name: 'Critical' },
   ];
 
   option = {
@@ -18,7 +18,7 @@ const pieChartSecurity = () => {
       text: 'Security Risk Levels', // Add your desired title here
       left: '0',
       textStyle: {
-        color: darkMode ? 'purple' : 'black',
+        color: darkMode ? '#af5aff' : 'black',
       },
     },
     tooltip: {
@@ -29,7 +29,7 @@ const pieChartSecurity = () => {
       left: 'center',
       textStyle: {
         color: 'grey',
-      },
+      }, 
     },
     toolbox: {
       feature: {
@@ -63,13 +63,13 @@ const pieChartSecurity = () => {
           show: false,
         },
         data: initialData, // Use the initial data
+        
       },
     ],
   };
-  const socket = io("http://localhost:3001");
 
   // Listen for WebSocket messages
-  socket.addEventListener('vCount', (event) => {
+  window.soc.addEventListener('vCount', (event) => {
     const newData = event.data;
     const newLow=newData.Low;
     const newCritical=newData.Critical;
@@ -78,10 +78,11 @@ const pieChartSecurity = () => {
     // console.log("Low ",newLow);
     // Map the WebSocket data to the format expected by ECharts
     const mappedData = [
-      { value: newData.Critical, name: 'Critical' },
+      { value: newData.Low, name: 'Low' },
       { value: newData.Important, name: 'Important' },
       { value: newData.Moderate, name: 'Moderate' },
-      { value: newData.Low, name: 'Low' },
+      { value: newData.Critical, name: 'Critical' },
+     
     ];
 
     // Update the chart with new data

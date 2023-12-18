@@ -53,9 +53,8 @@ const animatedBar = () => {
 
   var chart = new ApexCharts(document.getElementById("animatedbar"), options);
   chart.render();
-  const socket = io("http://localhost:3001");
- 
-  socket.addEventListener('twoArray', (event) => {
+
+  window.soc.addEventListener('twoArray', (event) => {
     console.log("Two", event.data);
   
     // Initialize empty arrays for CPU and MEMORY data

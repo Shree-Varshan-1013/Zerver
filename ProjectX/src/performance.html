@@ -118,26 +118,24 @@
   </div>
 
   <script>
-    
-    const s = io("http://localhost:3001");
 
-    s.on("connect", () => {
-      // console.log("You connected to Server : " + s.id);
-    });
-    s.on("totalStars", (event) => {
-      // console.log("Stars : ", (event.data.total_stars));
-      const starValue = event.data.total_stars;
-      const stars = document.querySelector(".stars");
-      stars.style.setProperty("--rating", ((starValue) / 1) + "%");
-    });
+    document.addEventListener("DOMContentLoaded", () => {
 
-  
+      console.log("Soc", window.soc);
+      window.soc.on("totalStars", (event) => {
+        // console.log("Stars : ", (event.data.total_stars));
+        const starValue = event.data.total_stars;
+        const stars = document.querySelector(".stars");
+        stars.style.setProperty("--rating", ((starValue) / 1) + "%");
+      });
 
-    s.on("cpugraf", (event) => {
-      // console.log("tele",event.data.usage_user);
-      document.getElementById('userUsage').innerText = `${event.data.usage_user}`;
+
+
+      window.soc.on("cpugraf", (event) => {
+        console.log("tele", event.data.usage_user);
+        document.getElementById('userUsage').innerText = `${event.data.usage_user}`;
+      });
     });
-  
 
 
     // const stars = document.querySelector(".stars");

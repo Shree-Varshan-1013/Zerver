@@ -5,9 +5,10 @@ import "../css/style.css";
 import Alpine from "alpinejs";
 import persist from '@alpinejs/persist'
 import flatpickr from "flatpickr";
+import io from "socket.io-client";
 import performance from "./components/performance";
 import chart01 from "./components/chart-01";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import chart02 from "./components/chart-02";
 import chart03 from "./components/chart-03";
 import chart04 from "./components/chart-04";
@@ -112,14 +113,16 @@ flatpickr(".datepicker", {
   },
 });
 
-// Document Loaded
+const sock = io('http://localhost:3001');
+window.soc=sock;
+
 document.addEventListener("DOMContentLoaded", () => {
+  
   Alpine.store('notification', {
     messages: Alpine.$persist([]),
     getNotification: function () {
-      const sock = io('http://localhost:3001');
     
-      sock.on('getNotifications', data => {
+      window.soc.on('getNotifications', data => {
         console.log(data);
         this.messages = data;
       })

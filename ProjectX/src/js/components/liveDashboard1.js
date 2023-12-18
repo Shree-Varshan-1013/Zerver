@@ -1,10 +1,9 @@
-const socket = io('http://localhost:3001');
-socket.on('logData', (data) => {
+window.soc.on('logData', (data) => {
     console.log(data);
   })
 
   
-  socket.on('logTableDashboardReverse', (data) => {
+  window.soc.on('logTableDashboardReverse', (data) => {
     console.log("Received LogTableValue:", JSON.stringify(data));
   
     const tableBody = document.getElementById('logTableBody');
@@ -50,7 +49,7 @@ socket.on('logData', (data) => {
   
 });
 
-socket.on('summaryData', (data) => {
+window.soc.on('summaryData', (data) => {
   console.log("Received summaryData:", JSON.stringify(data));
   // Assuming you have a <p> element with the id "logEntry"
   const logEntryElement = document.getElementById('logEntry');
@@ -61,14 +60,14 @@ socket.on('summaryData', (data) => {
   }
 });
 
-socket.on('total_logs_count', (data) => {
+window.soc.on('total_logs_count', (data) => {
   const total_logs = document.getElementById('dataValue');
   if(total_logs) {
     total_logs.textContent = data;
   }
 }) 
 
-// socket.on("request", (data) => {
+// window.soc.on("request", (data) => {
 //   console.log("Receied counts", JSON.stringify(data));
   
 // })
@@ -82,7 +81,7 @@ socket.on('total_logs_count', (data) => {
 // // Update the UI with the initial count
 // updateUI(documentsAddedCount);
 
-// socket.on('request', (data) => {
+// window.soc.on('request', (data) => {
 //   console.log('Received counts', JSON.stringify(data));
 
 //   // Update documentsAddedCount based on the received data

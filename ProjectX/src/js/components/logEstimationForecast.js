@@ -1,8 +1,5 @@
 // import ApexCharts from 'apexcharts';
 
-// Replace with your server URL
-const socket = io('http://localhost:3001');
-
 // Create a variable to hold the chart instance
 let chart1;
 
@@ -92,12 +89,12 @@ function updateChart(userForecast, logsForecast) {
 // Function to fetch user and logs estimation data
 function fetchUserAndLogsEstimationData() {
   // Emit an event to request data from the backend as soon as the socket connection is established
-  socket.on('connect', () => {
-    socket.emit('requestUserAndLogsForecast');
+  window.soc.on('connect', () => {
+    window.soc.emit('requestUserAndLogsForecast');
   });
 
   // Listen for 'userAndLogsForecast' event from the server
-  socket.on('userAndLogsForecast', (data) => {
+  window.soc.on('userAndLogsForecast', (data) => {
     console.log("user-log-forecast", data);
     // Update the chart with the received user and logs data
     updateChart(data.userForecast, data.logsForecast);

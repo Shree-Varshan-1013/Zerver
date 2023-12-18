@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
-    <title>Top IP's</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <title>Top IP's</title>
 </head>
+
 <body>
-    <select class="w-[100%]" name="select" id="topIPDropdown">
-      <option value="one">One</option>
-      <option value="one">Two</option>
-    </select>
-    <select name="cars" id="cars">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
-    </select>
-    <!-- <option value="one">one</option> -->
-    <script>
-      // Connect to the server using socket.io
-      const socket = io('http://localhost:3001');
+  <select class="w-[100%]" name="select" id="topIPDropdown">
+    <option value="one">One</option>
+    <option value="one">Two</option>
+  </select>
+  <select name="cars" id="cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </select>
+  <!-- <option value="one">one</option> -->
+  <script>
+    // Connect to the server using window.soc.io
+    // Function to fetch and update the top IP dropdown
+    function fetchAndUpdateTopIPDropdown() {
+      // Emit an event to request the top IPs from the backend
+      console.log("Request send");
+      window.soc.emit('requestTopIPs');
+      console.log("Request send1");
 
-      // Function to fetch and update the top IP dropdown
-      function fetchAndUpdateTopIPDropdown() {
-        // Emit an event to request the top IPs from the backend
-        console.log("Request send");
-        socket.emit('requestTopIPs');
-        console.log("Request send1");
+      // Listen for the response from the backend
+      window.soc.on('topIPs', (data) => {
+        console.log("Request send2");
+        console.log(data);
+        // Get the dropdown element
+        const dropdown = document.getElementById('topIPDropdown');
 
-        // Listen for the response from the backend
-        socket.on('topIPs', (data) => {
-          console.log("Request send2");
-          console.log(data);
-          // Get the dropdown element
-          const dropdown = document.getElementById('topIPDropdown');
+        // Clear existing options
+        dropdown.innerHTML = '';
 
-          // Clear existing options
-          dropdown.innerHTML = '';
-
-          // Create an option for each top IP and append it to the dropdown
-          data.forEach((ip) => {
-            const option = document.createElement('option');
-            option.value = ip._id;
-            option.textContent = ip._id;
-            dropdown.appendChild(option);
-          });
+        // Create an option for each top IP and append it to the dropdown
+        data.forEach((ip) => {
+          const option = document.createElement('option');
+          option.value = ip._id;
+          option.textContent = ip._id;
+          dropdown.appendChild(option);
         });
+      });
 
-      }
+    }
 
-      // document.addEventListener('DOMContentLoaded', function () {
-        fetchAndUpdateTopIPDropdown();
-      // });
+    // document.addEventListener('DOMContentLoaded', function () {
+    fetchAndUpdateTopIPDropdown();
+    // });
   </script>
 </body>
+
 </html>
