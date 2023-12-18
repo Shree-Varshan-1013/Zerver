@@ -18,68 +18,55 @@ const heatMap = () => {
   };  
   var options = {
     series: [{
-    name: 'Metric1',
-    data: generateData(18, {
+    name: 'Sunday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric2',
-    data: generateData(18, {
+    name: 'Monday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric3',
-    data: generateData(18, {
+    name: 'Tuesday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric4',
-    data: generateData(18, {
+    name: 'Wednesday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric5',
-    data: generateData(18, {
+    name: 'Thursday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric6',
-    data: generateData(18, {
+    name: 'Friday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
   {
-    name: 'Metric7',
-    data: generateData(18, {
+    name: 'Saturday',
+    data: generateData(52, {
       min: 0,
       max: 90
     })
   },
-  {
-    name: 'Metric8',
-    data: generateData(18, {
-      min: 0,
-      max: 90
-    })
-  },
-  {
-    name: 'Metric9',
-    data: generateData(18, {
-      min: 0,
-      max: 90
-    })
-  }
+  
   ],
     chart: {
     height: 350,
@@ -90,7 +77,12 @@ const heatMap = () => {
   },
   colors: ["#008FFB"],
   title: {
-    text: 'HeatMap Chart (Single color)'
+    text: "Yearly Error Logs",
+    style: {
+      // color: 'blue', // Text color
+      fontSize: '28px', // Font size
+   
+    }
   },
   };
 

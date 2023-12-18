@@ -1,104 +1,197 @@
-var dom = document.getElementById('chart-container');
-var myChart = echarts.init(dom, 'dark', {
-  renderer: 'canvas',
-  useDirtyRect: true
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   var options = {
+//     series: [{
+//       name: 'XYZ MOTORS',
+//       data: []
+//     }],
+//     chart: {
+//       type: 'area',
+//       stacked: false,
+//       height: 350,
+//       zoom: {
+//         type: 'x',
+//         enabled: true,
+//         autoScaleYaxis: true
+//       },
+//       toolbar: {
+//         autoSelected: 'zoom'
+//       }
+//     },
+//     dataLabels: {
+//       enabled: false
+//     },
+//     markers: {
+//       size: 0,
+//     },
+//     title: {
+//       text: 'Stock Price Movement',
+//       align: 'left'
+//     },
+//     fill: {
+//       type: 'gradient',
+//       gradient: {
+//         shadeIntensity: 1,
+//         inverseColors: false,
+//         opacityFrom: 0.5,
+//         opacityTo: 0,
+//         stops: [0, 90, 100]
+//       },
+//     },
+//     yaxis: {
+//       labels: {
+//         formatter: function (val) {
+//           return val.toFixed(0);
+//         },
+//       },
+//       title: {
+//         text: 'Value'
+//       },
+//     },
+//     xaxis: {
+//       type: 'datetime',
+//     },
+//     tooltip: {
+//       shared: false,
+//       y: {
+//         formatter: function (val) {
+//           return val.toFixed(0);
+//         }
+//       }
+//     }
+//   };
 
-var option;
+//   var chart = new ApexCharts(document.getElementById("chart-container"), options);
+//   chart.render();
 
-let oneSecond = 1000;
-let numberOfDataPoints = 86400;
-let storedValues = JSON.parse(localStorage.getItem('storedValues')) || [];
-let now = new Date();
-let randomValues = storedValues.length === numberOfDataPoints ? storedValues : generateRandomValues();
+//   var socket = io('http://localhost:3001');
 
-function generateRandomValues() {
-  return Array.from({ length: numberOfDataPoints }, () =>
-    Math.round(Math.abs((Math.random(1, 1000) + 0.5) * 20))
-  );
-}
+//   socket.on('request', function (data) {
+//     var newData = data.data;
 
-function updateLocalStorage(newData) {
-  storedValues.push(newData);
-  if (storedValues.length > numberOfDataPoints) {
-    storedValues.shift(); // Keep the array length within the limit
-  }
-  localStorage.setItem('storedValues', JSON.stringify(storedValues));
-}
+//     var dates = newData.map(function (entry) {
+//       return {
+//         x: new Date(entry.timestamp),
+//         y: parseInt(entry.status_code)
+//       };
+//     });
 
-option = {
-  backgroundColor: 'transparent',
-  tooltip: {
-    trigger: 'axis',
-    position: function (pt) {
-      return [pt[0], '10%'];
-    }
-  },
-  title: {
-    left: 'center',
-    text: 'Large Area Chart'
-  },
-  toolbox: {
-    feature: {
-      dataZoom: {
-        yAxisIndex: 'none'
+//     chart.updateSeries([{
+//       name: 'XYZ MOTORS',
+//       data: dates
+//     }]);
+//   });
+// });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // WebSocket connection
+  const socket = io('http://localhost:3001');
+
+  // Function to initialize the chart with options
+  function initializeChart() {
+    var options = {
+      series: [{
+        data: []
+      }],
+      chart: {
+        height: 350,
+        type: 'area', // Use area type for a filled area chart
+        zoom: {
+          type: 'x',
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        toolbar: {
+          autoSelected: 'zoom'
+        }
       },
-      restore: {},
-      saveAsImage: {}
-    }
-  },
-  xAxis: {
-    type: 'time',
-    boundaryGap: false
-  },
-  yAxis: {
-    type: 'value',
-    boundaryGap: [0, '100%']
-  },
-  dataZoom: [
-    {
-      type: 'inside',
-      start: 99,
-      end: 100
-    },
-    {
-      start: 99,
-      end: 100
-    }
-  ],
-  series: [
-    {
-      name: 'Log Data',
-      type: 'line',
-      showSymbol: false,
-      lineStyle: {
-        width: 1
+      dataLabels: {
+        enabled: false
       },
-      data: randomValues.map((value, index) => [now - (numberOfDataPoints - index - 1) * oneSecond, value])
-    }
-  ]
-};
-
-myChart.setOption(option);
-
-// Socket.io connection
-const socket = io('http://localhost:3001');
-
-socket.on('request', (data) => {
-  let newTimestamp = +new Date();
-  const newValue = Math.max(1, data.value); // Ensure the value is at least 1
-  randomValues.push(newValue);
-  randomValues.shift();
-  myChart.setOption({
-    series: [
-      {
-        data: randomValues.map((value, index) => [newTimestamp - (numberOfDataPoints - index - 1) * oneSecond, value])
+      markers: {
+        size: 0,
+      },
+      title: {
+        text: 'Log Graph',
+        align: 'left',
+        style: {
+          color: '#546E7A' // Text color for the title
+        }
+      },
+      xaxis: {
+        type: 'datetime',
+      },
+      yaxis: {
+        labels: {
+          style: {
+            colors: '#bfc7d5'
+          },
+          title: {
+            text: 'Logs'
+          }
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 0,
+          stops: [0, 90, 100]
+        },
+      },
+      tooltip: {
+        shared: false,
+        y: {
+          formatter: function (val) {
+            return val.toFixed(0);
+          }
+        }
       }
-    ]
+    };
+
+    // Create the initial chart
+    var chart = new ApexCharts(document.getElementById("chart-container"), options);
+    chart.render();
+
+    return chart;
+  }
+
+  // Create the initial chart
+  var chart = initializeChart();
+
+ // Function to update the chart with new data
+// Function to update the chart with new data
+function updateChart(data) {
+  // Extract timestamp and logs_count from the data object
+  const timestamps = data.data.map(item => new Date(item.timestamp));
+  const logsCount = data.data.map(item => item.logs_count);
+  console.log(logsCount);
+
+  // Update the chart series with processed data
+  chart.updateSeries([{
+    data: timestamps.map((timestamp, index) => ({
+      x: timestamp,
+      y: logsCount[index]
+    }))
+  }]);
+}
+
+
+
+  // WebSocket connection status
+  socket.on('connect', () => {
+    console.log('WebSocket connected');
   });
 
-  // Update stored values in local storage
-  updateLocalStorage(data.value);
-});
+  socket.on('disconnect', () => {
+    console.log('WebSocket disconnected');
+  });
 
-window.addEventListener('resize', myChart.resize);
+  // Listen for 'emitLogsCount' event from the server
+  socket.on('request', (data) => {
+    console.log('Logs chart data:', JSON.stringify(data));
+    updateChart(data);
+  });
+});

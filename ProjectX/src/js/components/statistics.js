@@ -115,31 +115,50 @@ const statistics = () => {
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
     // setInterval(fetchData, 10000);
-
+    function updateChart(chart, newData) {
+        // Logic to update the chart with the new data
+        // This could involve updating the series data, redrawing the chart, etc.
+      
+        // For example, if you're using a library like Highcharts:
+        chart.update({
+          series: newData
+        });
+      }
     const socket = io("http://localhost:3001");
- 
+
     socket.addEventListener('status_code', (event) => {
-        const dataArray = event;
-        console.log(event.data);
-    
-        if (dataArray && dataArray.length > 0) {
-          const newSuccessData = dataArray.reduce((accumulatedData, currentData) => {
+        const dataArray = event.data;
+      
+        if (Array.isArray(dataArray) && dataArray.length > 0) {
+          const newSuccessData = [];
+          const newErrorData = [];
+      
+          for (const currentData of dataArray) {
             if (currentData.accepted_count !== undefined) {
-              accumulatedData.push(currentData.accepted_count);
+              newSuccessData.push(currentData.accepted_count);
             }
-            return accumulatedData;
-          }, [...optionsArea.series[1].data]);
-         
-    
-        //   Update the "Success" series with the new data
-          chartArea.updateSeries(chartArea, [
-            { name: 'Total', data: newSuccessData },
-            { name: 'Success', data: newSuccessData },
-            { name: 'Failure', data: newSuccessData }
+            if (currentData.failed_count !== undefined) {
+              newErrorData.push(currentData.failed_count);
+            }
+          }
+      
+          // Replace the entire "Success" series data with the new data
+          optionsArea.series[1].data = newSuccessData;
+      
+          // Replace the entire "Failure" series data with the new data
+          optionsArea.series[2].data = newErrorData;
+          
+          // Update the chart
+          updateChart(chartArea, [
+            { name: 'Total', data: optionsArea.series[0].data },
+            { name: 'Success', data: optionsArea.series[1].data },
+            { name: 'Failure', data: optionsArea.series[2].data }
           ]);
-        console.log("Success",newSuccessData);
         }
       });
+      
+      
+    
     
 }
 

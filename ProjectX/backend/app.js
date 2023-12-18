@@ -189,7 +189,7 @@ let notificationsFetched = false;
 try {
 
   await connectToDatabases();
-  setupChangeStreamCount('server1_clf', 'basic_data', 'request');
+  // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
   //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
 
   //check and emit logtable data in sameorder
@@ -212,6 +212,9 @@ try {
   // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
   // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
   // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
+  await fetchDataAndEmitArray("69571Web", "dual_graph", "twoArray");
+  await fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+  await fetchDataAndEmitArray("server1_clf", "status_codes", "status_code");
   if (!notificationsFetched) {
     await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
     notificationsFetched = true;
@@ -394,6 +397,8 @@ io.on('connection', async (socket) => {
 
 
 
+
+
 //  ========== logs and Users count =============
 io.on('connection', async (socket) => {
   // console.log('A user connected');
@@ -451,6 +456,15 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
     const startDate = new Date('2023-12-01T12:00:00.000Z');
     const endDate = new Date('2023-12-20T14:00:00.000Z');
 
+    // const sDate = new Date(); // Current date and time
+    // const eDate = new Date();
+    // sDate.setDate(sDate.getDate() - 20); // 20 days later
+
+    // const startDate = sDate.toISOString().replace(/\.\d{3}Z$/, '+00:00');
+    // const endDate = eDate.toISOString().replace(/\.\d{3}Z$/, '+00:00');
+    console.log(startDate);
+    console.log(endDate);
+
     const result = await collection.find({
       timestamp: {
         $gte: startDate,
@@ -496,6 +510,66 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
 
 
+
+
+//  =========== live dashboard log graph ==========
+const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
+  try {
+    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+    const client = await MongoClient.connect(mongouri);
+    const db = dbInstance.db(dbName);
+    const collection = db.collection(collectionName);
+    const twentyFourHoursAgo = new Date();
+    const startDate = new Date('2023-12-01T12:00:00.000Z');
+    const endDate = new Date('2023-12-20T14:00:00.000Z');
+    
+    // twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+    // const startDate = twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);;
+    // const endDate = twentyFourHoursAgo;
+
+    const result = await collection.find({
+      timestamp: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).toArray();
+    // this is the request count in live dashboard
+    const total_logs = await collection.aggregate([
+      {
+        $match: {
+          timestamp: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalLogsCount: {
+            $sum: '$logs_count',
+          },
+        },
+      },
+    ]).toArray();
+    
+    // const sumOfTotalLogs = total_logs.length > 0 ? total_logs[0].totalLogsCount : 0;
+
+    const chartData = {
+      data: result, 
+    };
+
+    
+    io.emit(eventName, chartData);
+    // io.emit('total_logs_count', sumOfTotalLogs);
+    console.log("Dashboard",chartData);
+    client.close();
+  } catch (error) {
+    console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
+  }
+};
+
+liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
 
   socket.on('disconnect', () => {
     // console.log('User disconnected');
