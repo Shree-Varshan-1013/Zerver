@@ -196,7 +196,7 @@ try {
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
   setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
-  // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
+  await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
   await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
