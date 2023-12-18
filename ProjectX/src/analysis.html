@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-init="init()">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -28,82 +28,120 @@
         <include src="./partials/header.html" />
         <main>
           <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-            <div>
+            <div class="mb-10">
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="relative rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
-              <div  class=" rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"  id="log-estimation-forecast" style="width: 100%; height: 600px"></div>
-
+                <div
+                  class="loader"
+                  x-show="$store.analysis.loading"
+                  style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                  "
+                >
+                  <!-- Replace this with your actual loader or spinner element -->
+                  Loading...
+                </div>
+                <div
+                  class="rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
+                  id="log-estimation-forecast"
+                  style="width: 100%; height: 600px"
+                >
+                  <!-- Your chart or content goes here -->
+                </div>
               </div>
-
             </div>
-            <div>
+            <div class="mb-10">
               <div
                 class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
-              <div  class=" rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"  id="user-estimation-forecast" style="width: 100%; height: 600px"></div>
-
+                <div
+                  class="rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
+                  id="user-estimation-forecast"
+                  style="width: 100%; height: 600px"
+                ></div>
               </div>
-
             </div>
             <div class="grid grid-cols-2">
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Cost Estimation</h1>
-                <p x-text="$store.analysis.costEstimation"></p>
+                <h1
+                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                >
+                  Cost Estimation
+                </h1>
+                <p
+                  x-text="'$ ' + $store.analysis.costEstimation"
+                  class="text-2xl"
+                ></p>
               </div>
 
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-l-4  dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Details</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,
-                  autem!
+                <p class="text-2xl">
+                  For now today 12/18/2023, Using previous Data
                 </p>
               </div>
             </div>
             <div class="mt-10 grid grid-cols-2">
-              
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+              class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Details</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,
-                  autem!
-                </p>
+              <p class="text-2xl">
+                For now today 12/18/2023, Using previous Data
+                
+              </p>
               </div>
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Daily User Forecast</h1>
-                <p x-text="$store.analysis.userForecast"></p>
+                <h1
+                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                >
+                  Daily User Forecast
+                </h1>
+                <p
+                  x-text="$store.analysis.userForecast"
+                  class="text-2xl"
+                ></p>
               </div>
             </div>
             <div class="mt-10 grid grid-cols-2">
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Log Estimation</h1>
-                <p x-text="$store.analysis.logEstimation"></p>
+                <h1
+                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                >
+                Log Estimation
+              </h1>
+                <p
+                  x-text="JSON.stringify($store.analysis.logEstimation)"
+                  class="text-2xl"
+                ></p>
               </div>
               <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Details</h1>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,
-                  autem!
+              <p class="text-2xl">
+                  For now today 12/18/2023, Using previous Data
                 </p>
               </div>
             </div>
             <div class="flex w-[100%] items-center justify-center">
               <div
-                class="mt-5 w-fit rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
+                class="mt-5 w-fit rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
               >
-                <h1 class="text-center text-3xl font-bold text-lavendar3 dark:text-lavendar2">Check IP's Genuineness</h1>
+                <h1
+                  class="text-center text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                >
+                  Check IP's Genuineness
+                </h1>
                 <div class="mt-10 flex items-center justify-center">
                   <div class="cr8dw2" data-aos="fade-down">
                     <a
@@ -124,48 +162,58 @@
       </div>
     </div>
     <!-- <script> -->
-    <script src="./js/components/logEstimationForecast.js"></script>
-    <script src="./js/components/userEstimationForecast.js"></script>
-    <!-- </script> -->
-    <script>
-      document.addEventListener("alpine:init", () => {
-        Alpine.store("analysis", {
-          costEstimation: Alpine.$persist(null),
-          userForecast: Alpine.$persist(null),
-          logEstimation: Alpine.$persist(null),
+      <script src="./js/components/logEstimationForecast.js"></script>
+      <script src="./js/components/userEstimationForecast.js"></script>
+      <!-- </script> -->
+      <script>
+        document.addEventListener("alpine:init", () => {
+          Alpine.store("analysis", {
+            costEstimation: Alpine.$persist("12.3444"),
+            userForecast: Alpine.$persist("90.1212"),
+          logEstimation: Alpine.$persist("9.2323"),
+          loading: Alpine.$persist(false),
         });
-        const soc = io('http://localhost:3001');
-
-        soc.on('costEstimation', msg => {
-          // console.log(msg.data);
-          try{
-            Alpine.store('analysis').costEstimation = msg.data.yhat; 
-          }
-          catch(err){
-            console.log(err);
-          }
-        })
-
-        soc.on('userForecast', msg => {
-          console.log(msg.data);
-          try{
-            Alpine.store('analysis').userForecast = msg.data.yhat; 
-          }
-          catch(err){
-            console.log(err);
-          }
-        })
+        const soc = io("http://localhost:3001");
         
-        soc.on('logEstimation', msg => {
-          console.log(msg.data.yhat + "===log");
-          try{
-            Alpine.store('analysis').logEstimation = msg.data.yhat; 
-          }
-          catch(err){
+        soc.on("costEstimation1", (msg) => {
+          console.log(msg); 
+          try {
+            Alpine.store("analysis").costEstimation = msg.data.yhat;
+          } catch (err) {
             console.log(err);
           }
-        })
+        });
+
+        soc.on("userForecast1", (msg) => {
+          console.log(msg);
+          try {
+            Alpine.store("analysis").userForecast = msg.data.yhat;
+          } catch (err) {
+            console.log(err);
+          }
+        });
+        console.log(Alpine.store("analysis").userForecast);
+
+        soc.on("logEstimation1", (msg) => {
+          console.log(msg);
+          try {
+            Alpine.store("analysis").logEstimation = msg.data.yhat;
+          } catch (err) {
+            console.log(err);
+          }
+        });
       });
+      document.addEventListener("DOMContentLoaded", function () {
+
+        Alpine.store("analysis").loading = true;
+        
+        
+        if(Alpine.store("analysis").userForecast != null){
+          Alpine.store("analysis").loading = false;
+       }
+      });
+
+
       function trigger() {
         Swal.fire({
           title: "Enter the IP address",
@@ -213,6 +261,17 @@
             });
           });
       }
+      function init() {
+            // Check if it's a browser reload
+            if (performance.navigation.type === 1) {
+                // Alpine.store('analysis').userForecast = null;
+                // Alpine.store('analysis').costEstimation = null;
+                // Alpine.store('analysis').logEstimation  = null;
+                // Alpine.store('analysis').loading = false;
+                
+            }
+            
+        }
     </script>
   </body>
 </html>
