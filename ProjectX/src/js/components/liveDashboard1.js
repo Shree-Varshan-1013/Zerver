@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", () => {
 window.soc.on('logData', (data) => {
     console.log(data);
   })
@@ -48,7 +49,8 @@ window.soc.on('logData', (data) => {
     }
   
 });
-
+});
+document.addEventListener("DOMContentLoaded", () => {
 window.soc.on('summaryData', (data) => {
   console.log("Received summaryData:", JSON.stringify(data));
   // Assuming you have a <p> element with the id "logEntry"
@@ -59,14 +61,15 @@ window.soc.on('summaryData', (data) => {
     logEntryElement.textContent = data.data.summary;
   }
 });
-
+});
+document.addEventListener("DOMContentLoaded", () => {
 window.soc.on('total_logs_count', (data) => {
   const total_logs = document.getElementById('dataValue');
   if(total_logs) {
     total_logs.textContent = data;
   }
-}) 
-
+});
+});
 // window.soc.on("request", (data) => {
 //   console.log("Receied counts", JSON.stringify(data));
   

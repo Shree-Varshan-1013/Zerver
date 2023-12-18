@@ -1,8 +1,9 @@
 let sortingState = 'None';
 let sortingInProgress = false;
 let logsData = [];
-
-window.soc.on('logTableDashboardReverse', (data) => {
+console.log("SOC",window.soc);
+window.soc=io('http://localhost:3001');
+window.soc.addEventListener('logTableDashboardReverse', (data) => {
   console.log("Received LogTableValue:", JSON.stringify(data));
   logsData = data.data.map(log => {
     // Exclude the "_id" property

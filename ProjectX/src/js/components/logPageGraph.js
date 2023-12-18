@@ -195,7 +195,7 @@ function updateChart(data) {
   // Extract timestamp and logs_count from the data object
   const timestamps = data.data.map(item => new Date(item.timestamp));
   const logsCount = data.data.map(item => item.logs_count);
-  console.log(logsCount);
+  // console.log(logsCount);
 
   // Update the chart series with processed data
   chart.updateSeries([{
@@ -219,7 +219,7 @@ function updateChart(data) {
 
   // Listen for 'emitLogsCount' event from the server
   window.soc.on('emitLogsCount', (data) => {
-    console.log('Logs count data:', JSON.stringify(data));
+    // console.log('Logs count data:', JSON.stringify(data));
     updateChart(data);
   });
 });
