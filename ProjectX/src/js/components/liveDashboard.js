@@ -97,66 +97,58 @@ document.addEventListener("DOMContentLoaded", function () {
         height: 350,
         type: 'area', // Use area type for a filled area chart
         zoom: {
-          enabled: false
+          type: 'x',
+          enabled: true,
+          autoScaleYaxis: true
         },
-        // foreColor: '#bfc7d5',
-        // background: '#eff2f7',
+        toolbar: {
+          autoSelected: 'zoom'
+        }
       },
       dataLabels: {
         enabled: false
       },
-      stroke: {
-        curve: 'smooth',
-        width: 1,
+      markers: {
+        size: 0,
       },
       title: {
-        text: 'Logs Count by Timestamp',
+        text: 'Log Graph',
         align: 'left',
         style: {
-          color: '#ffffff'
+          color: '#546E7A' // Text color for the title
         }
-      },
-      grid: {
-        row: {
-          // colors: 'transparent',
-          opacity: 0.5
-        },
       },
       xaxis: {
         type: 'datetime',
-        labels: {
-          style: {
-            colors: '#bfc7d5'
-          }
-        }
       },
       yaxis: {
         labels: {
           style: {
             colors: '#bfc7d5'
+          },
+          title: {
+            text: 'Logs'
           }
         }
       },
-      theme: {
-        mode: 'light', 
-        palette: 'palette1'
-      },
       fill: {
-        type: 'gradient', // Use gradient for area fill
+        type: 'gradient',
         gradient: {
           shadeIntensity: 1,
-          opacityFrom: 0.7,
-          opacityTo: 0.2,
-          stops: [0, 100],
+          inverseColors: false,
+          opacityFrom: 0.5,
+          opacityTo: 0,
+          stops: [0, 90, 100]
         },
-        colors: ['#00e396'], // Set the color for the gradient
       },
-      markers: {
-        size: 4,
-        colors: '#00e396',
-        strokeColors: '#fff',
-        strokeWidth: 1,
-      },
+      tooltip: {
+        shared: false,
+        y: {
+          formatter: function (val) {
+            return val.toFixed(0);
+          }
+        }
+      }
     };
 
     // Create the initial chart
@@ -173,8 +165,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to update the chart with new data
 function updateChart(data) {
   // Extract timestamp and logs_count from the data object
-  const timestamps = data.map(item => new Date(item.timestamp));
-  const logsCount = data.map(item => item.logs_count);
+  const timestamps = data.data.map(item => new Date(item.timestamp));
+  const logsCount = data.data.map(item => item.logs_count);
   console.log(logsCount);
 
   // Update the chart series with processed data
