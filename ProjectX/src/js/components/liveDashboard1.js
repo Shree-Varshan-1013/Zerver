@@ -36,10 +36,10 @@ socket.on('logData', (data) => {
   
 });
 
-socket.on("summaryData", (data) => {
+socket.on('summaryData', (data) => {
   console.log("Received summaryData:", JSON.stringify(data));
   // Assuming you have a <p> element with the id "logEntry"
-  const logEntryElement = document.getElementById("logEntry");
+  const logEntryElement = document.getElementById('logEntry');
 
   // Update the content of the <p> tag with the summary property from the received data
   if (logEntryElement) {
