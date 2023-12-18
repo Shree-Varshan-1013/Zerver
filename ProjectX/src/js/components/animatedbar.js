@@ -51,22 +51,39 @@ const animatedBar = () => {
     },
   };
 
-  var chart = new ApexCharts(document.querySelector("#animatedbar"), options);
+  var chart = new ApexCharts(document.getElementById("animatedbar"), options);
   chart.render();
-  // const socket = io("http://localhost:3001");
+  const socket = io("http://localhost:3001");
  
-  // socket.addEventListener('cpuArray', (event) => {
+  socket.addEventListener('twoArray', (event) => {
    
-  //   console.log("Cpu",event.data);
- 
-    
-  // });
+    console.log("Two",event.data);
+    const newData = event.data.map(item => ({
+      x: new Date(item.timestamp).getTime(), 
+      y: item.cpu_percentage,
+    }));
 
-  // socket.addEventListener('memoryArray', (event1) => {
-  
-  //    console.log("Memory",event1.data);
-   
-  // });
+    const newMemoryData = event.data.map(item => ({
+      x: new Date(item.timestamp).getTime(),
+      y: item.memory_percentage,
+    }));
+
+    // Update series data
+    chart.updateSeries([
+      { name: 'CPU', data: newData },
+      { name: 'MEMORY', data: newMemoryData },
+    ]);
+
+    // Update x-axis categories
+    const newCategories = event.data.map(item => new Date(item.timestamp).getTime());
+    chart.updateOptions({
+      xaxis: {
+        categories: newCategories,
+      },
+    });
+    
+  });
+
   
   
  

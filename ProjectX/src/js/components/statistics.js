@@ -65,7 +65,7 @@ const statistics = () => {
         },
         {
             name: "Success",
-            data: [32, 33, 21, 42, 19, 32]
+            data: [31,45,56,78,90,56]
         },
         {
             name: "Failure",
@@ -115,6 +115,32 @@ const statistics = () => {
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
     // setInterval(fetchData, 10000);
+
+    const socket = io("http://localhost:3001");
+ 
+    socket.addEventListener('status_code', (event) => {
+        const dataArray = event;
+        console.log(event.data);
+    
+        if (dataArray && dataArray.length > 0) {
+          const newSuccessData = dataArray.reduce((accumulatedData, currentData) => {
+            if (currentData.accepted_count !== undefined) {
+              accumulatedData.push(currentData.accepted_count);
+            }
+            return accumulatedData;
+          }, [...optionsArea.series[1].data]);
+         
+    
+        //   Update the "Success" series with the new data
+          chartArea.updateSeries(chartArea, [
+            { name: 'Total', data: newSuccessData },
+            { name: 'Success', data: newSuccessData },
+            { name: 'Failure', data: newSuccessData }
+          ]);
+        console.log("Success",newSuccessData);
+        }
+      });
+    
 }
 
 export default statistics;

@@ -61,16 +61,18 @@
               <div>
                 <div
                   class="m-3 h-[90%] w-[100%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark">
+                  <h2 id="userUsage">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Eum laboriosam reprehenderit rem adipisci sit facere
+                    mollitia modi porro consectetur saepe.
+                  </h2>
+                  <br>
                   <h2>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Eum laboriosam reprehenderit rem adipisci sit facere
                     mollitia modi porro consectetur saepe.
                   </h2>
-                  <h2>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Eum laboriosam reprehenderit rem adipisci sit facere
-                    mollitia modi porro consectetur saepe.
-                  </h2>
+                  <br>
                   <h2>
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                     Eum laboriosam reprehenderit rem adipisci sit facere
@@ -122,15 +124,19 @@
       // console.log("You connected to Server : " + s.id);
     });
     s.on("totalStars", (event) => {
-      console.log("Stars : ", (event.data.total_stars));
+      // console.log("Stars : ", (event.data.total_stars));
       const starValue = event.data.total_stars;
       const stars = document.querySelector(".stars");
       stars.style.setProperty("--rating", ((starValue) / 1) + "%");
     });
 
-    s.on('operatingSystem', logDataValue => {
-      // console.log(JSON.stringify(logDataValue));
-    })
+  
+
+    s.on("cpugraf", (event) => {
+      // console.log("tele",event.data.usage_user);
+      document.getElementById('userUsage').innerText = `${event.data.usage_user}`;
+    });
+  
 
 
     // const stars = document.querySelector(".stars");

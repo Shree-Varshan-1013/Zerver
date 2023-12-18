@@ -1,22 +1,11 @@
 import ApexCharts from 'apexcharts';
-const healthPie=()=>{
+const healthPie2 =()=>{
 var options = {
     series: [44, 55],
     chart: {
     type: 'donut',
   },
   labels: ['Used Memory', 'Free Memory'],
-  title: {
-    text: 'Virtual Memory Usage', // Add your desired title here
-    align: 'left',
-    margin: 10,
-    offsetY: 0,
-    style: {
-      fontSize: '28px',
-      fontWeight: 'bold',
-      color: '#ffffff',
-    },
-  },
   responsive: [{
     breakpoint: 480,
     options: {
@@ -31,7 +20,7 @@ var options = {
   }]
   };
 
-  var chart = new ApexCharts(document.querySelector("#charthealth"), options);
+  var chart = new ApexCharts(document.getElementById("healthchart"), options);
   chart.render();
 
   const socket = io("http://localhost:3001");
@@ -45,4 +34,4 @@ var options = {
     
   });
 }
-export default healthPie;
+export default healthPie2;
