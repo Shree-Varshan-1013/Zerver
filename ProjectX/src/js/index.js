@@ -150,6 +150,7 @@ if (window.location.pathname === '/') {
   followingDotCursor();
 }
 
+
 if (window.location.pathname === '/performance.html') {
   statistics();
   // progress();
