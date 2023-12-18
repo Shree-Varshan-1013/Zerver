@@ -135,7 +135,21 @@
         </div>
       </main>
     </div>
-  </div>  
+  </div> 
+  <script>
+    const s = io("http://localhost:3001");
+
+    s.on("connect", () => {
+      // console.log("You connected to Server : " + s.id);
+    });
+    s.on("totalStars", (event) => {
+      // console.log("Stars : ", (event.data.total_stars));
+      const starValue = event.data.total_stars;
+      const stars = document.querySelector(".stars");
+      stars.style.setProperty("--rating", ((starValue) / 1) + "%");
+    });
+
+  </script> 
   
 </body>
 

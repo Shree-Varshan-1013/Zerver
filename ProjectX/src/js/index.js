@@ -7,6 +7,7 @@ import persist from '@alpinejs/persist'
 import flatpickr from "flatpickr";
 import performance from "./components/performance";
 import chart01 from "./components/chart-01";
+import io from "socket.io-client";
 import chart02 from "./components/chart-02";
 import chart03 from "./components/chart-03";
 import chart04 from "./components/chart-04";
@@ -149,10 +150,6 @@ if (window.location.pathname === '/performance.html') {
 
 if (window.location.pathname === '/customize.html') {
   statistics();
-  performance();
-}
-
-if (window.location.pathname === '/dashboard.html') {
   performance();
 }
 
