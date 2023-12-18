@@ -5854,7 +5854,6 @@ background: linear-gradient(90deg, rgba(186,119,249,1) 0%, rgba(175,90,255,1) 10
 }
 
 .chatbot-toggler {
-  z-index: 9999;
   position: fixed;
   bottom: 30px;
   right: 35px;
@@ -5867,7 +5866,7 @@ background: linear-gradient(90deg, rgba(186,119,249,1) 0%, rgba(175,90,255,1) 10
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #724ae8;
+  background: #BA77F9;
   transition: all 0.2s ease;
 }
 body.show-chatbot .chatbot-toggler {
@@ -5910,7 +5909,7 @@ body.show-chatbot .chatbot {
   position: relative;
   text-align: center;
   color: #fff;
-  background: #724ae8;
+  background: #BA77F9;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 .chatbot header span {
@@ -5956,7 +5955,7 @@ header h2 {
   text-align: center;
   line-height: 32px;
   align-self: flex-end;
-  background: #724ae8;
+  background: #BA77F9;
   border-radius: 4px;
   margin: 0 10px 7px 0;
 }
@@ -5967,7 +5966,7 @@ header h2 {
   max-width: 75%;
   color: #fff;
   font-size: 0.95rem;
-  background: #724ae8;
+  background: #BA77F9;
 }
 .chatbox .incoming p {
   border-radius: 10px 10px 10px 0;
@@ -6002,7 +6001,7 @@ header h2 {
 }
 .chat-input span {
   align-self: flex-end;
-  color: #724ae8;
+  color: #BA77F9;
   cursor: pointer;
   height: 55px;
   display: flex;
@@ -6038,6 +6037,8 @@ header h2 {
   }
 }
 
+
 .dropshadow{
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(157, 0, 255, 0.521) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
