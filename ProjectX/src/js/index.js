@@ -24,10 +24,6 @@ import securityLine from "./components/securitylinechart";
 import healthPie from "./components/healthpie";
 // import healthBar from "./components/animatedbar";
 
-function getSock(){
-  
-}
-
 Alpine.plugin(persist)
 window.Alpine = Alpine;
 Alpine.start();

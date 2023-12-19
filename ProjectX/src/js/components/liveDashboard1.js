@@ -1,3 +1,5 @@
+// import Typewriter from 'typewriter-effect';
+
 document.addEventListener("DOMContentLoaded", () => {
 window.soc.on('logData', (data) => {
     console.log(data);
@@ -58,7 +60,19 @@ window.soc.on('summaryData', (data) => {
 
   // Update the content of the <p> tag with the summary property from the received data
   if (logEntryElement) {
-    logEntryElement.textContent = data.data.summary;
+    const summaryText = data.data.summary;
+    
+    // Create a new typewriter instance
+    const typewriter = new Typewriter(logEntryElement, {
+      loop: false,  // Set to true if you want the effect to loop
+      delay: 50,   // Set the delay between characters
+    });
+
+    // Add the summary text to the typewriter instance
+    typewriter
+      .typeString(summaryText)
+      .pauseFor(1000)  // Pause for 1 second (optional)
+      .start();        // Start the typewriter effect
   }
 });
 });

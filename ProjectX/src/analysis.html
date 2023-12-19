@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -164,18 +164,5 @@
     <!-- <script> -->
       <script src="./js/components/logEstimationForecast.js"></script>
       <script src="./js/components/userEstimationForecast.js"></script>
-      <!-- </script> -->
-      <script>
-        document.addEventListener("alpine:init", () => {
-          Alpine.store("analysis", {
-            cost: 0,
-            userEst: 0,
-            log: 0,
-          loading: Alpine.$persist(false),
-        });
-            Alpine.store("analysis").userEst = 100;
-            console.log(Alpine.store("analysis").userEst);
-        });
-    </script>
   </body>
 </html>

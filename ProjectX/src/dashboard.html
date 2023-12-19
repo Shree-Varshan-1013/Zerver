@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="./images/logo/logoSq.png" type="image/x-icon" />
   <script src="./js/components/cdn-scripts.js"></script>
+    <!-- typewriter effect -->
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet"
@@ -112,9 +114,7 @@
               <div class="flex items-start justify-start">
                 <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">Summary</h1>
               </div>
-              <h1>Sample</h1>
-              <h1>Sample</h1>
-              <h1></h1>
+              <p class="text-[30px] mt-3" id="summary-text"></p>
             </div>
 
             <!-- Star -->
@@ -151,6 +151,32 @@
       stars.style.setProperty("--rating", ((starValue) / 1) + "%");
     });
   });
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    window.soc.on('summaryData', (data) => {
+      console.log("Received summaryData:", JSON.stringify(data));
+      // Assuming you have a <p> element with the id "logEntry"
+      const logEntryElement = document.getElementById('summary-text');
+
+      // Update the content of the <p> tag with the summary property from the received data
+      if (logEntryElement) {
+        const summaryText = data.data.summary;
+        
+        // Create a new typewriter instance
+        const typewriter = new Typewriter(logEntryElement, {
+          loop: false,  // Set to true if you want the effect to loop
+          delay: 50,   // Set the delay between characters
+        });
+
+        // Add the summary text to the typewriter instance
+        typewriter
+          .typeString(summaryText)
+          .pauseFor(1000)  // Pause for 1 second (optional)
+          .start();        // Start the typewriter effect
+      }
+    });
+    });
   </script>
 
 </body>
