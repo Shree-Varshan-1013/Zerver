@@ -64,10 +64,10 @@ window.soc.on('all_metrices', (data) => {
     logEntryElement.innerText = summaryText;  
     
     // Create a new typewriter instance
-    // const typewriter = new Typewriter(logEntryElement, {
-    //   loop: false,  // Set to true if you want the effect to loop
-    //   delay: 50,   // Set the delay between characters
-    // });
+    const typewriter = new Typewriter(logEntryElement, {
+      loop: false,  // Set to true if you want the effect to loop
+      delay: 50,   // Set the delay between characters
+    });
 
     // Add the summary text to the typewriter instance
     typewriter
