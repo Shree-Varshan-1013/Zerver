@@ -177,13 +177,16 @@ span.flatpickr-weekday,
   font-size: 55px;
   margin-top: 30px;
   margin-bottom: 30px;
+  color: #ddd; /* Default star color */
 }
 
 .stars:before {
   content: "★★★★★";
   letter-spacing: 3px;
-  background: linear-gradient(90deg, gold var(--rating), #ddd var(--rating));
+  color: gold;
+  overflow: hidden;
   -webkit-background-clip: text;
+  width: var(--rating);
   -webkit-text-fill-color: transparent;
 }
 .rotate {

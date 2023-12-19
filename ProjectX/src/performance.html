@@ -50,8 +50,8 @@
                 class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark">
                 <div class="stars" data-rating></div>
                 <div>
-                  <h4 class="text-black dark:text-cement">
-                    This is because it is performing good
+                  <h4 id="ratingText" class="text-black dark:text-cement">
+                    
                   </h4>
                 </div>
               </div>
@@ -152,7 +152,36 @@
         // console.log("Stars : ", (event.data.total_stars));
         const starValue = event.total_stars;
         const stars = document.querySelector(".stars");
-        stars.style.setProperty("--rating", ((starValue) / 1) + "%");
+        stars.style.setProperty("--rating", ((starValue/ 100) + "%"));
+
+        const starsElement = document.querySelector('.stars');
+  const ratingTextElement = document.getElementById('ratingText');
+        console.log("value", starValue)
+  if (starsElement && ratingTextElement) {
+    const rating = starValue/100;
+    console.log(Math.round(rating));
+    
+    // Logic to set the text based on the rating value
+    switch (parseInt(rating)) {
+      case 1:
+        ratingTextElement.textContent = "This is because it is performing poorly";
+        break;
+      case 2:
+        ratingTextElement.textContent = "This is because it is not performing well";
+        break;
+      case 3:
+        ratingTextElement.textContent = "This is because it is average";
+        break;
+      case 4:
+        ratingTextElement.textContent = "This is because it is good";
+        break;
+      case 5:
+        ratingTextElement.textContent = "This is because it is performing very well";
+        break;
+      default:
+        ratingTextElement.textContent = "Rating information not available";
+    }
+  }
       });
 
 
@@ -162,6 +191,8 @@
         document.getElementById('userUsage').innerText = `${event.data.usage_user}`;
       });
     });
+
+    
 
 
     // const stars = document.querySelector(".stars");
