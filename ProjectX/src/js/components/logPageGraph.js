@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
         text: 'Logs Count by Timestamp',
         align: 'left',
         style: {
-          color: '#ffffff'
+          color: '#af5aff'
         }
       },
       grid: {
