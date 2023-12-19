@@ -9,6 +9,7 @@
   body {
     /* @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body; */
     font-family: 'Lexend', sans-serif;
+    font-size: 15px;
   }
 }
 
@@ -6036,6 +6037,63 @@ header h2 {
     display: block;
   }
 }
+
+.tooltip-container {
+    display:inline-block;
+    position:relative;
+    text-align:left;
+    font-size: 20px;
+}
+
+.tooltip.container h3 {margin:12px 0;}
+
+.tooltip-container .top {
+    min-width:500px;
+    max-width:1000px;
+    top:130px;
+    left:50%;
+    transform:translate(-50%,0%);
+    padding:10px 20px;
+    color:#ffffff;
+    background-color:#BA77F9;
+    font-weight:normal;
+    font-size:14px;
+    border-radius:8px;
+    position:absolute;
+    z-index:99999999;
+    box-sizing:border-box;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+    display:none;
+}
+
+.tooltip-container:hover .top {
+    display:block;
+}
+
+.tooltip-container .top i {
+  font-size: 20px;
+    position:absolute;
+    top:100%;
+    left:50%;
+    margin-left:-12px;
+    width:24px;
+    height:12px;
+    overflow:hidden;
+}
+
+
+.tooltip .bottom i::after {
+  content:'';
+  position:absolute;
+  width:12px;
+  height:12px;
+  left:50%;
+  transform:translate(-50%,50%) rotate(45deg);
+  background-color:#EEEEEE;
+  box-shadow:0 1px 8px rgba(0,0,0,0.5);
+}
+
+
 
 
 .dropshadow{
