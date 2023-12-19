@@ -35,11 +35,11 @@ const connectToDatabases = async () => {
     if (!dbInstance) {
       dbInstance = await dbConnect();
     }
-    return dbInstance;
   } catch (error) {
     console.error("Error establishing or using the database connection:", error);
     throw error;
   }
+  return dbInstance;
 };
 
 const fetchDataAndEmitArray = async (dbName, collectionName, eventName) => {
@@ -82,57 +82,15 @@ const fetchDataAndEmitReverseArrayNotification = async (dbName, collectionName, 
   }
 };
 
-// const setupChangeStream = async (dbName, collectionName, eventName) => {
-//   const db = dbInstance.db(dbName);
-//   const collection = db.collection(collectionName);
 
-//   const changeStream = collection.watch();
 
-//   changeStream.on('change', (change) => {
-//     // console.log('Change detected:', change);
-//     fetchDataAndEmitReverseArray(dbName, collectionName, eventName); // Fetch and emit updated data
-//   });
 
-//   changeStream.on('error', (error) => {
-//     console.error('Change stream error:', error);
-//   });
-// };
-const setupChangeStreamArray = async (dbName, collectionName, eventName) => {
-  const db = dbInstance.db(dbName);
-  const collection = db.collection(collectionName);
 
-  const changeStream = collection.watch();
-
-  changeStream.on('change', (change) => {
-    // console.log('Change detected:', change);
-    fetchDataAndEmitArray(dbName, collectionName, eventName); // Fetch and emit updated data
-  });
-
-  changeStream.on('error', (error) => {
-    console.error('Change stream error:', error);
-  });
-};
-
-const setupChangeStreamLast = async (dbName, collectionName, eventName) => {
-  const db = dbInstance.db(dbName);
-  const collection = db.collection(collectionName);
-
-  const changeStream = collection.watch();
-
-  changeStream.on('change', (change) => {
-    // console.log('Change detected:', change);
-    fetchDataAndEmitLast(dbName, collectionName, eventName); // Fetch and emit updated data
-  });
-
-  changeStream.on('error', (error) => {
-    console.error('Change stream error:', error);
-  });
-};
-const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
+const fetchDataAndEmit = async (dbName, collectionName, eventName,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
-    const logDataValue = await logsCollection.findOne();
+    const logDataValue = await logsCollection.findOne({"hostname":server_name});
     // console.log("Got data from MongoDB (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
@@ -140,25 +98,25 @@ const fetchDataAndEmit = async (dbName, collectionName, eventName) => {
   }
 };
 
-const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
+const fetchDataAndEmitLast = async (dbName, collectionName, eventName,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
-    const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
-    // console.log("Got data from MongoDB "+dbName+":", logDataValue);
+    const logDataValue = await logsCollection.findOne({"hostname":server_name}, { sort: { timestamp: -1 } });
+    console.log("Got data from MongoDB "+server_name+":", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
 };
 
-const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, limit = 7) => {
+const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, limit = 7,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
 
     // Use the limit method to fetch the first 'limit' documents
-    const logDataValue = await logsCollection.find().limit(limit).toArray();
+    const logDataValue = await logsCollection.find({"hostname":server_name}).limit(limit).toArray();
 
     // console.log("Got data from 7 (${dbName}):", logDataValue);
     io.emit(eventName, { data: logDataValue });
@@ -166,12 +124,12 @@ const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, lim
     console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
 };
-const fetchDataByCompareIp = async (dbName, collectionName, eventName, ip) => {
+const fetchDataByCompareIp = async (dbName, collectionName, eventName, ip,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const ipData = db.collection(collectionName);
 
-    const result = await ipData.findOne({ ip_address: ip }, { sort: { timestamp: -1 } });
+    const result = await ipData.findOne({"hostname":server_name ,ip_address: ip }, { sort: { timestamp: -1 } });
 
     io.emit(eventName, { data: result });
   } catch (error) {
@@ -179,13 +137,13 @@ const fetchDataByCompareIp = async (dbName, collectionName, eventName, ip) => {
   }
 };
 
-const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName) => {
+const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
 
     // Use the countDocuments method to get the total count of documents in the collection
-    const dataSize = await logsCollection.countDocuments();
+    const dataSize = await logsCollection.find({"hostname":server_name}).count();
 
     // console.log(`Got data count from ${dbName}:`, dataSize);
 
@@ -196,7 +154,7 @@ const fetchDataAndEmitArrayCount = async (dbName, collectionName, eventName) => 
 };
 
 io.on('connection', async (socket) => {
-  // console.log(`Client Connected: ${socket.id}`);
+  console.log(`Client Connected: ${socket.id}`);
 
   socket.on("getDBName", (dbName) => {
     console.log("database name " + dbName);
@@ -204,7 +162,7 @@ io.on('connection', async (socket) => {
 
   var res = null;
   socket.on("getServer", async (server) => {
-    res = await checkDatabaseExistence("mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority", server);
+    res = await checkDatabaseExistence(dbInstance, server);
     io.emit("getResponse", res);
   })
 
@@ -216,29 +174,30 @@ io.on('connection', async (socket) => {
 );
 
 let notificationsFetched = false;
-
+let server_name=socket.handshake.query.name;
 // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-  await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+  // await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
-  await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
+
+  await fetchDataAndEmitLast("log_analysis","summary", "summaryData",server_name);
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
   // await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
-  await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
+  await fetchDataAndEmit("log_analysis","vulnerabilities_count_security", "vCount",server_name,);
   // await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
-  await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
+  await fetchDataAndEmitArrayLimit("log_analysis", "vulnerabilities_count_security", "vLimit",server_name,);
   
   // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
-  await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
-  await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
+  await fetchDataAndEmitArray("log_analysis", "memory_usage", "memoryArray",server_name,);
+  await fetchDataAndEmitArray("log_analysis","cpu_usage", "cpuArray",server_name,);
   // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
   // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
   // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
-  await fetchDataAndEmitArray("69571Web", "dual_graph", "twoArray");
+  await fetchDataAndEmitArray("log_analysis", "dual_graph", "twoArray",server_name,);
   // await fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
-  await fetchDataAndEmitArray("server1_clf", "status_codes", "status_code");
+  await fetchDataAndEmitArray( "log_analysis","status_codes", "status_code",server_name,);
   if (!notificationsFetched) {
-    await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
+    await fetchDataAndEmitReverseArrayNotification("log_analysis", "notifications", "getNotifications",server_name,);
     notificationsFetched = true;
   }
 
@@ -278,18 +237,7 @@ const fetchDataAndEmitCount = async (dbName, collectionName, eventName) => {
   }
 };
 
-const setupChangeStreamCount = async (dbName, collectionName, eventName) => {
-  const db = dbInstance.db(dbName);
-  const collection = db.collection(collectionName);
 
-  const changeStream = collection.watch();
-
-  changeStream.on('change', (change) => {
-    if (change.operationType === 'insert') {
-      documentsAddedCount += 1;
-    }
-  });
-};
 
 
 
@@ -300,8 +248,8 @@ io.on("connection", (socket) => {
   socket.on("fetchChartData", async (data) => {
     const { ipAddress } = data;
     try {
-      const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
-      const client = await MongoClient.connect(mongouri);
+      // const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+      // const client = await MongoClient.connect(mongouri);
 
       // await connectToDatabases();
       const db = dbInstance.db('server1_clf');
@@ -361,11 +309,12 @@ io.on('connection', async (socket) => {
   // console.log(`Client Connected to userforecast: ${socket.id}`);
 
   try {
-    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
-    const client = await MongoClient.connect(mongouri);
-    const dbInstance = client.db('server1_clf');
-    const collection = dbInstance.collection('cost_estimation_forecast');
-
+    // const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+    // const client = await MongoClient.connect(mongouri);
+    // const dbInstance = client.db('server1_clf');
+    // const collection = dbInstance.collection('cost_estimation_forecast');
+    // const db = dbInstance.db("");
+    // const logsCollection = db.collection(collectionName);
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 10);
 
@@ -394,7 +343,7 @@ io.on('connection', async (socket) => {
     const seriesData = result.map(entry => entry.Yhat);
 
     socket.emit('userForecast', { labels, seriesData });
-    console.log('labels',labels);
+    // console.log('labels',labels);
     // console.log('seriesData',seriesData);
 
     client.close();
@@ -520,7 +469,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 };
 
 // Example usage
-fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
+// fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
 
 
 
@@ -591,10 +540,10 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
   }
 };
 
-setInterval(() => {
-  liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
+// setInterval(() => {
+//   liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
   
-}, 5000);
+// }, 5000);
 
   socket.on('disconnect', () => {
     // console.log('User disconnected');
@@ -606,59 +555,59 @@ setInterval(() => {
 
 //  =========== top 5 IP's ==============
 // Connect to the server using socket.io
-io.on('connection', async (socket) => {
-  try {
-    console.log('New client connected');
-    // Your MongoDB connection details
-    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
-    const client = await MongoClient.connect(mongouri);
+// io.on('connection', async (socket) => {
+//   try {
+//     console.log('New client connected');
+//     // Your MongoDB connection details
+//     const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+//     const client = await MongoClient.connect(mongouri);
     
-    // Your MongoDB database and collection details
-    const dbInstance = client.db('server1_clf');
-    const logsCollection = dbInstance.collection('basic_data');
+//     // Your MongoDB database and collection details
+//     const dbInstance = client.db('server1_clf');
+//     const logsCollection = dbInstance.collection('basic_data');
 
-    // Date range for fetching data from 2023 until the future available date
-    const startOf2023 = new Date('2007-12-01T00:00:00.000Z');
-    const endOfFuture = new Date('2043-12-31T00:00:00.000Z');
+//     // Date range for fetching data from 2023 until the future available date
+//     const startOf2023 = new Date('2007-12-01T00:00:00.000Z');
+//     const endOfFuture = new Date('2043-12-31T00:00:00.000Z');
 
-    // Aggregate to count the occurrences of each IP address
-    const pipeline = [
-      {
-        $match: {
-          ds: {
-            $gte: startOf2023,
-            $lte: endOfFuture,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: '$ip_address',
-          count: { $sum: 1 },
-        },
-      },
-      {
-        $sort: { count: -1 },
-      },
-      {
-        $limit: 5,
-      },
-    ];
+//     // Aggregate to count the occurrences of each IP address
+//     const pipeline = [
+//       {
+//         $match: {
+//           ds: {
+//             $gte: startOf2023,
+//             $lte: endOfFuture,
+//           },
+//         },
+//       },
+//       {
+//         $group: {
+//           _id: '$ip_address',
+//           count: { $sum: 1 },
+//         },
+//       },
+//       {
+//         $sort: { count: -1 },
+//       },
+//       {
+//         $limit: 5,
+//       },
+//     ];
 
-    const topIPs = await logsCollection.aggregate(pipeline).toArray();
+//     const topIPs = await logsCollection.aggregate(pipeline).toArray();
 
-    // Emit top IPs to the connected client
-    socket.emit('topIPs', topIPs);
-    console.log('Top IPs sent to the connected client');
+//     // Emit top IPs to the connected client
+//     socket.emit('topIPs', topIPs);
+//     console.log('Top IPs sent to the connected client');
 
-    // Close the MongoDB connection when done
-    client.close();
-  } catch (error) {
-    console.error(error);
-    // Emit an error event to the connected client
-    socket.emit('error', { message: 'Internal Server Error' });
-  }
-});
+//     // Close the MongoDB connection when done
+//     client.close();
+//   } catch (error) {
+//     console.error(error);
+//     // Emit an error event to the connected client
+//     socket.emit('error', { message: 'Internal Server Error' });
+//   }
+// });
 
 server.listen(3001, async () => {
   console.log('Server is listening on port 3001');
@@ -666,14 +615,14 @@ server.listen(3001, async () => {
 
     await connectToDatabases();
     setInterval(() => {
-     async function fetchAll(dbName, cdata,edata){
+     async function fetchAll(server_name,dbName, gdata){
       try {
         const db = dbInstance.db(dbName);
         data={};
         for(let i=0;i<cdata.length;i++){
           cName=cdata[i];
           const logsCollection = db.collection(cName);
-          const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
+          const logDataValue = await logsCollection.findOne({"hostname":server_name}, { sort: { timestamp: -1 } });
           if(typeof(edata[i])!="string"){
             for(let j=0;j<edata[i].length;j++){
               data[edata[i][j]]=logDataValue[edata[i][j]];
@@ -694,7 +643,7 @@ server.listen(3001, async () => {
     // fetchAll("telegraf",["cpu"],["usage_user"]);
     fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
    
-    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
+    fetchAll(server_name,["cpu_usage","total_stars","memory_usage","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
@@ -762,10 +711,10 @@ const listS3ObjectsAndEmit = (socket) => {
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('A user connected',socket.handshake.query);
 
   // Initial list of objects on connection
-  listS3ObjectsAndEmit(socket);
+  // listS3ObjectsAndEmit(socket);
 
   socket.on('disconnect', () => {
     console.log('User disconnected');

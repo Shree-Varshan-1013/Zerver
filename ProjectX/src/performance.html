@@ -1,154 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Performance</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"
-    />
-    <script src="./js/components/cdn-scripts.js"></script>
-  </head>
 
-  <body
-    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-    x-init="
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance</title>
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script src="./js/components/cdn-scripts.js"></script>
+</head>
+
+<body
+  x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+  x-init="
           darkMode = JSON.parse(localStorage.getItem('darkMode'));
           $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-  >
-    <include src="./partials/preloader.html"></include>
+  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <include src="./partials/preloader.html"></include>
 
-    <div class="flex h-screen overflow-hidden">
-      <include src="./partials/sidebar.html"></include>
+  <div class="flex h-screen overflow-hidden">
+    <include src="./partials/sidebar.html"></include>
 
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <include src="./partials/header.html" />
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <include src="./partials/header.html" />
 
-        <main>
-          <include src="./partials/chatbot.html"></include>
-          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
-            <div class="mx-auto">
+      <main>
+        <include src="./partials/chatbot.html"></include>
+        <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+          <div class="mx-auto">
+            <div class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 class="text-title-md2 font-bold text-black dark:text-cement">
+                Performance
+              </h2>
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="index.html">Dashboard /</a>
+                  </li>
+                  <li class="text-lavendar">Performance</li>
+                </ol>
+              </nav>
+            </div>
+
+            <div class="flex gap-8">
               <div
-                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <h2
-                  class="text-title-md2 font-bold text-black dark:text-cement"
-                >
-                  Performance
-                </h2>
-                <nav>
-                  <ol class="flex items-center gap-2">
-                    <li>
-                      <a class="font-medium" href="index.html">Dashboard /</a>
-                    </li>
-                    <li class="text-lavendar">Performance</li>
-                  </ol>
-                </nav>
-              </div>
-
-              <div class="flex gap-8">
-                <div
-                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div class="stars" data-rating></div>
-                  <div>
-                    <h4
-                      id="ratingText"
-                      class="text-black dark:text-cement"
-                    ></h4>
-                  </div>
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark">
+                <div class="stars" data-rating></div>
+                <div>
+                  <h4 class="text-black dark:text-cement">
+                    This is because it is performing good
+                  </h4>
                 </div>
-                <div
-                  class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div>
-                    <div class="tooltip-container">
-                      <p class="mt-10 text-center" style="font-size: 20px">
-                        Calculations of Star rating <br />
-                        Hover Me !!
-                      </p>
-                      <div class="top">
-                        <h3>
-                          totalstars = star1 + star2 + star3 + star4 + star5
-                        </h3>
+              </div>
+              <div
+                class="m-3 rounded-sm border border-stroke p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark">
+                <div>
+                  <div class="tooltip-container">
+                    <p class="text-center mt-10" style="font-size: 20px;">Calculations of Star rating <br/>
+                      Hover Me !! 
+                    </p>
+                    <div class="top">
+                        <h3>totalstars = star1 + star2 + star3 + star4 + star5</h3>
                         Formula:
                         <ul>
-                          <li>
-                            Star 1: <br /><span
-                              >abs(((total_error_logs_last_minute / (logs_count
-                              + 1)) * 100) - 100)</span
-                            >
-                          </li>
-                          <li>
-                            Star 2: <br /><span>abs(cpu_percent - 100)</span>
-                          </li>
-                          <li>
-                            Star 3: <br /><span
-                              >abs(remaining_memory - 100)</span
-                            >
-                          </li>
-                          <li>
-                            Star 4: <br /><span
-                              >((accepted_count + 1) / (accepted_count +
-                              failed_count + 1)) * 100</span
-                            >
-                          </li>
-                          <li>
-                            Star 5: <br /><span
-                              >((failed_count + 1) / (accepted_count +
-                              failed_count + 1)) * 100</span
-                            >
-                          </li>
+                            <li>
+                              Star 1: <br/><span>abs(((total_error_logs_last_minute / (logs_count + 1)) * 100) - 100)</span>
+                            </li>
+                            <li>
+                              Star 2: <br/><span>abs(cpu_percent - 100)</span>
+                            </li>
+                            <li>
+                              Star 3: <br/><span>abs(remaining_memory - 100)</span>
+                            </li>
+                            <li>
+                              Star 4: <br/><span>((accepted_count + 1) / (accepted_count + failed_count + 1)) * 100</span>
+                            </li>
+                            <li>
+                              Star 5: <br/><span>((failed_count + 1) / (accepted_count + failed_count + 1)) * 100</span>
+                            </li>
                         </ul>
                         <i></i>
-                      </div>
                     </div>
-                  </div>
+                </div>
+                
                 </div>
 
-                <div style="width: 100%; font-size: 20px">
-                  <div
-                    class="m-3 h-[90%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark"
-                  >
-                    <h2 id="userUsage">Total Request :</h2>
-                    <br />
-                    <h2>Success Requests :</h2>
-                    <br />
-                    <h2>Failure Requests :</h2>
-                  </div>
+              </div>
+
+              <div style="width: 100%; font-size: 20px;" >
+                <div  
+                  class="m-3 h-[90%] rounded-sm border border-stroke py-6 px-7.5 dark:border-none dark:bg-boxdark">
+                  <h2 id="userUsage">
+                    Total Request : 
+                  </h2>
+                  <br>
+                  <h2>
+                    Success Requests :
+                  </h2>
+                  <br>
+                  <h2>
+                    Failure Requests :
+                  </h2>
                 </div>
               </div>
+            </div>
+            <div
+              class="mass-shadow hovering m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark mb-6">
+              <div class="w-full">
+                <div id="areachart"></div>
+              </div>
+            </div>
+            <div>
               <div
-                class="mass-shadow hovering m-3 mt-10 mb-6 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark"
-              >
-                <div class="w-full">
-                  <div id="areachart"></div>
-                </div>
-              </div>
-              <div>
-                <div
-                  class="mass-shadow hovering m-3 mb-6 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div class="col-md-7">
-                    <button id="combineButton">Download Chart</button>
-                    <div id="chartsContainer">
-                      <div id="progress1"></div>
-                      <div id="progress2"></div>
-                      <div id="progress3"></div>
-                    </div>
+                class="mass-shadow m-3 p-10 py-6 px-7.5 shadow-default dark:border-none dark:bg-boxdark hovering mb-6">
+                <div class="col-md-7">
+                  <button id="combineButton">Download Chart</button>
+                  <div id="chartsContainer">
+                    <div id="progress1"></div>
+                    <div id="progress2"></div>
+                    <div id="progress3"></div>
                   </div>
                 </div>
               </div>
-              <!-- <div
+            </div>
+            <!-- <div
               class="mass-shadow hovering flex content-center max-w-fit rounded-sm border border-stroke dark:border-none dark:bg-boxdark">
               <div class="m-3 p-10 dark:bg-boxdark">
                 <h5>Heat</h5>
@@ -159,66 +137,37 @@
               </div>
               <div id="chart"></div>
             </div> -->
-            </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        console.log("Soc", window.soc);
-        window.soc.on("all_metrices", (event) => {
-          // console.log("Stars : ", (event.data.total_stars));
-          const starValue = event.total_stars;
-          const stars = document.querySelector(".stars");
-          stars.style.setProperty("--rating", (starValue / 100) + "%");
+  <script>
 
-          const starsElement = document.querySelector(".stars");
-          const ratingTextElement = document.getElementById("ratingText");
-          console.log("value", starValue);
-          if (starsElement && ratingTextElement) {
-            const rating = starValue / 100;
-            console.log(Math.round(rating));
+    document.addEventListener("DOMContentLoaded", () => {
 
-            // Logic to set the text based on the rating value
-            switch (parseInt(rating)) {
-              case 1:
-                ratingTextElement.textContent =
-                  "This is because it is performing poorly";
-                break;
-              case 2:
-                ratingTextElement.textContent =
-                  "This is because it is not performing well";
-                break;
-              case 3:
-                ratingTextElement.textContent = "This is because it is average";
-                break;
-              case 4:
-                ratingTextElement.textContent = "This is because it is good";
-                break;
-              case 5:
-                ratingTextElement.textContent =
-                  "This is because it is performing very well";
-                break;
-              default:
-                ratingTextElement.textContent =
-                  "Rating information not available";
-            }
-          }
-        });
-
-        window.soc.on("cpugraf", (event) => {
-          console.log("tele", event.data.usage_user);
-          document.getElementById(
-            "userUsage"
-          ).innerText = `${event.data.usage_user}`;
-        });
+      console.log("Soc", window.soc);
+      window.soc.on("all_metrices", (event) => {
+        // console.log("Stars : ", (event.data.total_stars));
+        const starValue = event.total_stars;
+        const stars = document.querySelector(".stars");
+        stars.style.setProperty("--rating", ((starValue) / 1) + "%");
       });
 
-      // const stars = document.querySelector(".stars");
-      // const rating = parseInt(stars.getAttribute("data-rating"));
-      // stars.style.setProperty("--rating", (rating / 5) * 100 + "%");
-    </script>
-  </body>
+
+
+      window.soc.on("cpugraf", (event) => {
+        console.log("tele", event.data.usage_user);
+        document.getElementById('userUsage').innerText = `${event.data.usage_user}`;
+      });
+    });
+
+
+    // const stars = document.querySelector(".stars");
+    // const rating = parseInt(stars.getAttribute("data-rating"));
+    // stars.style.setProperty("--rating", (rating / 5) * 100 + "%");
+  </script>
+</body>
+
 </html>

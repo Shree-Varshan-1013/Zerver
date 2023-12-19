@@ -49,7 +49,6 @@ window.soc.on('logData', (data) => {
     } else {
       console.error("Received data is not in the expected format:", data);
     }
-  
 });
 });
 document.addEventListener("DOMContentLoaded", () => {

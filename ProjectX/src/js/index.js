@@ -114,7 +114,7 @@ flatpickr(".datepicker", {
   },
 });
 
-const sock = io('http://localhost:3001');
+const sock = io('http://localhost:3001',{query:"name="+window.Alpine.store('global').dbName});
 window.soc=sock;
 
 document.addEventListener("DOMContentLoaded", () => {
