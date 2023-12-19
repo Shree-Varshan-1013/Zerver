@@ -144,9 +144,9 @@
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-    window.soc.on("totalStars", (event) => {
+    window.soc.on("all_metrices", (event) => {
       // console.log("Stars : ", (event.data.total_stars));
-      const starValue = event.data.total_stars;
+      const starValue = event.total_stars;
       const stars = document.querySelector(".stars");
       stars.style.setProperty("--rating", ((starValue) / 1) + "%");
     });
@@ -154,14 +154,14 @@
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-    window.soc.on('summaryData', (data) => {
-      console.log("Received summaryData:", JSON.stringify(data));
+    window.soc.on('all_metrices', (data) => {
+      console.log("Received summaryData:", JSON.stringify(data.summary));
       // Assuming you have a <p> element with the id "logEntry"
       const logEntryElement = document.getElementById('summary-text');
 
       // Update the content of the <p> tag with the summary property from the received data
       if (logEntryElement) {
-        const summaryText = data.data.summary;
+        const summaryText = data.summary;
         
         // Create a new typewriter instance
         const typewriter = new Typewriter(logEntryElement, {
