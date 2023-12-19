@@ -184,30 +184,12 @@ const performance = () => {
     chartProgress3.render();
 
     
-    // const combineButton = document.getElementById('combineButton');
-    // combineButton.addEventListener('click', () => {
-    //     const chartsContainer = document.getElementById('chartsContainer');
-
-    //     domtoimage.toBlob(chartsContainer)
-    //         .then((blob) => {
-    //             const link = document.createElement('a');
-    //             link.href = window.URL.createObjectURL(blob);
-    //             link.download = 'server-performance.png';
-
-    //             document.body.appendChild(link);
-    //             link.click();
-
-    //             document.body.removeChild(link);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error combining charts:', error);
-    //         });
-    // });
-
+   
+    document.addEventListener("DOMContentLoaded", function () {
   // Listen for WebSocket messages
   window.soc.addEventListener('allmetrices', (event) => {
     // const newData1 = event.data;
-    // console.log("Star",newData1);
+    console.log("Graph",event);
    
    
 // console.log("T1otal Stars Sum (out of 100):", roundedPercentage);
@@ -239,9 +221,7 @@ const performance = () => {
         }
     });
   });
- 
- 
-
+});
 }
 
 export default performance;

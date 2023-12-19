@@ -9,6 +9,7 @@
   body {
     /* @apply relative z-1 bg-whiten font-satoshi text-base font-normal text-body; */
     font-family: 'Lexend', sans-serif;
+    font-size: 15px;
   }
 }
 
