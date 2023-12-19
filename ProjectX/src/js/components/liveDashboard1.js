@@ -53,14 +53,14 @@ window.soc.on('logData', (data) => {
 });
 });
 document.addEventListener("DOMContentLoaded", () => {
-window.soc.on('summaryData', (data) => {
-  console.log("Received summaryData:", JSON.stringify(data));
+window.soc.on('all_metrices', (data) => {
+  console.log("Received summaryData:", JSON.stringify(data.summary));
   // Assuming you have a <p> element with the id "logEntry"
   const logEntryElement = document.getElementById('logEntry');
 
   // Update the content of the <p> tag with the summary property from the received data
   if (logEntryElement) {
-    const summaryText = data.data.summary;
+    const summaryText = data.summary;
     
     // Create a new typewriter instance
     const typewriter = new Typewriter(logEntryElement, {
@@ -120,7 +120,7 @@ window.soc.on('total_logs_count', (data) => {
 
 // // Function to update the UI with the current count
 // function updateUI(count) {
-//   // Implement your UI update logic here
+//   // Implement your UI update logic here;
 //   // console.log('Current count:', count);
 //   const requestElement = document.getElementById("dataValue");
 
