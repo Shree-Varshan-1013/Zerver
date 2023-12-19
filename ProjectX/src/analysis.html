@@ -38,10 +38,46 @@
           <include src="./partials/chatbot.html"></include>
           <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
             <div class="mb-10">
+                <div class="grid grid-cols-3 gap-7 mb-10">
+                    <div
+                      class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
+                    >
+                      <h1
+                        class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      >
+                        Cost Estimation
+                      </h1>
+                      <p class="text-2xl mt-3 mb-3">$125.90</p>
+                      <div class="text-xl">For now today 20/12/2023, Using previous data</div>
+                    </div>
+      
+                    <div
+                      class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
+                    >
+                      <h1
+                        class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      >
+                        Log Estimation
+                      </h1>
+                      <p class="text-2xl mt-3 mb-3">$125.90</p>
+                      <div class="text-xl">For now today 20/12/2023, Using previous data</div>
+                    </div>
+      
+                    <div
+                      class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
+                    >
+                      <h1
+                        class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      >
+                        User Forecast
+                      </h1>
+                      <p class="text-2xl mt-3 mb-3">$125.90</p>
+                      <div class="text-xl">For now today 20/12/2023, Using previous data</div>
+                    </div>
+                  </div>
               <div
                 class="relative rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-strokedark dark:bg-boxdark"
               >
-              
                 <div
                   class="rounded-sm border border-stroke bg-white py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
                   id="log-estimation-forecast"
@@ -62,70 +98,7 @@
                 ></div>
               </div>
             </div>
-            <div class="grid grid-cols-2">
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <h1
-                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
-                >
-                  Cost Estimation
-                </h1>
-                <!-- <p
-                  x-text="'$ ' + $store.analysis.costEstimation"
-                  class="text-2xl"
-                ></p> -->
-              </div>
-
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <p class="text-2xl">
-                  For now today 12/18/2023, Using previous Data
-                </p>
-              </div>
-            </div>
-            <div class="mt-10 grid grid-cols-2">
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <p class="text-2xl">
-                  For now today 12/18/2023, Using previous Data
-                </p>
-              </div>
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <h1
-                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
-                >
-                  Daily User Forecast
-                </h1>
-                <!-- <p x-text="$store.analysis.userForecast" class="text-2xl"></p> -->
-              </div>
-            </div>
-            <div class="mt-10 grid grid-cols-2">
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <h1
-                  class="text-3xl font-bold text-lavendar3 dark:text-lavendar2"
-                >
-                  Log Estimation
-                </h1>
-                    <!-- <p
-                    x-text="JSON.stringify($store.analysis.logEstimation)"
-                    class="text-2xl"
-                    ></p> -->
-              </div>
-              <div
-                class="rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
-              >
-                <p class="text-2xl">
-                  For now today 12/18/2023, Using previous Data
-                </p>
-              </div>
-            </div>
+            
             <div class="flex w-[100%] items-center justify-center">
               <div
                 class="mt-5 w-fit rounded-sm border border-stroke bg-white py-6 px-5.5 dark:border-none dark:bg-boxdark"
