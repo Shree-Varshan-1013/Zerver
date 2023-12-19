@@ -212,11 +212,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     chartProgress3.updateSeries([{
-        data: [event.total_stars]
+        data: [(event.total_stars)/10]
     }]);
     chartProgress3.updateOptions({
         subtitle: {
-            text: `${event.total_stars}%`
+            text: `${(event.total_stars)/10}%`
         }
     });
   });

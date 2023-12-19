@@ -71,7 +71,7 @@ window.soc.on('all_metrices', (data) => {
     // Add the summary text to the typewriter instance
     typewriter
       .typeString(summaryText)
-      .pauseFor(1000)  // Pause for 1 second (optional)
+      .pauseFor(500)  // Pause for 1 second (optional)
       .start();        // Start the typewriter effect
   }
 });
