@@ -205,57 +205,42 @@ const performance = () => {
     // });
 
   // Listen for WebSocket messages
-  window.soc.addEventListener('totalStars', (event) => {
-    const newData1 = event.data;
-    console.log("Star",newData1);
+  window.soc.addEventListener('allmetrices', (event) => {
+    // const newData1 = event.data;
+    // console.log("Star",newData1);
    
    
 // console.log("T1otal Stars Sum (out of 100):", roundedPercentage);
     
     // Update the chart with new data
-    chartProgress3.updateSeries([{
-        data: [newData1.total_stars]
-    }]);
-    chartProgress3.updateOptions({
-        subtitle: {
-            text: `${newData1.total_stars}%`
-        }
-    });
-  });
-  window.soc.addEventListener('cpuUsage', (event) => {
-    const newData2 = event.data;
-    // console.log("Cpu",newData.cpu_percent);
    
-    
-// console.log("Total CPU SUM (out of 100):", cpuroundedPercentage);
-    
-    // Update the chart with new data
     chartProgress1.updateSeries([{
-        data: [newData2.cpu_percent]
+        data: [event.cpu_usage]
     }]);
     chartProgress1.updateOptions({
         subtitle:{
-            text: `${newData2.cpu_percent}%`
+            text: `${event.cpu_usage}%`
         }
     });
-  });
-  window.soc.addEventListener('memoryUsage', (event) => {
-    const newData3 = event.data;
-    console.log("memory",newData3);
-   
-   
-// console.log("Total CPU SUM (out of 100):", memoryroundedPercentage);
-    
-    // Update the chart with new data
     chartProgress2.updateSeries([{
-        data: [newData3.percent_used]
+        data: [event.memory_usage]
     }]);
     chartProgress2.updateOptions({
         subtitle:{
-            text: `${newData3.percent_used}%`
+            text: `${event.memory_usage}%`
+        }
+    });
+    chartProgress3.updateSeries([{
+        data: [event.total_stars]
+    }]);
+    chartProgress3.updateOptions({
+        subtitle: {
+            text: `${event.total_stars}%`
         }
     });
   });
+ 
+ 
 
 }
 

@@ -11,8 +11,8 @@ const io = new Server(server, {
     origin: "*",
   },
 });
-
-const page1Namespace = io.of('/performance.html');
+// io.path("/performance");
+const page1Namespace = io.of('/performance');
 page1Namespace.on('connection', async (socket) => {
   // Handle events specific to page 1
   console.log('Client connected to page 1:', socket.id);
@@ -218,55 +218,13 @@ io.on('connection', async (socket) => {
 let notificationsFetched = false;
 
 
-try {
-
-  await connectToDatabases();
-  setInterval(() => {
-    // Fetch data from MongoDB
-   fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
-     fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
-     fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
-     fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
-  }, 5000);
-  // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
-  //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
-
-  //check and emit logtable data in sameorder
-  setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-  await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
-  setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
-  // setupChangeStreamLast("telegraf","cpu","cpugraf");
-  await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
-  // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
-  await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
-  await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
-  await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
-  await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
-
-  await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
-  await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
-  await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
-  await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
-  // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
-  // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
-  // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
-  await fetchDataAndEmitArray("69571Web", "dual_graph", "twoArray");
-  await fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
-  await fetchDataAndEmitArray("server1_clf", "status_codes", "status_code");
-  if (!notificationsFetched) {
-    await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
-    notificationsFetched = true;
-  }
-
-
-} catch (error) {
-  console.error("Error during data fetching and emission:", error);
-}
 
 socket.on('disconnect', () => {
   console.log(`Client Disconnected: ${socket.id}`);
 });
 });
+
+
 
 /// <============ integer values for  request and logTable count ========>
 
@@ -675,7 +633,71 @@ io.on('connection', async (socket) => {
   }
 });
 
-server.listen(3001, () => {
+server.listen(3001, async () => {
   console.log('Server is listening on port 3001');
+  try {
+
+    await connectToDatabases();
+    setInterval(() => {
+     async function fetchAll(dbName, cdata,edata){
+      try {
+        const db = dbInstance.db(dbName);
+        data={};
+        for(let i=0;i<cdata.length;i++){
+          cName=cdata[i];
+          const logsCollection = db.collection(cName);
+          const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
+          data[cName]=logDataValue[edata[i]];
+          console.log("Check",logDataValue,edata[i]);
+        }
+        console.log("Data",data);
+        // console.log("Got data from MongoDB "+dbName+":", logDataValue);
+        io.emit("all_metrices", data);
+      } catch (error) {
+        console.error("Error fetching data from MongoDB (${dbName}):", error);
+      }
+    };
+    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage"],["cpu_percent","total_stars","percent_used"]);
+      // Fetch data from MongoDB
+    //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+    //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+    //    fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
+    //    fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
+    }, 5000);
+    // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
+    //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
+  
+    //check and emit logtable data in sameorder
+    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
+    await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+    setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+    // setupChangeStreamLast("telegraf","cpu","cpugraf");
+    await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
+    // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
+    await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
+    await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
+    await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
+    await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
+  
+    await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
+    await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
+    await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
+    await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
+    // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
+    // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
+    // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
+    await fetchDataAndEmitArray("69571Web", "dual_graph", "twoArray");
+    await fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
+    await fetchDataAndEmitArray("server1_clf", "status_codes", "status_code");
+    if (!notificationsFetched) {
+      await fetchDataAndEmitReverseArrayNotification("server1_clf", "notifications", "getNotifications");
+      notificationsFetched = true;
+    }
+  
+  
+  } catch (error) {
+    console.error("Error during data fetching and emission:", error);
+  }
+  
 });
 

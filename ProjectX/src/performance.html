@@ -122,9 +122,9 @@
     document.addEventListener("DOMContentLoaded", () => {
 
       console.log("Soc", window.soc);
-      window.soc.on("totalStars", (event) => {
-        // console.log("Stars : ", (event.data.total_stars));
-        const starValue = event.data.total_stars;
+      window.soc.on("all_metrices", (event) => {
+        const starValue = event.total_stars;
+        console.log("Stars : ",event);
         const stars = document.querySelector(".stars");
         stars.style.setProperty("--rating", ((starValue) / 1) + "%");
       });
