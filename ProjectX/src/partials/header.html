@@ -239,4 +239,88 @@
       </ul>
     </div>
   </div>
+  <script>
+   setTimeout(() => {
+
+    const noti = window.Alpine.store('notification');
+    const dataArray = Object.values(noti.messages);
+    console.log(dataArray);
+    // Using Object.values() to get the values of the proxied objects
+    var arr = [];
+const valuesArray = dataArray.map(proxyObject => Object.values(proxyObject));
+
+// Accessing the values from the valuesArray
+valuesArray.forEach(values => {
+  // Do something with the values
+  console.log(values[1]);
+  const obj = {
+    _id: values[0],
+    message: values[1],
+    code: values[2],
+  };
+  arr.push(obj);
+});
+
+  // Function to create and append list items for each message
+  function populateDropdown(messages) {
+    const dropdownList = document.querySelector("#dropdown ul");
+
+    messages.forEach((message) => {
+      let label;
+      let bgColor;
+
+      // Set label and background color based on code
+      switch (message.code) {
+        case "1":
+          label = "success";
+          bgColor = "#00cc00"; 
+          break;
+        case "2":
+          label = "warning";
+          bgColor = "#ffcc00"; 
+          break;
+        case "3":
+          label = "red";
+          bgColor = "#ff3300"; 
+          break;
+        default:
+          label = "red";
+          bgColor = "#cccccc"; 
+          break;
+      }
+
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `
+        <div class="mb-1 flex w-full border-l-6 border-${label} px-3 py-3 shadow-md dark:bg-${label} md:p-2" style="background-color:"red">
+          <div class="mr-5 flex h-9 w-9 items-center justify-center rounded-lg">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 2C13.6569 2 15 3.34315 15 5V16.8826L17.4393 19.3219C17.6344 19.517 17.7803 19.7627 17.8653 20.0339C17.9504 20.3051 17.9717 20.5894 17.9266 20.8672C17.8814 21.1449 17.7713 21.4075 17.6073 21.6283C17.4432 21.8492 17.2314 22.0196 16.9955 22.1258C16.7597 22.232 16.5084 22.2703 16.2599 22.2386C16.0114 22.2069 15.7754 22.1065 15.5755 21.949L8.57547 16.449C8.32178 16.2553 8.12807 16.0001 8.01439 15.7134C7.90071 15.4268 7.87162 15.1192 7.93 14.821V5C7.93 3.34315 9.27315 2 10.93 2H12ZM10.93 4H12V14.3826L15.9999 18.3826V5C15.9999 4.44772 15.5522 4 14.9999 4H10.93Z"
+                fill="#fff"
+              />
+            </svg>
+          </div>
+          <div class="w-full">
+            <h5 class="mb-3 text-lg font-bold text-${label}">${message.message}</h5>
+            <p class="text-xs">19/12/23</p>
+          </div>
+        </div>
+      `;
+      dropdownList.appendChild(listItem);
+    });
+  }
+
+  // Populate the dropdown with notification messages
+  populateDropdown(arr);
+}, 10000);
+
+  </script>
 </header>

@@ -120,7 +120,7 @@ window.soc=sock;
 document.addEventListener("DOMContentLoaded", () => {
   
   Alpine.store('notification', {
-    messages: Alpine.$persist([]),
+    messages: [],
     getNotification: function () {
     
       window.soc.on('getNotifications', data => {
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Alpine.store('notification').getNotification();
   console.log(Alpine.store('notification').messages);
 
-//  Alpine.store('notification').emptyNotifica  tions();
+//  Alpine.store('notification').emptyNotifications();
   chart01();
   chart02();
   chart03();
