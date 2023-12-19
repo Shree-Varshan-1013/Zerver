@@ -184,15 +184,14 @@ const performance = () => {
     chartProgress3.render();
 
     
-   
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Listen for WebSocket messages
-  window.soc.addEventListener('allmetrices', (event) => {
+  window.soc.addEventListener('all_metrices', (event) => {
     // const newData1 = event.data;
     console.log("Graph",event);
    
    
-// console.log("T1otal Stars Sum (out of 100):", roundedPercentage);
+ // console.log("T1otal Stars Sum (out of 100):", roundedPercentage);
     
     // Update the chart with new data
    
