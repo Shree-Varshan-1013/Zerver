@@ -34,11 +34,11 @@ var options = {
   var chart = new ApexCharts(document.querySelector("#charthealth"), options);
   chart.render();
 
-  window.soc.addEventListener('virtualMemory', (event) => {
-    const free=event.data.virtual_memory_info.free;
-    const used=event.data.virtual_memory_info.used;
-    console.log("VM",free);
-    console.log("VM",used);
+  window.soc.addEventListener('all_metrices', (event) => {
+    const free=event.virtual_memory.free;
+    const used=event.virtual_memory.used;
+    // console.log("VM",event.virtual_memory);
+    // console.log("VM",used);
     chart.updateSeries([free, used]);
     
   });

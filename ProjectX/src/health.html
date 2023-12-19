@@ -212,19 +212,17 @@
   <script src="./js/components/animatedbar.js"></script>
   <script>
 document.addEventListener("DOMContentLoaded", () => {
-    window.soc.on("cpuUsage", (data) => {
+    window.soc.on("all_metrices", (data) => {
 
-      console.log(data.data.cpu_percent);
-      document.getElementById('cpuUsage').innerText = `${data.data.cpu_percent}`;
-    });
-    window.soc.on("memoryUsage", (data) => {
+      // console.log(data.cpu_usage);
+      document.getElementById('cpuUsage').innerText = `${data.cpu_usage}`;
+      document.getElementById('memoryUsage').innerText = `${data.memory_usage}`;
 
-      console.log(data.data.percent_used);
-      document.getElementById('memoryUsage').innerText = `${data.data.percent_used}`;
     });
+   
     window.soc.on("error_count", (data) => {
 
-      console.log("Error", data.count);
+      // console.log("Error", data.count);
       document.getElementById('errorCount').innerText = `${data.count}`;
     });
   });
