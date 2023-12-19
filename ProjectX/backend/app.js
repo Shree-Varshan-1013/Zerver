@@ -145,7 +145,7 @@ const fetchDataAndEmitLast = async (dbName, collectionName, eventName) => {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
     const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
-    console.log("Got data from MongoDB "+dbName+":", logDataValue);
+    // console.log("Got data from MongoDB "+dbName+":", logDataValue);
     io.emit(eventName, { data: logDataValue });
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
@@ -227,7 +227,7 @@ setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
   await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
   await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
-
+  
   // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
@@ -512,7 +512,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
     };
 
     io.emit(eventName, chartData);
-    io.emit('total_logs_count', sumOfTotalLogs);
+    // io.emit('total_logs_count', sumOfTotalLogs);
     // console.log("logPage Graph",chartData);
     client.close();
   } catch (error) {
@@ -540,7 +540,7 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
 
     const sDate = new Date(); // Current date and time
     const eDate = new Date();
-    sDate.setDate(sDate.getDate() - 20); // 20 days later
+    sDate.setDate(sDate.getDate() - 0.5); // 20 days later
 
     const startDate =  sDate;
     const endDate =  eDate;
@@ -575,7 +575,7 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
       },
     ]).toArray();
     
-    // const sumOfTotalLogs = total_logs.length > 0 ? total_logs[0].totalLogsCount : 0;
+    const sumOfTotalLogs = total_logs.length > 0 ? total_logs[0].totalLogsCount : 0;
 
     const chartData = {
       data: result, 
@@ -583,6 +583,7 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
 
     
     io.emit(eventName, chartData);
+    io.emit('total_logs_count', sumOfTotalLogs);
     // io.emit('total_logs_count', sumOfTotalLogs);
     // console.log("Dashboard",chartData);
     client.close();
@@ -591,7 +592,10 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
   }
 };
 
-liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
+setInterval(() => {
+  liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
+  
+}, 5000);
 
   socket.on('disconnect', () => {
     // console.log('User disconnected');
@@ -702,4 +706,73 @@ server.listen(3001, async () => {
   }
   
 });
+
+
+
+//common error path
+io.on('connection', async(socket) => {
+
+})
+
+// const http = require('http');
+const AWS = require('aws-sdk');
+// const socketIO = require('socket.io');
+
+
+// AWS configuration
+AWS.config.update({
+  accessKeyId: 'AKIAQXZF3HZ2WZ3ZG66X',
+  secretAccessKey: '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',
+  region: 'eu-north-1',
+});
+
+const s3 = new AWS.S3();
+
+// Function to list S3 objects and emit the data through Socket.IO
+const listS3ObjectsAndEmit = (socket) => {
+  // S3 bucket and prefix (folder) to list objects from
+  const bucketName = 'log-saving-files';
+  // const prefix = 'YOUR_PREFIX';
+
+  const params = {
+    Bucket: bucketName,
+    // Prefix: prefix,
+  };
+
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      console.error(err);
+      return socket.emit('error', 'Error listing objects');
+    }
+
+    const objects = data.Contents.map((obj) => obj.Key);
+
+    // Emit the object list to connected clients
+    console.log('data from s3',objects);
+    socket.emit('objectList', objects);
+  });
+};
+
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Initial list of objects on connection
+  listS3ObjectsAndEmit(socket);
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+
+  // Handle a custom event for updating the object list
+  socket.on('updateObjectList', () => {
+    // Call the function to list objects and emit the updated list
+    listS3ObjectsAndEmit(socket);
+  });
+});
+
+// const port = 3000;
+// server.listen(port, () => {
+//   console.log(`Server is running at http://localhost:${port}`);
+// });
 

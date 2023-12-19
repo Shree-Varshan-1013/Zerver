@@ -163,9 +163,13 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to update the chart with new data
 function updateChart(data) {
   // Extract timestamp and logs_count from the data object
+  cc = data.data[data.data.length-1]
+  data.data = data.data.filter((e,ind,arr)=> ind % 20 === 0)
+  data.data.push(cc)
+
   const timestamps = data.data.map(item => new Date(item.timestamp));
   const logsCount = data.data.map(item => item.logs_count);
-  console.log(logsCount);
+  console.log("curr cs",cc);
 
   // Update the chart series with processed data
   chart.updateSeries([{

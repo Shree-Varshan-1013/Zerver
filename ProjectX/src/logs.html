@@ -44,6 +44,21 @@
         border-radius: 4px;
       }
     </style>
+    <style>
+      /* Your existing styles */
+  
+      #pagination {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+  
+      #prevPageBtn,
+      #nextPageBtn {
+        margin: 0 10px;
+      }
+    </style>
   </head>
 
   <body
@@ -148,7 +163,7 @@
                           id="st-time"
                           type="datetime-local"
                           class="datetime-input bg-white text-black"
-                          disabled />
+                          disabled/>
                       </div>
                       <div class="">
                         <span class="ml-4 mr-4 text-black dark:text-cement"
@@ -232,6 +247,12 @@
                   <!-- <tbody> -->
                   <tbody class="dark:bg-boxdark-2" id="logTableBody1"></tbody>
                 </table>
+              </div>
+              <!-- Pagination Controls -->
+              <div id="pagination">
+                <button id="prevPageBtn" onclick="prevPage()">Previous</button>
+                <span id="currentPage">Page 1</span>
+                <button id="nextPageBtn" onclick="nextPage()">Next</button>
               </div>
             </div>
           </div>
