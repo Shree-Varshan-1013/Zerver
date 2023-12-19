@@ -120,7 +120,7 @@ window.soc=sock;
 document.addEventListener("DOMContentLoaded", () => {
   
   Alpine.store('notification', {
-    messages: [],
+    messages: Alpine.$persist([]),
     getNotification: function () {
     
       window.soc.on('getNotifications', data => {

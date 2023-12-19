@@ -6100,3 +6100,55 @@ header h2 {
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(157, 0, 255, 0.521) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-special {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  padding: 18px 16px;
+  background-color: #BA77F9;
+  cursor: pointer;
+  transition: all .5s ease-in-out;
+}
+
+.input-special::placeholder {
+  color: transparent;
+}
+
+.input-special:focus::placeholder {
+  color: rgb(131, 128, 128);
+}
+
+.input-special:focus,.input-special:not(:placeholder-shown) {
+  background-color: #fff;
+  border: 1px solid #BA77F9;
+  width: 200px;
+  cursor: none;
+  padding: 18px 16px 18px 45px;
+}
+
+.icon {
+  position: absolute;
+  right: 0;
+  height: 45px;
+  width: 45px;
+  background-color: #fff;
+  border-radius: 99px;
+  z-index: -1;
+  fill: #BA77F9;
+  border: 1px solid #BA77F9;
+}
+
+.input-special:focus + .icon,.input-special:not(:placeholder-shown) + .icon {
+  z-index: 0;
+  background-color: #BA77F9;  
+  border: none;
+}
