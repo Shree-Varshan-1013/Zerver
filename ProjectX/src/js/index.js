@@ -124,8 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
     getNotification: function () {
     
       window.soc.on('getNotifications', data => {
-        console.log(data);
-        this.messages = data;
+        console.log("data from notification  :", data.data);
+        this.messages = data.data;
       })
     },
     emptyNotifications: function() {
@@ -133,8 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   })
   Alpine.store('notification').getNotification();
+  console.log(Alpine.store('notification').messages);
 
- // Alpine.store('notification').emptyNotifications();
+//  Alpine.store('notification').emptyNotifica  tions();
   chart01();
   chart02();
   chart03();

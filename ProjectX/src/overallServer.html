@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0"
+    />
+    <title>Security</title>
+  </head>
+
+  <body
+    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+    x-init="
+          darkMode = JSON.parse(localStorage.getItem('darkMode'));
+          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Content Area Start ===== -->
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
+        <!-- ===== Header Start ===== -->
+        <include src="./partials/header.html" />
+
+        <main class="align-center flex w-full flex-col">
+          <include src="./partials/chatbot.html"></include>
+          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+            <div class="mx-auto">
+              <div
+                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+              >
+                <h2
+                  class="text-title-md2 font-bold text-black dark:text-cement"
+                >
+                  Logs
+                </h2>
+                <nav>
+                  <ol class="flex items-center gap-2">
+                    <li>
+                      <a class="font-medium" href="index.html">Dashboard /</a>
+                    </li>
+                    <li class="text-lavendar">Logs</li>
+                  </ol>
+                </nav>
+              </div>
+              <div class="grid grid-cols-2">
+                <div
+                  class="m-5 flex justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                >
+                  <div
+                    class="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+                  >
+                    <h4
+                      class="mb-6 text-xl font-bold text-black dark:text-cement"
+                    >
+                      Total Number of Servers : 5
+                    </h4>
+
+                    <div class="flex flex-col">
+                      <div
+                        class="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-boxdark sm:grid-cols-2"
+                      >
+                        <div class="p-2.5 xl:p-5">
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Server
+                          </h5>
+                        </div>
+                        <div class="p-2.5 text-center xl:p-5">
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Status
+                          </h5>
+                        </div>
+                      </div>
+
+                      <div
+                        class="grid grid-cols-2 border-b border-stroke dark:border-strokedark sm:grid-cols-2"
+                      >
+                        <div class="flex items-center gap-2 p-2.5 xl:p-5">
+                          <p
+                            class="hidden font-medium text-black dark:text-cement sm:block"
+                          >
+                            Server-1
+                          </p>
+                        </div>
+                        
+
+                        <div
+                          class="flex items-center justify-center p-2.5 xl:p-5"
+                        >
+                          <p class="font-medium text-meta-3">ON</p>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="m-5 flex justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                >
+                  <h1
+                    class="text-title-md2 font-bold text-black dark:text-cement"
+                  >
+                    Log2
+                  </h1>
+                </div>
+              </div>
+              <div class="grid grid-cols-2">
+                <div
+                  class="m-5 flex justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                >
+                  <div
+                    class="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
+                  >
+                    <h4
+                      class="mb-6 text-xl font-bold text-black dark:text-cement"
+                    >
+                      Total Number of Servers : 5
+                    </h4>
+
+                    <div class="flex flex-col">
+                      <div
+                        class="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-boxdark sm:grid-cols-2"
+                      >
+                        <div class="p-2.5 xl:p-5">
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Server
+                          </h5>
+                        </div>
+                        <div class="p-2.5 text-center xl:p-5">
+                          <h5
+                            class="text-sm font-medium uppercase xsm:text-base"
+                          >
+                            Status
+                          </h5>
+                        </div>
+                      </div>
+
+                      <div
+                        class="grid grid-cols-2 border-b border-stroke dark:border-strokedark sm:grid-cols-2"
+                      >
+                        <div class="flex items-center gap-2 p-2.5 xl:p-5">
+                          <p
+                            class="hidden font-medium text-black dark:text-cement sm:block"
+                          >
+                            Server-1
+                          </p>
+                        </div>
+                        
+
+                        <div
+                          class="flex items-center justify-center p-2.5 xl:p-5"
+                        >
+                          <p class="font-medium text-meta-3">ON</p>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="m-5 flex justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                >
+                  <h1
+                    class="text-title-md2 font-bold text-black dark:text-cement"
+                  >
+                    Log2
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

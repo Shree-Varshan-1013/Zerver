@@ -177,9 +177,9 @@
           </label>
           <!-- Dark Mode Toggler -->
         </li>
-        <!-- Notification Menu Area -->
+
         <li
-          class="relative"
+          class="dropdown relative"
           x-data="{ dropdownOpen: false, notifying: true }"
           @click.outside="dropdownOpen = false"
         >
@@ -211,55 +211,62 @@
               />
             </svg>
           </a>
-          
+
           <div
-          x-show="dropdownOpen"
-          x-data="{notifications : ['sample']}"
-          class="absolute -right-27 mt-2.5 flex h-90 w-95 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-90"
-        >
-          <div class="px-4.5 py-3">
-            <h5 class="text-sm font-medium text-bodydark2">Notification</h5>
+            x-show="dropdownOpen"
+            id="dropdown"
+            class="absolute -right-27 mt-2.5 flex h-90 w-95 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-90"
+          >
+            <div class="px-4.5 py-3">
+              <h5 class="text-sm font-medium text-bodydark2">Notification</h5>
+              <!-- <h1 x-text="$store.notification.messages"></h1> -->
+            </div>
+
+            <ul class="flex h-auto flex-col overflow-y-auto">
+              <!-- List items will be dynamically added here -->
+            </ul>
           </div>
-
-          <ul class="flex h-auto flex-col overflow-y-auto">
-            <template x-for="(value, index) in notifications" :key="index">
-            <li>
-              <div
-                class="flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-3 py-3 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-2"
-              >
-                <div
-                  class="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30"
-                >
-                  <svg
-                    width="19"
-                    height="16"
-                    viewBox="0 0 19 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M1.50493 16H17.5023C18.6204 16 19.3413 14.9018 18.8354 13.9735L10.8367 0.770573C10.2852 -0.256858 8.70677 -0.256858 8.15528 0.770573L0.156617 13.9735C-0.334072 14.8998 0.386764 16 1.50493 16ZM10.7585 12.9298C10.7585 13.6155 10.2223 14.1433 9.45583 14.1433C8.6894 14.1433 8.15311 13.6155 8.15311 12.9298V12.9015C8.15311 12.2159 8.6894 11.688 9.45583 11.688C10.2223 11.688 10.7585 12.2159 10.7585 12.9015V12.9298ZM8.75236 4.01062H10.2548C10.6674 4.01062 10.9127 4.33826 10.8671 4.75288L10.2071 10.1186C10.1615 10.5049 9.88572 10.7455 9.50142 10.7455C9.11929 10.7455 8.84138 10.5028 8.79579 10.1186L8.13574 4.75288C8.09449 4.33826 8.33984 4.01062 8.75236 4.01062Z"
-                      fill="#FBBF24"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="w-full">
-                  <h5 class="mb-3 text-sm font-bold text-[#9D5425]">
-                    Attention needed
-                  </h5>
-                  <p class="text-sm leading-relaxed text-[#D0915C]" x-text="value">
-                      
-                  </p>
-                  <p class="text-xs">04 Jan, 2025</p>
-                </div>
-              </div>
-            </li>
-          </template>
-          </ul>
-        </div>
-
         </li>
       </ul>
     </div>
   </div>
+
+  <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          setTimeout(() => {
+            const notificationStore = Alpine.store("notification");
+            console.log("mapla");
+
+            // Simulated notification messages (replace this with your actual data)
+            const notificationMessages = notificationStore.messages;
+            console.log(notificationMessages);
+            
+
+            // Function to create and append list items for each message
+            function populateDropdown(messages) {
+              const dropdownList = document.querySelector("#dropdown ul");
+
+              messages.forEach((message) => {
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+               <div class="flex w-full border-l-6 border-warning bg-warning bg-opacity-[15%] px-3 py-3 shadow-md dark:bg-[#1B1B24] dark:bg-opacity-30 md:p-2">
+                 <div class="mr-5 flex h-9 w-9 items-center justify-center rounded-lg bg-warning bg-opacity-30">
+                   <!-- Your SVG icon code here -->
+                 </div>
+                 <div class="w-full">
+                   <h5 class="mb-3 text-sm font-bold text-[#9D5425]">${message.title}</h5>
+                   <p class="text-sm leading-relaxed text-[#D0915C]">${message.description}</p>
+                   <p class="text-xs">${message.date}</p>
+                 </div>
+               </div>
+             `;
+                dropdownList.appendChild(listItem);
+              });
+            }
+
+            // Populate the dropdown with notification messages
+            populateDropdown(notificationMessages);
+          }, 5000);
+        });
+  </script>
 </header>
