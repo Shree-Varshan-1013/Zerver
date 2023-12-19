@@ -61,7 +61,7 @@ window.soc.on('all_metrices', (data) => {
   // Update the content of the <p> tag with the summary property from the received data
   if (logEntryElement) {
     const summaryText = data.summary;
-    logEntryElement.innerText = summaryText;
+    logEntryElement.innerText = summaryText;  
     
     // Create a new typewriter instance
     // const typewriter = new Typewriter(logEntryElement, {
@@ -69,11 +69,11 @@ window.soc.on('all_metrices', (data) => {
     //   delay: 50,   // Set the delay between characters
     // });
 
-    // // Add the summary text to the typewriter instance
-    // typewriter
-    //   .typeString(summaryText)
-    //   .pauseFor(1000)  // Pause for 1 second (optional)
-    //   .start();        // Start the typewriter effect
+    // Add the summary text to the typewriter instance
+    typewriter
+      .typeString(summaryText)
+      .pauseFor(500)  // Pause for 1 second (optional)
+      .start();        // Start the typewriter effect
   }
 });
 });

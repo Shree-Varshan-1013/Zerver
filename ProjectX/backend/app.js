@@ -82,21 +82,21 @@ const fetchDataAndEmitReverseArrayNotification = async (dbName, collectionName, 
   }
 };
 
-const setupChangeStream = async (dbName, collectionName, eventName) => {
-  const db = dbInstance.db(dbName);
-  const collection = db.collection(collectionName);
+// const setupChangeStream = async (dbName, collectionName, eventName) => {
+//   const db = dbInstance.db(dbName);
+//   const collection = db.collection(collectionName);
 
-  const changeStream = collection.watch();
+//   const changeStream = collection.watch();
 
-  changeStream.on('change', (change) => {
-    // console.log('Change detected:', change);
-    fetchDataAndEmitReverseArray(dbName, collectionName, eventName); // Fetch and emit updated data
-  });
+//   changeStream.on('change', (change) => {
+//     // console.log('Change detected:', change);
+//     fetchDataAndEmitReverseArray(dbName, collectionName, eventName); // Fetch and emit updated data
+//   });
 
-  changeStream.on('error', (error) => {
-    console.error('Change stream error:', error);
-  });
-};
+//   changeStream.on('error', (error) => {
+//     console.error('Change stream error:', error);
+//   });
+// };
 const setupChangeStreamArray = async (dbName, collectionName, eventName) => {
   const db = dbInstance.db(dbName);
   const collection = db.collection(collectionName);
@@ -217,21 +217,20 @@ io.on('connection', async (socket) => {
 
 let notificationsFetched = false;
 
-setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
+// setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
-  setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
+  // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
   // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
-  await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
+  // await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
-  await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
+  // await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
   await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
   
   // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
-  await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
   // await fetchDataAndEmitLast("server1_clf", "cost_estimation_forecast", "costEstimation");
   // await fetchDataAndEmitLast("server1_clf", "daily_users_forecast", "userForecast");
   // await fetchDataAndEmitLast("server1_clf", "logs_estimation_forecast", "logEstimation");
@@ -675,8 +674,15 @@ server.listen(3001, async () => {
           cName=cdata[i];
           const logsCollection = db.collection(cName);
           const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
+          if(typeof(edata[i])!="string"){
+            for(let j=0;j<edata[i].length;j++){
+              data[edata[i][j]]=logDataValue[edata[i][j]];
+            }
+          }
+          else{
           data[cName]=logDataValue[edata[i]];
           console.log("Check",logDataValue,edata[i]);
+          }
         }
         console.log("Data",data);
         // console.log("Got data from MongoDB "+dbName+":", logDataValue);
@@ -686,8 +692,9 @@ server.listen(3001, async () => {
       }
     };
     // fetchAll("telegraf",["cpu"],["usage_user"]);
+    fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
    
-      fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info"]);
+    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
