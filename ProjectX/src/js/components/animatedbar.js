@@ -31,7 +31,7 @@ const animatedBar = () => {
       align: 'left',
       style: {
         fontSize: '28px',
-        color: '#cbd5e1'
+        color: '#BA77F9'
       }
     },
     dataLabels: {

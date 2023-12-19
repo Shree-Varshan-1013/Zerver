@@ -14,7 +14,7 @@ var options = {
     style: {
       fontSize: '28px',
       fontWeight: 'bold',
-      color: '#ffffff',
+      color: '#BA77F9',
     },
   },
   responsive: [{

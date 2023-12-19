@@ -169,7 +169,7 @@ function updateChart(data) {
 
   const timestamps = data.data.map(item => new Date(item.timestamp));
   const logsCount = data.data.map(item => item.logs_count);
-  console.log("curr cs",cc);
+  // console.log("curr cs",cc);
 
   // Update the chart series with processed data
   chart.updateSeries([{

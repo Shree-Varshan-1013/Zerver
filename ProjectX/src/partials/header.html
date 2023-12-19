@@ -189,7 +189,7 @@
 
         <li
           class="dropdown relative"
-          x-data="{ dropdownOpen: false, notifying: true }"
+          x-data="{ dropdownOpen: false, notifying: true}"
           @click.outside="dropdownOpen = false"
         >
           <a
@@ -240,57 +240,58 @@
     </div>
   </div>
   <script>
-   setTimeout(() => {
+    setTimeout(() => {
+      const noti = window.Alpine.store("notification");
+      const dataArray = Object.values(noti.messages);
+      console.log(dataArray);
+      // Using Object.values() to get the values of the proxied objects
+      var arr = [];
+      const valuesArray = dataArray.map((proxyObject) =>
+        Object.values(proxyObject)
+      );
 
-    const noti = window.Alpine.store('notification');
-    const dataArray = Object.values(noti.messages);
-    console.log(dataArray);
-    // Using Object.values() to get the values of the proxied objects
-    var arr = [];
-const valuesArray = dataArray.map(proxyObject => Object.values(proxyObject));
+      // Accessing the values from the valuesArray
+      valuesArray.forEach((values) => {
+        // Do something with the values
+        console.log(values[1]);
+        const obj = {
+          _id: values[0],
+          message: values[1],
+          code: values[2],
+        };
+        arr.push(obj);
+      });
 
-// Accessing the values from the valuesArray
-valuesArray.forEach(values => {
-  // Do something with the values
-  console.log(values[1]);
-  const obj = {
-    _id: values[0],
-    message: values[1],
-    code: values[2],
-  };
-  arr.push(obj);
-});
+      // Function to create and append list items for each message
+      function populateDropdown(messages) {
+        const dropdownList = document.querySelector("#dropdown ul");
 
-  // Function to create and append list items for each message
-  function populateDropdown(messages) {
-    const dropdownList = document.querySelector("#dropdown ul");
+        messages.forEach((message) => {
+          let label;
+          let bgColor;
 
-    messages.forEach((message) => {
-      let label;
-      let bgColor;
+          // Set label and background color based on code
+          switch (message.code) {
+            case "1":
+              label = "success";
+              bgColor = "#00cc00";
+              break;
+            case "2":
+              label = "warning";
+              bgColor = "#ffcc00";
+              break;
+            case "3":
+              label = "red";
+              bgColor = "#ff3300";
+              break;
+            default:
+              label = "red";
+              bgColor = "#cccccc";
+              break;
+          }
 
-      // Set label and background color based on code
-      switch (message.code) {
-        case "1":
-          label = "success";
-          bgColor = "#00cc00"; 
-          break;
-        case "2":
-          label = "warning";
-          bgColor = "#ffcc00"; 
-          break;
-        case "3":
-          label = "red";
-          bgColor = "#ff3300"; 
-          break;
-        default:
-          label = "red";
-          bgColor = "#cccccc"; 
-          break;
-      }
-
-      const listItem = document.createElement("li");
-      listItem.innerHTML = `
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `
         <div class="mb-1 flex w-full border-l-6 border-${label} px-3 py-3 shadow-md dark:bg-${label} md:p-2" style="background-color:"red">
           <div class="mr-5 flex h-9 w-9 items-center justify-center rounded-lg">
             <svg
@@ -314,13 +315,22 @@ valuesArray.forEach(values => {
           </div>
         </div>
       `;
-      dropdownList.appendChild(listItem);
-    });
-  }
+          dropdownList.appendChild(listItem);
+        });
+      }
 
-  // Populate the dropdown with notification messages
-  populateDropdown(arr);
-}, 10000);
+      // Populate the dropdown with notification messages
+      populateDropdown(arr);
+      if(arr.length > 0){
+        window.Alpine.store('notification').notifying = true;
+        console.log(window.Alpine.store('notification').notifying);
+      }
+      else{
+        console.log("onnum ila");
+      }
+      
 
+    }, 10000);
+    
   </script>
 </header>
