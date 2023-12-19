@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         text: 'Log Graph',
         align: 'left',
         style: {
-          color: '#546E7A' // Text color for the title
+          color: '#af5aff' // Text color for the title
         }
       },
       xaxis: {
