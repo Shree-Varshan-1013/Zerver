@@ -221,7 +221,7 @@ let notificationsFetched = false;
   await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
-  // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
+  await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
   // await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
@@ -694,7 +694,7 @@ server.listen(3001, async () => {
     // fetchAll("telegraf",["cpu"],["usage_user"]);
     fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
    
-    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
+    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
