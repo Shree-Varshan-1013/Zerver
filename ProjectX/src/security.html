@@ -10,9 +10,9 @@
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-<link rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
   <title>Security</title>
   <style>
     /* body.blur {
@@ -309,8 +309,8 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      window.soc.on("operatingSystem", (data) => {
-        const osData = data.data;
+      window.soc.on("all_metrices", (data) => {
+        const osData = data;
 
         const osDataContainer = $("#osData");
         const osHFContainer = $("#osHF");
@@ -326,23 +326,23 @@
       <tbody>
         <tr>
           <td>Name</td>
-          <td>${osData.Name}</td>
+          <td>${data.Name}</td>
         </tr>
         <tr>
           <td>Generation</td>
-          <td>${osData.Generation}</td>
+          <td>${data.Generation}</td>
         </tr>
         <tr>
           <td>Build</td>
-          <td>${osData.Build}</td>
+          <td>${data.Build}</td>
         </tr>
         <tr>
           <td>Version</td>
-          <td>${osData.Version}</td>
+          <td>${data.Version}</td>
         </tr>
         <tr>
           <td>Architecture</td>
-          <td>${osData.Architecture}</td>
+          <td>${data.Architecture}</td>
         </tr>
       </tbody>
     </table>
@@ -353,25 +353,22 @@
         const osHF = `
     <div>
       <ul>
-        ${osData.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
+        ${data.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
       </ul>
     </div>
     
   `;
         // console.log(osData);
         osHFContainer.html(osHF);
-      });
+        const vData = data;
+      console.log("Sec", data);
+      const vDataContainer = $("#vData");
 
-      window.soc.on("vData", (data) => {
-        const vData = data.data;
-
-        const vDataContainer = $("#vData");
-
-        const vInfo = `
+      const vInfo = `
   <table class="table-auto w-full">
     <tr>
       <td>Date</td>
-      <td>${vData.Date}</td>
+      <td>${data.Date}</td>
     </tr>
     <tr>
       <td>CVE</td>
@@ -379,38 +376,42 @@
     </tr>
     <tr>
       <td>KB</td>
-      <td>${vData.KB}</td>
+      <td>${data.KB}</td>
     </tr>
     <tr>
       <td>Title</td>
-      <td>${vData.Title}</td>
+      <td>${data.Title}</td>
     </tr>
     <tr>
       <td>Affected Product</td>
-      <td>${vData.AffectedProduct}</td>
+      <td>${data.AffectedProduct}</td>
     </tr>
     <tr>
       <td>Affected Component</td>
-      <td>${vData.AffectedComponent}</td>
+      <td>${data.AffectedComponent}</td>
     </tr>
     <tr>
       <td>Severity</td>
-      <td>${vData.Severity}</td>
+      <td>${data.Severity}</td>
     </tr>
     <tr>
       <td>Impact</td>
-      <td>${vData.Impact}</td>
+      <td>${data.Impact}</td>
     </tr>
     <tr>
       <td>Exploit</td>
-      <td>${vData.Exploit}</td>
+      <td>${data.Exploit}</td>
     </tr>
   </table>
 `;
-        // console.log("VData ",vData);
-        vDataContainer.html(vInfo);
-      });
+      // console.log("VData ",vData);
+      vDataContainer.html(vInfo);
     });
+      });
+
+
+      
+
   </script>
 </body>
 

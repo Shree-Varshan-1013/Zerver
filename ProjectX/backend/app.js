@@ -223,9 +223,9 @@ let notificationsFetched = false;
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
   // await fetchDataAndEmitLast("server1_clf", "summary", "summaryData");
   // await fetchDataAndEmit("server2_db", "cpu_usage", "secondTable");
-  await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
+  // await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("server1_clf", "vulnerabilities_count_security", "vCount");
-  await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
+  // await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
   await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
 
   // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
@@ -670,8 +670,15 @@ server.listen(3001, async () => {
           cName=cdata[i];
           const logsCollection = db.collection(cName);
           const logDataValue = await logsCollection.findOne({}, { sort: { timestamp: -1 } });
+          if(typeof(edata[i])!="string"){
+            for(let j=0;j<edata[i].length;j++){
+              data[edata[i][j]]=logDataValue[edata[i][j]];
+            }
+          }
+          else{
           data[cName]=logDataValue[edata[i]];
           console.log("Check",logDataValue,edata[i]);
+          }
         }
         console.log("Data",data);
         // console.log("Got data from MongoDB "+dbName+":", logDataValue);
@@ -683,7 +690,7 @@ server.listen(3001, async () => {
     // fetchAll("telegraf",["cpu"],["usage_user"]);
     fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
    
-      fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory","vulnerabilities"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info","Date"]);
+    fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
