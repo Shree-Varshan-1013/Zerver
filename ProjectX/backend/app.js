@@ -12,21 +12,21 @@ const io = new Server(server, {
   },
 });
 // io.path("/performance");
-const page1Namespace = io.of('/performance');
-page1Namespace.on('connection', async (socket) => {
-  // Handle events specific to page 1
-  console.log('Client connected to page 1:', socket.id);
+// const page1Namespace = io.of('/performance');
+// page1Namespace.on('connection', async (socket) => {
+//   // Handle events specific to page 1
+//   console.log('Client connected to page 1:', socket.id);
 
-  // Example: Emit data for page 1
-  await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
-  await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
-  await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
-  // ... (other events)
+//   // Example: Emit data for page 1
+//   await fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+//   await fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
+//   await fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
+//   // ... (other events)
 
-  socket.on('disconnect', () => {
-    console.log(`Client Disconnected from page 1: ${socket.id}`);
-  });
-});
+//   socket.on('disconnect', () => {
+//     console.log(`Client Disconnected from page 1: ${socket.id}`);
+//   });
+// });
 let dbInstance; // Declare a variable to store the database instance globally
 
 const connectToDatabases = async () => {
@@ -228,7 +228,7 @@ setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
   await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
   await fetchDataAndEmitArrayLimit("server1_clf", "vulnerabilities_count_security", "vLimit");
 
-  await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
+  // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
   await fetchDataAndEmitArray("server1_clf", "memory_usage", "memoryArray");
   await fetchDataAndEmitArray("server1_clf", "cpu_usage", "cpuArray");
   await fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
@@ -683,7 +683,7 @@ server.listen(3001, async () => {
     };
     // fetchAll("telegraf",["cpu"],["usage_user"]);
    
-      fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary"],["cpu_percent","total_stars","percent_used","summary"]);
+      fetchAll("server1_clf",["cpu_usage","total_stars","memory_usage","summary","virtual_memory"],["cpu_percent","total_stars","percent_used","summary","virtual_memory_info"]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
