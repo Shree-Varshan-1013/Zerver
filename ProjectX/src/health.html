@@ -205,9 +205,9 @@
                     <h1
                     class="text-2xl font-bold text-lavendar3 dark:text-lavendar2"
                   >
-                    CPU Usage
+                    CPU Available
                   </h1>
-                    <div id="cpuUsage" class="text-black dark:text-cement p-3 text-center text-3xl">7.8</div>
+                    <div id="cpuavailable" class="text-black dark:text-cement p-3 text-center text-3xl">7.8</div>
                   </div>
                 </div>
                 <div class="">
@@ -216,9 +216,9 @@
                     <h1
                     class="text-2xl font-bold text-lavendar3 dark:text-lavendar2"
                   >
-                    Memory Usage
+                    Memory Available
                   </h1>
-                    <div id="memoryUsage" class="text-black dark:text-cement p-3 text-center text-3xl">78.4</div>
+                    <div id="memoryavailable" class="text-black dark:text-cement p-3 text-center text-3xl">78.4</div>
                   </div>
 
                 </div>
@@ -265,7 +265,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // console.log("CPU",data);
       document.getElementById('cpuUsage').innerText = `${data.cpu.toFixed(2)}`;
+      document.getElementById('cpuavailable').innerText = `${(100-data.cpu).toFixed(2)}`;
       document.getElementById('memoryUsage').innerText = `${data.mem.used_percent.toFixed(2)}`;
+      document.getElementById('memoryavailable').innerText = `${(100-data.mem.used_percent).toFixed(2)}`;
 
     });
    

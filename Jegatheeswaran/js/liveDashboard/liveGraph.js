@@ -5,6 +5,24 @@
   });
 
   setInterval(function () {
+    let newTimestamp = new Date().getTime();
+    let randomValue = Math.round((Math.random(1, 1000)) * 20);
+  
+    // Add the new random value to the array
+    randomValues.push(randomValue);
+  
+    // Remove the oldest random value
+    randomValues.shift();
+  
+    // Create a new dataset with the updated array
+    let newData = randomValues.map((value, index) => ({
+      x: newTimestamp - (numberOfDataPoints - index - 1) * oneSecond,
+      y: value
+    }));
+  
+    // Update the chart data with the new dataset using setData method
+    chart.setData([{ data: newData }], false); // Set the second parameter to false to disable animation
+  }, 1000);
 
   var options = {
     chart: {
