@@ -311,7 +311,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       window.soc.on("all_metrices", (data) => {
         const osData = data;
-        console.log("FIX",data.operating_systems_info_security);
+        console.log("FIX",data.vulnerabilities);
         const osDataContainer = $("#osData");
         const osHFContainer = $("#osHF");
 

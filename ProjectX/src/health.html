@@ -227,8 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.soc.on("all_metrices", (data) => {
 
       // console.log("CPU",data);
-      document.getElementById('cpuUsage').innerText = `${data.cpu}`;
-      document.getElementById('memoryUsage').innerText = `${data.mem}`;
+      document.getElementById('cpuUsage').innerText = `${data.cpu.toFixed(2)}`;
+      document.getElementById('memoryUsage').innerText = `${data.mem.toFixed(2)}`;
 
     });
    

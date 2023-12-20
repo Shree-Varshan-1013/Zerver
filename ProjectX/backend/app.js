@@ -629,7 +629,7 @@ server.listen(3001, async () => {
           host_query = dbName == "machine_info"? {"tags.host":server_name} : {"hostname":server_name}
           const logDataValue = await logsCollection.findOne(host_query, { sort: { timestamp: -1 } });
           if(typeof(cval[1])!="string"){
-            let subdata = {};
+            let subdata = {}; 
             for(let j=0;j<cval[1].length;j++){
               subdata[cval[1][j]]=logDataValue[cval[1][j]];
             }
