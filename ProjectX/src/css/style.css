@@ -5854,7 +5854,7 @@ background: linear-gradient(90deg, rgba(186,119,249,1) 0%, rgba(175,90,255,1) 10
   position: fixed;
   top: 70px;
   right: 20px;
-  z-index: 9999;
+  z-index: 9999999999;
 }
 
 .chatbot-toggler {
