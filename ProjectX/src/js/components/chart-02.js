@@ -5,12 +5,12 @@ const chart02 = () => {
   const chartTwoOptions = {
     series: [
       {
-        name: "Sales",
-        data: [44, 55, 41, 67, 22, 43, 65],
+        name: "Uptime percentage",
+        data: [44, 55, 41],
       },
       {
-        name: "Revenue",
-        data: [13, 23, 20, 8, 13, 27, 15],
+        name: "Error Count",
+        data: [13, 23, 20],
       },
     ],
     colors: ["#3056D3", "#80CAEE"],
@@ -53,7 +53,7 @@ const chart02 = () => {
     },
 
     xaxis: {
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["M", "T", "W"],
     },
     legend: {
       position: "top",
