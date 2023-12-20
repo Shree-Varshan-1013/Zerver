@@ -1,0 +1,11 @@
+Date	20220412
+CVE	CVE-2022-26832
+KB	KB5012117
+Title	.NET Framework Denial of Service Vulnerability
+Affected Product	Microsoft .NET Framework 4.8 on Windows 10 Version 21H2 for x64-based Systems
+Affected Component	Microsoft
+Severity	Important
+Impact	Denial of Service
+Exploit	n/a
+
+

@@ -65,7 +65,7 @@ const statistics = () => {
         },
         {
             name: "Success",
-            data: [32, 33, 21, 42, 19, 32]
+            data: [31,45,56,78,90,56]
         },
         {
             name: "Failure",
@@ -115,6 +115,50 @@ const statistics = () => {
 
     // Simulate fetching data every 5 seconds (replace with your desired interval)
     // setInterval(fetchData, 10000);
+    function updateChart(chart, newData) {
+        // Logic to update the chart with the new data
+        // This could involve updating the series data, redrawing the chart, etc.
+      
+        // For example, if you're using a library like Highcharts:
+        chart.update({
+          series: newData
+        });
+      }
+
+    window.soc.addEventListener('status_code', (event) => {
+        const dataArray = event.data;
+      
+        if (Array.isArray(dataArray) && dataArray.length > 0) {
+          const newSuccessData = [];
+          const newErrorData = [];
+      
+          for (const currentData of dataArray) {
+            if (currentData.accepted_count !== undefined) {
+              newSuccessData.push(currentData.accepted_count);
+            }
+            if (currentData.failed_count !== undefined) {
+              newErrorData.push(currentData.failed_count);
+            }
+          }
+      
+          // Replace the entire "Success" series data with the new data
+          optionsArea.series[1].data = newSuccessData;
+      
+          // Replace the entire "Failure" series data with the new data
+          optionsArea.series[2].data = newErrorData;
+          
+          // Update the chart
+          updateChart(chartArea, [
+            { name: 'Total', data: optionsArea.series[0].data },
+            { name: 'Success', data: optionsArea.series[1].data },
+            { name: 'Failure', data: optionsArea.series[2].data }
+          ]);
+        }
+      });
+      
+      
+    
+    
 }
 
 export default statistics;

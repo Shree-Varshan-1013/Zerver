@@ -496,7 +496,7 @@ server.listen(3001, async () => {
           let cval = cdata[i]
           const logsCollection = db.collection(cval[0]);
           host_query = dbName == "machine_info"? {"tags.host":server_name} : {"hostname":server_name}
-          const logDataValue = await logsCollection.findOne(host_query, { sort:{timestamp:-1} });
+          const logDataValue = await logsCollection.findOne(host_query, { sort:{timestamp:1} });
           if(!logDataValue) return
           if(typeof(cval[1])!="string"){
             let subdata = {}; 
