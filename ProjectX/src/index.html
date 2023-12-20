@@ -5,7 +5,10 @@
     <title>Zerver</title>
     <link rel="icon" href="../src/images/logo/logoSq.png" type="image/x-icon" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="./js/components/chatBot.js"></script>
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
 
     <meta name="viewport" content="width=device-width,initial-scale=1" />
   </head>
@@ -35,42 +38,7 @@
                 />
               </a>
             </div>
-            <!-- Desktop navigation -->
-            <nav class="cp37h cjnbw ch9bk">
-              <!-- Desktop menu links -->
-              <ul class="csqqr c2sao cbsu6 c4agq c9wgl">
-                <li>
-                  <a
-                    class="c0z2s cit3o cx3jz ccqx1 cgi3a cqxsj ch2qt cvdvu ciz32"
-                    href="about.html"
-                    >About</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="c0z2s cit3o cx3jz ccqx1 cgi3a cqxsj ch2qt cvdvu ciz32"
-                    href="dashboard.html"
-                    >Integrations</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="c0z2s cit3o cx3jz ccqx1 cgi3a cqxsj ch2qt cvdvu ciz32"
-                    href="customers.html"
-                    >Customers</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="c0z2s cit3o cx3jz ccqx1 cgi3a cqxsj ch2qt cvdvu ciz32"
-                    href="changelog.html"
-                    >Changelog</a
-                  >
-                </li>
-              </ul>
-            </nav>
-
-            <!-- Desktop sign in links -->
+            <include src="./partials/chatbot.html"></include>
             <ul class="c2sao cq21c ci0vw c4agq">
               <li>
                 <a
@@ -79,23 +47,8 @@
                   >Sign in</a
                 >
               </li>
-              <li class="cci1o">
-                <a
-                  class="c3d7q c272e cegg3 c8isz c0z2s c1mpe ccqfq cit3o cx3jz cgi3a cqxsj c27r3 cfl4k ca0gw cq2yg"
-                  href="signup.html"
-                >
-                  <span class="c2sao cwban c27r3">
-                    Sign up
-                    <span class="c9pof c406y cxxyq c3fbv cx3jz cgi3a cqzh1"
-                      >-&gt;</span
-                    >
-                  </span>
-                </a>
-              </li>
             </ul>
-            <!-- Mobile menu -->
             <div class="c2sao c89zz cwap3 c4agq" x-data="{ expanded: false }">
-              <!-- Hamburger button -->
               <button
                 class="c381v"
                 :class="{ 'active': expanded }"
@@ -114,54 +67,6 @@
                   <rect y="16" width="20" height="2" rx="1"></rect>
                 </svg>
               </button>
-              <!-- Mobile navigation -->
-              <nav
-                id="mobile-nav"
-                class="cbvce cml7t cpjek cgi3a ca5ue chez1 csm51 c1tcw ca0gw ccxsu ccyhi"
-                x-ref="mobileNav"
-                :style="expanded ? 'max-height: ' + $refs.mobileNav.scrollHeight + 'px; opacity: 1' : 'max-height: 0; opacity: .8'"
-                @click.outside="expanded = false"
-                @keydown.escape.window="expanded = false"
-                x-cloak=""
-              >
-                <ul class="c3d7q cy8oh c8nst coow7 cn544 ccyhi">
-                  <li>
-                    <a
-                      class="c0z2s cit3o ccqx1 coow7 cvdvu c4agq"
-                      href="about.html"
-                      >About</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      class="c0z2s cit3o ccqx1 coow7 cvdvu c4agq"
-                      href="integrations.html"
-                      >Integrations</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      class="c0z2s cit3o ccqx1 coow7 cvdvu c4agq"
-                      href="pricing.html"
-                      >Pricing</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      class="c0z2s cit3o ccqx1 coow7 cvdvu c4agq"
-                      href="customers.html"
-                      >Customers</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      class="c0z2s cit3o ccqx1 coow7 cvdvu c4agq"
-                      href="changelog.html"
-                      >Changelog</a
-                    >
-                  </li>
-                </ul>
-              </nav>
             </div>
           </div>
         </div>
@@ -286,70 +191,15 @@
                       <div
                         class="ccqrz c6df8 ccal6 cuygr ctwez cwban ccqx1 c6wvq"
                       >
-                        The security first platform
+                        Server Log System
                       </div>
                     </div>
                     <h3 class="cc7gh ccqrz cx8zw c6df8 cfcmr ctwez c6wvq c6m3m">
-                      Simplify your security with authentication services
+                      Establishing a Server log system
                     </h3>
                     <p class="cmuyi cbgr1 cpvtt">
-                      Define access roles for the end-users, and extend your
-                      authorization capabilities to implement dynamic access
-                      control.
+                      Server log systemfor E-governance with appropriate notification and content based classification of log AICTE
                     </p>
-                    <div class="c07t0 ccea9 chcps cv8av">
-                      <button
-                        class="cvq3v cwlfg c8azi c2sao cx3jz ccqx1 cgi3a cqxsj c36jb cvdvu ca0gw cn544 c4agq cpjg8 c8x2c"
-                        :class="tab !== '1' ? 'cupc0 cp4r7' : 'cgx4y c1xwr cmzyq'"
-                        @click.prevent="tab = '1'"
-                      >
-                        <svg
-                          class="c6ek1 cl3jq cygn6"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                        >
-                          <path
-                            d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12Zm0 14V2H2v12h12Zm-3-7H5a1 1 0 1 1 0-2h6a1 1 0 0 1 0 2Zm0 4H5a1 1 0 0 1 0-2h6a1 1 0 0 1 0 2Z"
-                          ></path>
-                        </svg>
-                        <span>Simplify your security</span>
-                      </button>
-                      <button
-                        class="cvq3v cwlfg c8azi c2sao cx3jz ccqx1 cgi3a cqxsj c36jb cvdvu ca0gw cn544 c4agq cpjg8 c8x2c"
-                        :class="tab !== '2' ? 'cupc0 cp4r7' : 'cgx4y c1xwr cmzyq'"
-                        @click.prevent="tab = '2'"
-                      >
-                        <svg
-                          class="c6ek1 cl3jq cygn6"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                        >
-                          <path
-                            d="M2 6H0V2a2 2 0 0 1 2-2h4v2H2v4ZM16 6h-2V2h-4V0h4a2 2 0 0 1 2 2v4ZM14 16h-4v-2h4v-4h2v4a2 2 0 0 1-2 2ZM6 16H2a2 2 0 0 1-2-2v-4h2v4h4v2Z"
-                          ></path>
-                        </svg>
-                        <span>Customer identity</span>
-                      </button>
-                      <button
-                        class="cvq3v cwlfg c8azi c2sao cx3jz ccqx1 cgi3a cqxsj c36jb cvdvu ca0gw cn544 c4agq cpjg8 c8x2c"
-                        :class="tab !== '3' ? 'cupc0 cp4r7' : 'cgx4y c1xwr cmzyq'"
-                        @click.prevent="tab = '3'"
-                      >
-                        <svg
-                          class="c6ek1 cl3jq cygn6"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                        >
-                          <path
-                            d="M14.3.3c.4-.4 1-.4 1.4 0 .4.4.4 1 0 1.4l-8 8c-.2.2-.4.3-.7.3-.3 0-.5-.1-.7-.3-.4-.4-.4-1 0-1.4l8-8ZM15 7c.6 0 1 .4 1 1 0 4.4-3.6 8-8 8s-8-3.6-8-8 3.6-8 8-8c.6 0 1 .4 1 1s-.4 1-1 1C4.7 2 2 4.7 2 8s2.7 6 6 6 6-2.7 6-6c0-.6.4-1 1-1Z"
-                          ></path>
-                        </svg>
-                        <span>Adaptable authentication</span>
-                      </button>
-                    </div>
                   </div>
                   <!-- Image -->
                   <div
@@ -526,17 +376,13 @@
               <!-- Section header -->
               <div class="cw9su c80wd c9eon csya4 cifrc">
                 <h2 class="cc7gh ccqrz cx8zw c6df8 cfcmr ctwez cvc1j c4zau">
-                  Faster. Smarter.
+                  Smarter. Better.
                 </h2>
                 <p class="cmuyi cbgr1">
-                  There are many variations available, but the majority have
-                  suffered alteration in some form, by injected humour, or
-                  randomised words which don't look even slightly believable.
+                  There are many variations of server logging systems available, but the majority of them can't do what we do. We are the future of server logging
                 </p>
               </div>
-              <!-- Highlighted boxes -->
               <div class="c9eon c27r3 cifrc">
-                <!-- Blurred shape -->
                 <div
                   class="c3sb3 c2vxt cp4r7 c3x17 ca5ue c2s0w c7upq cjfxx"
                   aria-hidden="true"
@@ -635,13 +481,10 @@
                                 <h3
                                   class="cc7gh ccqrz cx8zw c6df8 cfcmr ctwez cwban cflos cskrr cwj8y"
                                 >
-                                  Optimized for security
+                                Real Time Updates and Data Visulaization
                                 </h3>
                                 <p class="cmuyi">
-                                  Optimize for user experience and privacy. Use
-                                  social login integrations, lower user
-                                  friction, incorporate rich user profiling, and
-                                  facilitate more transactions.
+                                  Powered by Web Sockets and Optimized for data vizulaisation using publish and subscribe technology and graphical vizualiser technology 
                                 </p>
                               </div>
                             </div>
@@ -698,11 +541,11 @@
                               <h3
                                 class="cc7gh ccqrz cx8zw c6df8 cfcmr ctwez cwban cflos cskrr cwj8y"
                               >
-                                Extensibility
+                              Centralised
                               </h3>
                               <p class="cmuyi">
-                                Your login box must find the right balance
-                                between user convenience, privacy and security.
+                                No matter how many servers or the type of server, Zerver is compatible with all types of logs.
+
                               </p>
                             </div>
                           </div>
@@ -744,11 +587,10 @@
                               <h3
                                 class="cc7gh ccqrz cx8zw c6df8 cfcmr ctwez cwban cflos cskrr cwj8y"
                               >
-                                Infinite options
+                              Customized Dashboard
                               </h3>
                               <p class="cmuyi">
-                                Quickly apply filters to refine your issues
-                                lists and create custom views.
+                                Overwhelemd by the information provided to you? Choose just what suits YOUR needs. No one size fits all.
                               </p>
                             </div>
                           </div>

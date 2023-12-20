@@ -150,18 +150,82 @@
                 <div id="heatmap" style="width: 1100px; height: 300px" class="ml-10 mt-[17px]"></div>
               </div>
             </div>
-            <div x-show="risks"
+            <div x-show="risk"
               class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
               style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
               x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
               x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
               x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
-              <div class="text-2xl">Yearly Graph</div>
+              <div class="text-2xl">Risks</div>
               <div class="flex flex-row m-5">
                
               </div>
-              <div>
-                <div id="heatmap" style="width: 1100px; height: 300px" class="ml-10 mt-[17px]"></div>
+              
+            </div>
+            <div x-show="errorCounts"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">ErrorCounts</div>
+              <div class="flex flex-row m-5">
+               
+              </div>
+            </div>
+            <div x-show="overallServer"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">overallServer</div>
+              <div class="flex flex-row m-5">
+               
+              </div>
+            </div>
+            <div x-show="worldmap"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">worldMap</div>
+              <div class="flex flex-row m-5">
+               
+              </div>
+            </div>
+            <div x-show="threeprogress"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">threeprogress</div>
+              <div class="flex flex-row m-5">
+               
+              </div>
+            </div>
+            <div x-show="serverHealth"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">serverHealth</div>
+              <div class="flex flex-row m-5">
+               
+              </div>
+            </div>
+            <div x-show="virtualMemory"
+              class="p-10 my-5 rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+              style="box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;"
+              x-transition:enter="transition-opacity duration-300" x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100" x-transition:leave="transition-opacity duration-300"
+              x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+              <div class="text-2xl">virtualMemory</div>
+              <div class="flex flex-row m-5">
+               
               </div>
             </div>
           </div>
