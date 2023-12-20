@@ -355,7 +355,7 @@ function renderTable(searchQuery, searchColumn, logs , page) {
         const row = tableBody.insertRow();
 
         // Exclude log_id and log_time from the displayed columns
-        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time');
+        const columnsToDisplay = Object.keys(log).filter(key => key !== 'log_id' && key !== 'log_time' && key != 'hostname');
 
         columnsToDisplay.forEach(key => {
           const cell = row.insertCell();

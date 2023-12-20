@@ -22,6 +22,7 @@ import animatedBar from "./components/animatedbar";
 import { followingDotCursor } from "./components/followingDotCursor";
 import securityLine from "./components/securitylinechart";
 import healthPie from "./components/healthpie";
+import allGraphs from "./components/allGraphs";
 // import healthBar from "./components/animatedbar";
 
 Alpine.plugin(persist)
@@ -166,6 +167,7 @@ if (window.location.pathname === '/security.html') {
 }
 
 if (window.location.pathname === '/customize.html') {
+  allGraphs();
   pieChartSecurity();
   heatMap();
   securityLine();
