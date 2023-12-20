@@ -153,9 +153,12 @@
         // Assuming you have a <p> element with the id "logEntry"
         const logEntryElement = document.getElementById("summary-text");
 
+        const valuesArray = JSON.stringify(data.data.summary).split(',');
+        console.log("Check",valuesArray);
+
         // Update the content of the <p> tag with the summary property from the received data
-        if (logEntryElement) {
-          const summaryText = data.data.summary;
+        if (valuesArray) {
+          const summaryText = valuesArray;
 
           // Create a new typewriter instance
           const typewriter = new Typewriter(logEntryElement, {
