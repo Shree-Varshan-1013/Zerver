@@ -28,7 +28,7 @@ const io = new Server(server, {
 //   });
 // });
 let dbInstance; // Declare a variable to store the database instance globally
-
+// let server_name =socket.handshake.query.name;
 const connectToDatabases = async () => {
   try {
     // Establish a single database connection
@@ -110,7 +110,7 @@ const fetchDataAndEmitLast = async (dbName, collectionName, eventName,server_nam
   }
 };
 
-const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, limit = 7,server_name) => {
+const fetchDataAndEmitArrayLimit = async (dbName, collectionName, eventName, limit,server_name) => {
   try {
     const db = dbInstance.db(dbName);
     const logsCollection = db.collection(collectionName);
@@ -185,8 +185,9 @@ let server_name=socket.handshake.query.name;
   // await fetchDataAndEmit("server1_clf", "operating_systems_info_security", "operatingSystem");
   await fetchDataAndEmit("log_analysis","vulnerabilities_count_security", "vCount",server_name,);
   // await fetchDataAndEmit("server1_clf", "vulnerabilities", "vData");
-  await fetchDataAndEmitArrayLimit("log_analysis", "vulnerabilities_count_security", "vLimit",server_name,);
-  
+  await fetchDataAndEmitArrayLimit("log_analysis", "vulnerabilities_count_security", "vLimit",7,server_name,);
+//  await fetchDataAndEmitLast("log_analysis", "total_stars", "total_stars",server_name);
+
   // await fetchDataAndEmitLast("server1_clf", "virtual_memory", "virtualMemory");
   await fetchDataAndEmitArray("log_analysis", "memory_usage", "memoryArray",server_name,);
   await fetchDataAndEmitArray("log_analysis","cpu_usage", "cpuArray",server_name,);
@@ -610,12 +611,15 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
 // });
 
 server.listen(3001, async () => {
-  console.log('Server is listening on port 3001');
-  try {
 
+  console.log('Server is listening on port 3001');
+  
+  try {
+    io.on('connection', async (socket) => {
+      const server_name=socket.handshake.query.name;
     await connectToDatabases();
     setInterval(() => {
-     async function fetchAll(server_name,dbName, gdata){
+     async function fetchAll(server_name,dbName, cdata){
       try {
         const db = dbInstance.db(dbName);
         data={};
@@ -641,12 +645,11 @@ server.listen(3001, async () => {
       }
     };
     // fetchAll("telegraf",["cpu"],["usage_user"]);
-    fetchDataAndEmitArrayCount("server1_clf", "error_logs", "error_count");
    
     fetchAll(server_name,["cpu_usage","total_stars","memory_usage","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
-    //    fetchDataAndEmitLast("server1_clf", "total_stars", "totalStars");
+    fetchDataAndEmitLast("log_analysis", "total_stars", "total_stars",server_name);
     //    fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
     //    fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
     }, 5000);
@@ -656,7 +659,7 @@ server.listen(3001, async () => {
     //check and emit logtable data in sameorder
     
   
-  
+    });
   } catch (error) {
     console.error("Error during data fetching and emission:", error);
   }
@@ -711,7 +714,7 @@ const listS3ObjectsAndEmit = (socket) => {
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
-  console.log('A user connected',socket.handshake.query);
+  console.log('A user connected',socket.handshake.query.name);
 
   // Initial list of objects on connection
   // listS3ObjectsAndEmit(socket);
