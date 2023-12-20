@@ -196,19 +196,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update the chart with new data
    
     chartProgress1.updateSeries([{
-        data: [event.cpu_usage]
+        data: [event.cpu]
     }]);
     chartProgress1.updateOptions({
         subtitle:{
-            text: `${event.cpu_usage}%`
+            text: `${event.cpu.toFixed(2)}%`
         }
     });
     chartProgress2.updateSeries([{
-        data: [event.memory_usage]
+        data: [event.mem]
     }]);
     chartProgress2.updateOptions({
         subtitle:{
-            text: `${event.memory_usage}%`
+            text: `${event.mem.toFixed(2)}%`
         }
     });
     chartProgress3.updateSeries([{
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }]);
     chartProgress3.updateOptions({
         subtitle: {
-            text: `${(event.total_stars)/10}%`
+            text: `${((event.total_stars)/10).toFixed(2)}%`
         }
     });
   });

@@ -226,9 +226,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     window.soc.on("all_metrices", (data) => {
 
-      // console.log(data.cpu_usage);
-      document.getElementById('cpuUsage').innerText = `${data.cpu_usage}`;
-      document.getElementById('memoryUsage').innerText = `${data.memory_usage}`;
+      // console.log("CPU",data);
+      document.getElementById('cpuUsage').innerText = `${data.cpu}`;
+      document.getElementById('memoryUsage').innerText = `${data.mem}`;
 
     });
    

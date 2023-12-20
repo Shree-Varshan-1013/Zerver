@@ -35,11 +35,15 @@ var options = {
   chart.render();
 
   window.soc.addEventListener('all_metrices', (event) => {
+    console.log("Memory",event);
+    if(event.virtual_memory){
     const free=event.virtual_memory.free;
     const used=event.virtual_memory.used;
-    // console.log("VM",event.virtual_memory);
+    // console.log("VM",event.virtual_memory.free);
     // console.log("VM",used);
     chart.updateSeries([free, used]);
+    }
+    
     
   });
 }

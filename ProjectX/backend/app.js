@@ -613,43 +613,69 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
 server.listen(3001, async () => {
 
   console.log('Server is listening on port 3001');
-  
+  var DatasetInterval;
   try {
     io.on('connection', async (socket) => {
       const server_name=socket.handshake.query.name;
     await connectToDatabases();
-    setInterval(() => {
-     async function fetchAll(server_name,dbName, cdata){
-      try {
+     DatasetInterval=setInterval(() => {
+     async function fetchAll(server_name,fdata){
+      let findata={};
+      for (const [dbName, cdata] of Object.entries(fdata)) {
         const db = dbInstance.db(dbName);
-        data={};
         for(let i=0;i<cdata.length;i++){
-          cName=cdata[i];
-          const logsCollection = db.collection(cName);
-          const logDataValue = await logsCollection.findOne({"hostname":server_name}, { sort: { timestamp: -1 } });
-          if(typeof(edata[i])!="string"){
-            for(let j=0;j<edata[i].length;j++){
-              data[edata[i][j]]=logDataValue[edata[i][j]];
+          let cval = cdata[i]
+          const logsCollection = db.collection(cval[0]);
+          host_query = dbName == "machine_info"? {"tags.host":server_name} : {"hostname":server_name}
+          const logDataValue = await logsCollection.findOne(host_query, { sort: { timestamp: -1 } });
+          if(typeof(cval[1])!="string"){
+            let subdata = {};
+            for(let j=0;j<cval[1].length;j++){
+              subdata[cval[1][j]]=logDataValue[cval[1][j]];
             }
+            findata[cval[0]]=subdata;
           }
-          else{
-          data[cName]=logDataValue[edata[i]];
-          console.log("Check",logDataValue,edata[i]);
+          else {
+            findata[cval[0]]=logDataValue[cval[1]];
           }
+          
         }
-        console.log("Data",data);
-        // console.log("Got data from MongoDB "+dbName+":", logDataValue);
-        io.emit("all_metrices", data);
-      } catch (error) {
-        console.error("Error fetching data from MongoDB (${dbName}):", error);
       }
+      console.log("fin",server_name,findata);
+      io.emit("all_metrices", findata);
+      // try {
+      //   for(let i=0;i<cdata.length;i++){
+      //     cName=cdata[i];
+      //     const logsCollection = db.collection(cName);
+      //     const logDataValue = await logsCollection.findOne({"hostname":server_name}, { sort: { timestamp: -1 } });
+      //     if(typeof(edata[i])!="string"){
+      //       let subdata = {};
+      //       for(let j=0;j<edata[i].length;j++){
+      //         subdata[edata[i][j]]=logDataValue[edata[i][j]];
+      //       }
+      //       findata[cName]=subdata;
+      //     }
+      //     else{
+      //       findata[cName]=logDataValue[edata[i]];
+      //     // console.log("Check",logDataValue,edata[i]);
+      //     }
+      //   }
+      //   console.log("Data",findata);
+      //   // console.log("Got data from MongoDB "+dbName+":", logDataValue);
+      //   io.emit("all_metrices", findata);
+      // } catch (error) {
+      //   console.error("Error fetching data from MongoDB (${dbName}):", error);
+      // }
     };
+
     // fetchAll("telegraf",["cpu"],["usage_user"]);
    
-    fetchAll(server_name,["cpu_usage","total_stars","memory_usage","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","percent_used","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
+    // fetchAll(server_name,"log_analysis",["cpu_usage","total_stars","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
+    fetchAll(server_name,{"machine_info":[["cpu","usage_system"],["mem","used_percent"]],"log_analysis":[["total_stars","total_stars"],["vulnerabilities",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"]],["operating_systems_info_security",["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]]})
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
-    fetchDataAndEmitLast("log_analysis", "total_stars", "total_stars",server_name);
+    // fetchDataAndEmitLast("log_analysis", "total_stars", "total_stars",server_name);
+    // fetchDataAndEmitCount("log_analysis","")
     //    fetchDataAndEmitLast("server1_clf", "cpu_usage", "cpuUsage");
     //    fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
     }, 5000);
@@ -660,6 +686,12 @@ server.listen(3001, async () => {
     
   
     });
+
+    socket.on('disconnect', () => {
+      console.log(`Client Disconnected: ${socket.id}`);
+      clearInterval(DatasetInterval);
+    });
+
   } catch (error) {
     console.error("Error during data fetching and emission:", error);
   }

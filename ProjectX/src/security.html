@@ -311,7 +311,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       window.soc.on("all_metrices", (data) => {
         const osData = data;
-
+        console.log("FIX",data.operating_systems_info_security);
         const osDataContainer = $("#osData");
         const osHFContainer = $("#osHF");
 
@@ -326,23 +326,23 @@
       <tbody>
         <tr>
           <td>Name</td>
-          <td>${data.Name}</td>
+          <td>${data.operating_systems_info_security.Name}</td>
         </tr>
         <tr>
           <td>Generation</td>
-          <td>${data.Generation}</td>
+          <td>${data.operating_systems_info_security.Generation}</td>
         </tr>
         <tr>
           <td>Build</td>
-          <td>${data.Build}</td>
+          <td>${data.operating_systems_info_security.Build}</td>
         </tr>
         <tr>
           <td>Version</td>
-          <td>${data.Version}</td>
+          <td>${data.operating_systems_info_security.Version}</td>
         </tr>
         <tr>
           <td>Architecture</td>
-          <td>${data.Architecture}</td>
+          <td>${data.operating_systems_info_security.Architecture}</td>
         </tr>
       </tbody>
     </table>
@@ -353,7 +353,7 @@
         const osHF = `
     <div>
       <ul>
-        ${data.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
+        ${data.operating_systems_info_security.Installed_hotfixes.map(hotfix => `<li>${hotfix}</li>`).join('')}
       </ul>
     </div>
     
@@ -361,7 +361,7 @@
         // console.log(osData);
         osHFContainer.html(osHF);
         const vData = data;
-      console.log("Sec", data);
+      // console.log("Sec", data);
       const vDataContainer = $("#vData");
 
       const vInfo = `
