@@ -194,6 +194,22 @@
       <div x-data="{ checkboxToggle: false }">
         <label for="checkboxLabelSecurity"
           class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
+                        Risks
+                      <div class=" relative ml-9">
+          <input type="checkbox" id="checkboxLabelSecurity" class="sr-only" x-model="security"
+            @change="checkboxToggle = !checkboxToggle" />
+          <div :class="checkboxToggle && 'border-bodydark bg-gray dark:bg-transparent'"
+            class="ml-4 flex h-5 w-5 items-center justify-center rounded border">
+            <span :class="checkboxToggle && 'bg-bodydark'" class="h-2.5 w-2.5 rounded-sm"></span>
+          </div>
+      </div>
+      </label>
+</div>
+</li>
+    <li>
+      <div x-data="{ checkboxToggle: false }">
+        <label for="checkboxLabelSecurity"
+          class="flex cursor-pointer select-none items-center text-bodydark2 duration-300 ease-in-out hover:text-white"">
                         Security
                       <div class=" relative ml-9">
           <input type="checkbox" id="checkboxLabelSecurity" class="sr-only" x-model="security"

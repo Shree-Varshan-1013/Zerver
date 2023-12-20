@@ -71,6 +71,12 @@
         </li>
 
         <li class="pr-5">
+          <a href="../reportGeneration.html"
+            class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
+            @click="selected = (selected == 'Report' ? '':'Report')"
+            :class="{ 'bg-graydark dark:bg-boxdark': (selected === 'Performance') && (page === 'performance') }">Report</a>
+        </li>
+        <li class="pr-5">
           <a href="../configHistory.html"
             class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-black duration-300 ease-in-out hover:bg-whiter dark:text-cement dark:hover:bg-meta-4"
             @click="selected = (selected == 'Performance' ? '':'Performance')"
