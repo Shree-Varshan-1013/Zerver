@@ -8,7 +8,7 @@ import flatpickr from "flatpickr";
 import io from "socket.io-client";
 import performance from "./components/performance";
 import chart01 from "./components/chart-01";
-// import '../js/components/chatBot';
+import '../js/components/chatBot';
 // import io from "socket.io-client";
 import chart02 from "./components/chart-02";
 import chart03 from "./components/chart-03";

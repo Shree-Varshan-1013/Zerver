@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateChart(data) {
   // Extract timestamp and logs_count from the data object
   cc = data.data[data.data.length-1]
-  data.data = data.data.filter((e,ind,arr)=> ind % 20 === 0)
+  data.data = data.data.filter((e,ind,arr)=> ind % 90 === 0)
   data.data.push(cc)
 
   const timestamps = data.data.map(item => new Date(item.timestamp));

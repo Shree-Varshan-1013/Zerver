@@ -1,196 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link rel="stylesheet" href="../src/css/style.css" />
-    <link rel="stylesheet"
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="../src/css/style.css" />
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
-    <!-- <script src=""></script> -->
-    <title>Logs</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  <!-- <script src=""></script> -->
+  <title>Logs</title>
 
-    <style>
-      .datetime-input[disabled] {
-        background-color: #f2f2f2;
-      }
-      .rotate180 {
-        transform: rotate(180deg);
-        transition: transform 0.5s ease;
-      }
-      .sort-icon {
-        width: 16px;
-        height: 16px;
-        transition: transform 0.3s ease;
-      }
-      .sort-icon.rotated {
-        transform: rotate(90deg);
-      }
+  <style>
+    .datetime-input[disabled] {
+      background-color: #f2f2f2;
+    }
 
-      .date-input {
-        border: 1px solid #ccc;
-        padding: 8px;
-        border-radius: 4px;
-      }
-    </style>
-    <style>
-      /* Your existing styles */
-  
-      #pagination {
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-  
-      #prevPageBtn,
-      #nextPageBtn {
-        margin: 0 10px;
-      }
-    </style>
-  </head>
+    .rotate180 {
+      transform: rotate(180deg);
+      transition: transform 0.5s ease;
+    }
 
-  <body
-    x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
-    x-init="
+    .sort-icon {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .sort-icon.rotated {
+      transform: rotate(90deg);
+    }
+
+    .date-input {
+      border: 1px solid #ccc;
+      padding: 8px;
+      border-radius: 4px;
+    }
+  </style>
+  <style>
+    /* Your existing styles */
+
+    #pagination {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #prevPageBtn,
+    #nextPageBtn {
+      margin: 0 10px;
+    }
+  </style>
+</head>
+
+<body
+  x-data="{ page: 'profile', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false, 'logs': false, 'health': false, 'performance': false, 'security': false }"
+  x-init="
             darkMode = JSON.parse(localStorage.getItem('darkMode'));
             $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
-    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
-  >
-    <include src="./partials/preloader.html"></include>
+  :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}">
+  <include src="./partials/preloader.html"></include>
 
-    <div class="flex h-screen overflow-hidden">
-      <include src="./partials/sidebar.html"></include>
+  <div class="flex h-screen overflow-hidden">
+    <include src="./partials/sidebar.html"></include>
 
-      <div
-        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
-      >
-        <include src="./partials/header.html" />
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <include src="./partials/header.html" />
 
-        <main
-          class="align-center flex h-fit flex-col bg-whiten dark:bg-boxdark-2"
-        >
-          <include src="./partials/chatbot.html"></include>
-          <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
-            <div class="mx-auto">
+      <main class="align-center flex h-fit flex-col bg-whiten dark:bg-boxdark-2">
+        <include src="./partials/chatbot.html"></include>
+        <div class="mx-auto w-full p-4 md:p-6 2xl:p-10">
+          <div class="mx-auto">
+            <div class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <h2 class="text-title-md2 font-bold ml-7 text-lavendar3 dark:text-lavendar2">
+                Logs
+              </h2>
+              <nav>
+                <ol class="flex items-center gap-2">
+                  <li>
+                    <a class="font-medium" href="index.html">Dashboard /</a>
+                  </li>
+                  <li class="text-lavendar">Logs</li>
+                </ol>
+              </nav>
+            </div>
+            <div>
               <div
-                class="mb-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
-              >
-                <h2
-                  class="text-title-md2 font-bold ml-7 text-lavendar3 dark:text-lavendar2"
-                >
-                  Logs
-                </h2>
-                <nav>
-                  <ol class="flex items-center gap-2">
-                    <li>
-                      <a class="font-medium" href="index.html">Dashboard /</a>
-                    </li>
-                    <li class="text-lavendar">Logs</li>
-                  </ol>
-                </nav>
-              </div>
-              <div>
-                <div
-                  class="shadow-default m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-boxdark"
-                >
-                  <div class="m-10">
-                    <div class="bg-gray-700 mt-3 flex text-black bg-transparent">
-                      <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
-                      <select
-                        id="searchColumn"
-                        class="border-gray-700 border text-center"
-                      >
-                        <option class="text-red" value="search">
-                          Search By
-                        </option>
-                        <option class="text-red" value="all">All</option>
-                        <!-- <option class="text-red" value="log_id">Log ID</option> -->
-                        <!-- <option value="log_time">Log Time</option> -->
-                        <option value="timestamp">Timestamp</option>
-                        <option value="ip_address">IP Address</option>
-                        <option value="http_method">HTTP Method</option>
-                        <option value="requested_path">Request URL</option>
-                        <option value="status_code">Status Code</option>
-                      </select>
-                      <!-- <div class="flex bg-transparent"> -->
-                        <!-- <div class="input-container">
+                class="shadow-default m-5 flex justify-evenly rounded-sm border border-stroke dark:border-none dark:bg-boxdark">
+                <div class="m-10">
+                  <div class="bg-gray-700 mt-3 flex text-black bg-transparent">
+                    <!-- <label for="searchColumn" class="mr-2 text-white">Search By:</label> -->
+                    <select id="searchColumn" class="border-gray-700 border text-center">
+                      <option class="text-red" value="search">
+                        Search By
+                      </option>
+                      <option class="text-red" value="all">All</option>
+                      <!-- <option class="text-red" value="log_id">Log ID</option> -->
+                      <!-- <option value="log_time">Log Time</option> -->
+                      <option value="timestamp">Timestamp</option>
+                      <option value="ip_address">IP Address</option>
+                      <option value="http_method">HTTP Method</option>
+                      <option value="requested_path">Request URL</option>
+                      <option value="status_code">Status Code</option>
+                    </select>
+                    <!-- <div class="flex bg-transparent"> -->
+                    <!-- <div class="input-container">
                           <input type="text" name="text" id="search" class="input-special" placeholder="Search...">
                           <span class="letter-icon">A</span>
                         </div> -->
-                      <div class="relative">
-                        <input
-                        type="text"
-                        id="search"
-                        class="border-gray-700 pl-10 pr-4 border text-black"
-                        placeholder="Search..."
-                        />
-                          <svg
-                            class="absolute top-2 left-[88%]  text-gray-800 reset-search-svg h-6 w-6 p-1 bg-white "
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 14 14"
-                          >
-                            <path
-                              stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                            />
-                          </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- date inputs -->
-                  <div class="mt-13">
-                    <!-- date inputs -->
-                    <div date-range-picker class="flex text-black">
-                      <div class="">
-                        <span class="mr-4 text-black dark:text-cement"
-                          >From</span
-                         >
-                        <input
-                          name="start"
-                          id="st-time"
-                          type="datetime-local"
-                          class="datetime-input bg-white text-black"
-                          disabled/>
-                      </div>
-                      <div class="">
-                        <span class="ml-4 mr-4 text-black dark:text-cement"
-                          >To</span
-                        >
-                        <input
-                          name="end"
-                          id="en-time"
-                          type="datetime-local"
-                          class="datetime-input bg-white text-black"
-                          disabled />
-                      </div>
+                    <div class="relative">
+                      <input type="text" id="search" class="border-gray-700 pl-10 pr-4 border text-black"
+                        placeholder="Search..." />
+                      <svg class="absolute top-2 left-[88%]  text-gray-800 reset-search-svg h-6 w-6 p-1 bg-white "
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                      </svg>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="shadow-default m-5 rounded-sm border border-stroke bg-whiten dark:border-none dark:bg-boxdark"
-                >
-                  <!-- <div class=" py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
+                <!-- date inputs -->
+                <div class="mt-13">
+                  <!-- date inputs -->
+                  <div date-range-picker class="flex text-black">
+                    <div class="">
+                      <span class="mr-4 text-black dark:text-cement">From</span>
+                      <input name="start" id="st-time" type="datetime-local" class="datetime-input bg-white text-black"
+                        disabled />
+                    </div>
+                    <div class="">
+                      <span class="ml-4 mr-4 text-black dark:text-cement">To</span>
+                      <input name="end" id="en-time" type="datetime-local" class="datetime-input bg-white text-black"
+                        disabled />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="shadow-default m-5 rounded-sm border border-stroke bg-whiten dark:border-none dark:bg-boxdark">
+                <!-- <div class=" py-3 shadow-default dark:border-strokedark dark:bg-boxdark"
                       id="live-movement-graph"
                       style="width: 100; height: 300%"
                     ></div> -->
-                    <div
+                <!-- <div
                     class="mass-shadow hovering m-3 mt-10 rounded-sm border border-stroke p-10 py-6 px-7.5 dark:border-none dark:bg-boxdark mb-6"
     
                   >
@@ -199,77 +160,63 @@
                       id="live-movement-graph"
                       style="width: 100%  ; height: 300px"
                     ></div>
-                  </div>
-                  <!-- <script src="./js/logsPage/logsChart.js"></script> -->
-                  <!-- <div id="chart-container"></div> -->
-                </div>
-                <table class="w-full table-auto">
-                  <thead>
-                    <tr class="bg-gray-2 text-left dark:bg-boxdark">
-                      <th
-                        onclick="sortTable(0)"
-                        data-icon-id="timestampSortIcon"
-                        class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement"
-                      >
-                        Timestamp
-                        <p>(None)</p>
-                      </th>
-                      <th
-                        onclick="sortTable(1)"
-                        data-icon-id="timestampSortIcon"
-                        class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement"
-                      >
-                        IP Address
-                        <p>(None)</p>
-                      </th>
-                      <th
-                        onclick="sortTable(2)"
-                        data-icon-id="timestampSortIcon"
-                        class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-cement"
-                      >
-                        Http Method
-                        <p>(None)</p>
-                      </th>
-                      <th
-                        onclick="sortTable(3)"
-                        data-icon-id="timestampSortIcon"
-                        class="py-4 px-4 font-medium text-black dark:text-cement"
-                      >
-                        Request URL
-                        <p>(None)</p>
-                      </th>
-                      <th
-                        onclick="sortTable(4)"
-                        data-icon-id="timestampSortIcon"
-                        class="py-4 px-4 font-medium text-black dark:text-cement"
-                      >
-                        Status Code
-                        <p>(None)</p>
-                      </th>
-                    </tr>
-                  </thead>
-                  <!-- <tbody> -->
-                  <tbody class="dark:bg-boxdark-2" id="logTableBody1"></tbody>
-                </table>
+                  </div> -->
+                <!-- <script src="./js/logsPage/logsChart.js"></script> -->
+                <!-- <div id="chart-container"></div> -->
               </div>
-              <!-- Pagination Controls -->
-              <div id="pagination">
-                <button id="prevPageBtn" onclick="prevPage()">Previous</button>
-                <span id="currentPage">Page 1</span>
-                <button id="nextPageBtn" onclick="nextPage()">Next</button>
-              </div>
+              <table class="w-full table-auto">
+                <thead>
+                  <tr class="bg-gray-2 text-left dark:bg-boxdark">
+                    <th onclick="sortTable(0)" data-icon-id="timestampSortIcon"
+                      class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement">
+                      Timestamp
+                      <p>(None)</p>
+                    </th>
+                    <th onclick="sortTable(1)" data-icon-id="timestampSortIcon"
+                      class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-cement">
+                      IP Address
+                      <p>(None)</p>
+                    </th>
+                    <th onclick="sortTable(2)" data-icon-id="timestampSortIcon"
+                      class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-cement">
+                      Http Method
+                      <p>(None)</p>
+                    </th>
+                    <th onclick="sortTable(3)" data-icon-id="timestampSortIcon"
+                      class="py-4 px-4 font-medium text-black dark:text-cement">
+                      Request URL
+                      <p>(None)</p>
+                    </th>
+                    <th onclick="sortTable(4)" data-icon-id="timestampSortIcon"
+                      class="py-4 px-4 font-medium text-black dark:text-cement">
+                      Status Code
+                      <p>(None)</p>
+                    </th>
+                  </tr>
+                </thead>
+                <!-- <tbody> -->
+                <tbody class="dark:bg-boxdark-2" id="logTableBody1"></tbody>
+              </table>
+            </div>
+            <!-- Pagination Controls -->
+            <div id="pagination">
+              <button id="prevPageBtn" onclick="prevPage()">Previous</button>
+              <span id="currentPage">Page 1</span>
+              <button id="nextPageBtn" onclick="nextPage()">Next</button>
             </div>
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
     </div>
+  </div>
 
-    <script src="./js/components/logPageGraph.js"></script>
-    
-    <!-- <script src="./js/components/chart-01.js"></script> -->
-    <!-- <script src="./js/components/logTableScript.js"></script> -->
-    <!-- <script src="./js/components/logTableSort.js"></script> -->
-    <!-- <script src="./js/components/liveDashboard1.js"></script> -->
-    <script src="./js/components/logTable.js"></script>
-  </body>
+  <!-- <script src="./js/components/logPageGraph.js"></script> -->
+
+  <!-- <script src="./js/components/chart-01.js"></script> -->
+  <!-- <script src="./js/components/logTableScript.js"></script> -->
+  <!-- <script src="./js/components/logTableSort.js"></script> -->
+  <!-- <script src="./js/components/liveDashboard1.js"></script> -->
+  <script src="./js/components/logTable.js"></script>
+</body>
+
 </html>

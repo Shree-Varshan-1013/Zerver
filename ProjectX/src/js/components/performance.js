@@ -204,11 +204,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     chartProgress2.updateSeries([{
-        data: [event.mem]
+        data: [event.mem.used_percent]
     }]);
     chartProgress2.updateOptions({
         subtitle:{
-            text: `${event.mem.toFixed(2)}%`
+            text: `${event.mem.used_percent.toFixed(2)}%`
         }
     });
     chartProgress3.updateSeries([{

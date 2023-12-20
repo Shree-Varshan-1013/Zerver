@@ -15,14 +15,14 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
   <title>Security</title>
   <style>
-    /* body.blur {
+    body.blur {
       filter: blur(100px);
      
       transition: filter 0.5s ease;
-    } */
+    } 
 
     /* Add these styles to your existing CSS or create a new style section */
-    /* .overlay {
+    .overlay {
       display: none;
       position: fixed;
       top: 0;
@@ -35,8 +35,8 @@
       justify-content: center;
       text-align: center;
       z-index: 1000;
-    } */
-    /* 
+    }
+  
     @keyframes blink {
       0% {
         background-color: rgba(185, 66, 66, 0.6);
@@ -49,9 +49,9 @@
       100% {
         background-color: rgba(185, 66, 66, 0.6);
       }
-    } */
+    } 
 
-    /* .overlay-content {
+     .overlay-content {
       background: rgba(46, 45, 45, 0);
       padding: 50px;
       border-radius: 6px;
@@ -73,7 +73,7 @@
       border-radius: 5px;
       cursor: pointer;
       margin-left: 42%;
-    } */
+    }
 
     #glassy-container {
       position: relative;
@@ -201,29 +201,29 @@
   </style>
 
   <script>
-    //   function playSiren() {
-    //     var sirenAudio = document.getElementById("sirenAudio");
-    //     sirenAudio.play();
-    //   }
-    //   function stopSiren() {
-    //     var sirenAudio = document.getElementById("sirenAudio");
-    //     sirenAudio.pause();
-    //     sirenAudio.currentTime = 0;
-    //   }
-    //   function showErrorOverlay() {
-    //     document.getElementById("overlay").style.display = "flex";
-    //     playSiren();
-    //   }
+      function playSiren() {
+        var sirenAudio = document.getElementById("sirenAudio");
+        // sirenAudio.play();
+      }
+      function stopSiren() {
+        var sirenAudio = document.getElementById("sirenAudio");
+        sirenAudio.pause();
+        sirenAudio.currentTime = 0;
+      }
+      function showErrorOverlay() {
+        document.getElementById("overlay").style.display = "flex";
+        playSiren();
+      }
 
-    //   function hideErrorOverlay() {
-    //     document.getElementById("overlay").style.display = "none";
-    //     stopSiren();
-    //   }
+      function hideErrorOverlay() {
+        document.getElementById("overlay").style.display = "none";
+        stopSiren();
+      }
     // </script>
 
   <script>
-    //   setTimeout(showErrorOverlay, 5000);
-    // </script>
+      setTimeout(showErrorOverlay, 20000);
+    </script>
 </head>
 
 <body
@@ -248,7 +248,7 @@
       <include src="./partials/header.html" />
       <!-- ===== Header End ===== -->
       <!-- Error Message -->
-      <!-- <div id="overlay" class="overlay">
+      <div id="overlay" class="overlay">
         <div class="overlay-content">
           <lord-icon src="https://cdn.lordicon.com/abvsilxn.json" trigger="loop" delay="1500" colors="primary:#E5AB24"
             style="width: 350px; height: 350px">
@@ -259,7 +259,7 @@
             <div class="close">Close</div>
           </button>
         </div>
-      </div> -->
+      </div>
       <!-- ===== Main Content Start ===== -->
       <main class="align-center flex w-full flex-col">
         <include src="./partials/chatbot.html"></include>
@@ -368,39 +368,39 @@
   <table class="table-auto w-full">
     <tr>
       <td>Date</td>
-      <td>${data.Date}</td>
+      <td>${data.vulnerabilities.Date}</td>
     </tr>
     <tr>
       <td>CVE</td>
-      <td>${vData.CVE}</td>
+      <td>${data.vulnerabilities.CVE}</td>
     </tr>
     <tr>
       <td>KB</td>
-      <td>${data.KB}</td>
+      <td>${data.vulnerabilities.KB}</td>
     </tr>
     <tr>
       <td>Title</td>
-      <td>${data.Title}</td>
+      <td>${data.vulnerabilities.Title}</td>
     </tr>
     <tr>
       <td>Affected Product</td>
-      <td>${data.AffectedProduct}</td>
+      <td>${data.vulnerabilities.AffectedProduct}</td>
     </tr>
     <tr>
       <td>Affected Component</td>
-      <td>${data.AffectedComponent}</td>
+      <td>${data.vulnerabilities.AffectedComponent}</td>
     </tr>
     <tr>
       <td>Severity</td>
-      <td>${data.Severity}</td>
+      <td>${data.vulnerabilities.Severity}</td>
     </tr>
     <tr>
       <td>Impact</td>
-      <td>${data.Impact}</td>
+      <td>${data.vulnerabilities.Impact}</td>
     </tr>
     <tr>
       <td>Exploit</td>
-      <td>${data.Exploit}</td>
+      <td>${data.vulnerabilities.Exploit}</td>
     </tr>
   </table>
 `;

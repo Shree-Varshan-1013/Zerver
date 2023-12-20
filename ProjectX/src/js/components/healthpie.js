@@ -36,9 +36,9 @@ var options = {
 
   window.soc.addEventListener('all_metrices', (event) => {
     console.log("Memory",event);
-    if(event.virtual_memory){
-    const free=event.virtual_memory.free;
-    const used=event.virtual_memory.used;
+    if(event){
+    const free=event.mem.available_percent;
+    const used=event.mem.used_percent;
     // console.log("VM",event.virtual_memory.free);
     // console.log("VM",used);
     chart.updateSeries([free, used]);

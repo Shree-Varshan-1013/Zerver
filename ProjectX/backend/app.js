@@ -176,7 +176,7 @@ io.on('connection', async (socket) => {
 let notificationsFetched = false;
 let server_name=socket.handshake.query.name;
 // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboard');
-  // await fetchDataAndEmitReverseArray("server1_clf", "basic_data", "logTableDashboardReverse");
+  await fetchDataAndEmitReverseArray("log_analysis", "basic_data", "logTableDashboardReverse");
   // setupChangeStream('server1_clf', 'basic_data', 'logTableDashboardReverse');
   // setupChangeStreamLast("telegraf","cpu","cpugraf");
 
@@ -422,7 +422,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 
     const sDate = new Date(); // Current date and time
     const eDate = new Date();
-    sDate.setHours(sDate.getHours() - 30); // 20 days later
+    sDate.setHours(sDate.getHours() - 10); // 20 days later
 
     const startDate =  sDate;
     const endDate =  eDate;
@@ -470,7 +470,7 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 };
 
 // Example usage
-// fetchChartDataPastHour('server1_clf', 'logs_count', 'emitLogsCount');
+fetchChartDataPastHour('log_analysis', 'logs_count', 'emitLogsCount');
 
 
 
@@ -478,11 +478,11 @@ const fetchChartDataPastHour = async (dbName, collectionName, eventName) => {
 //  =========== live dashboard log graph ==========
 const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
   try {
-    const mongouri = 'mongodb+srv://test:test@log1cluster.c12lwe7.mongodb.net/?retryWrites=true&w=majority';
+    const mongouri = 'mongodb+srv://test:test@sanenomore.mteelpf.mongodb.net/?retryWrites=true&w=majority';
     const client = await MongoClient.connect(mongouri);
     // const db = dbInstance.db(dbName);
-    const dbInstance = client.db(dbName);
-    const collection = dbInstance.collection(collectionName);
+    const dbInstance = client.db("log_analysis");
+    const collection = dbInstance.collection("logs_count");
     // const twentyFourHoursAgo = new Date();
     // const startDate = new Date('2023-12-01T12:00:00.000Z');
     // const endDate = new Date('2023-12-20T14:00:00.000Z');
@@ -541,10 +541,10 @@ const liveDashboardLogGraph = async (dbName, collectionName, eventName) => {
   }
 };
 
-// setInterval(() => {
-//   liveDashboardLogGraph('server1_clf', 'logs_count', 'request');
+setInterval(() => {
+  liveDashboardLogGraph('log_analysis', 'logs_count', 'request');
   
-// }, 5000);
+}, 5000);
 
   socket.on('disconnect', () => {
     // console.log('User disconnected');
@@ -627,7 +627,8 @@ server.listen(3001, async () => {
           let cval = cdata[i]
           const logsCollection = db.collection(cval[0]);
           host_query = dbName == "machine_info"? {"tags.host":server_name} : {"hostname":server_name}
-          const logDataValue = await logsCollection.findOne(host_query, { sort: { timestamp: -1 } });
+          const logDataValue = await logsCollection.findOne(host_query, { sort:{timestamp:-1} });
+          if(!logDataValue) return
           if(typeof(cval[1])!="string"){
             let subdata = {}; 
             for(let j=0;j<cval[1].length;j++){
@@ -663,7 +664,7 @@ server.listen(3001, async () => {
       //   console.log("Data",findata);
       //   // console.log("Got data from MongoDB "+dbName+":", logDataValue);
       //   io.emit("all_metrices", findata);
-      // } catch (error) {
+      // } catch (error) {    
       //   console.error("Error fetching data from MongoDB (${dbName}):", error);
       // }
     };
@@ -671,7 +672,7 @@ server.listen(3001, async () => {
     // fetchAll("telegraf",["cpu"],["usage_user"]);
    
     // fetchAll(server_name,"log_analysis",["cpu_usage","total_stars","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);
-    fetchAll(server_name,{"machine_info":[["cpu","usage_system"],["mem","used_percent"]],"log_analysis":[["total_stars","total_stars"],["vulnerabilities",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"]],["operating_systems_info_security",["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]]})
+    fetchAll(server_name,{"machine_info":[["cpu","usage_system"],["mem",["available_percent","used_percent"]]],"log_analysis":[["total_stars","total_stars"],["vulnerabilities",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"]],["operating_systems_info_security",["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]]})
       // Fetch data from MongoDB
     //    fetchDataAndEmitLast("telegraf", "cpu", "cpugraf");
     // fetchDataAndEmitLast("log_analysis", "total_stars", "total_stars",server_name);
@@ -680,7 +681,7 @@ server.listen(3001, async () => {
     //    fetchDataAndEmitLast("server1_clf", "memory_usage", "memoryUsage");
     }, 5000);
     // setupChangeStreamCount('server1_clf', 'basic_data', 'request');
-    //  await fetchDataAndEmitCount("server1_clf", "basic_data", "request");
+    //  await fetchDataAndEmitCount("log_analysis", "logs_count", "request");
   
     //check and emit logtable data in sameorder
     

@@ -48,7 +48,10 @@ var options = {
     const timestamp=newData.timestamp;
     const calculateSum = (array) => {
       const values = Object.keys(array).filter(key => key !== '_id').map(key => array[key]);
-      return values.reduce((sum, value) => sum + value, 0);
+      let min = 1;
+      let max = 10;
+      let randomValue = Math.floor(Math.random() * (max - min + 1)) + min;
+      return values.reduce((sum, value) => sum + value, randomValue);
     };
     
    
