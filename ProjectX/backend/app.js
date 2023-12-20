@@ -265,7 +265,7 @@ io.on('connection', async (socket) => {
     
       const server_name=socket.handshake.query.name;
       const db = dbInstance.db('log_analysis');
-      const collection = db.collection('daily_users forecast');
+      const collection = db.collection('daily_users_forecast');
       const collection2 = db.collection('logs_estimation_forecast');
       const startOf2023 = new Date('2023-12-09T00:00:00.000Z');
       const endOfFuture = new Date('2023-12-31T00:00:00.000Z');
@@ -284,7 +284,9 @@ io.on('connection', async (socket) => {
           $lte: endOfFuture,
         }
       }).toArray();
+      console.log(userData);
       socket.emit('userAndLogsForecast', { userForecast: userData, logsForecast: logData });
+      console.log(userForecast);
     
     } catch (error) {
       console.error(error);
