@@ -56,10 +56,12 @@ window.soc.on('summaryData', (data) => {
   console.log("Received summaryData:", JSON.stringify(data.data));
   // Assuming you have a <p> element with the id "logEntry"
   const logEntryElement = document.getElementById('logEntry');
-
+  //  console.log(data.data.split(","));
   // Update the content of the <p> tag with the summary property from the received data
   if (logEntryElement) {
-    const summaryText = data.data.summary;
+    let summaryText = data.data.summary;
+    summaryText=summaryText.replaceAll(",","<br>");
+    console.log("summary",summaryText);
     logEntryElement.innerText = summaryText;  
     
     // Create a new typewriter instance
@@ -71,7 +73,7 @@ window.soc.on('summaryData', (data) => {
     // Add the summary text to the typewriter instance
     typewriter
       .typeString(summaryText)
-      .pauseFor(500)  // Pause for 1 second (optional)
+      .pauseFor(100)  // Pause for 1 second (optional)
       .start();        // Start the typewriter effect
   }
 });
@@ -85,10 +87,10 @@ window.soc.on('total_logs_count', (data) => {
   }
 });
 });
-// window.soc.on("request", (data) => {
-//   console.log("Receied counts", JSON.stringify(data));
+window.soc.on("request", (data) => {
+  console.log("Receied counts", JSON.stringify(data));
   
-// })
+})
 
 
 // const socket = io('http://localhost:3001');

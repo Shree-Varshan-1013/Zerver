@@ -188,7 +188,8 @@ function updateChart(data) {
 
   // Listen for 'emitLogsCount' event from the server
   window.soc.on('request', (data) => {
-    console.log('Logs chart data:', JSON.stringify(data));
+    // console.log('Logs chart data:', JSON.stringify(data));
+    if(data)
     updateChart(data);
   });
 });
