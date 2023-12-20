@@ -53,14 +53,14 @@
                 <h2
                   class="text-title-md2 font-bold text-black dark:text-cement"
                 >
-                  Overall Server
+                  Logs
                 </h2>
                 <nav>
                   <ol class="flex items-center gap-2">
                     <li>
                       <a class="font-medium" href="index.html">Dashboard /</a>
                     </li>
-                    <li class="text-lavendar">Overall Server</li>
+                    <li class="text-lavendar">Logs</li>
                   </ol>
                 </nav>
               </div>
@@ -72,7 +72,7 @@
                     class="w-full rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"
                   >
                     <h4
-                      class="mb-5 text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      class="mb-6 text-xl font-bold text-black dark:text-cement"
                     >
                       Total Number of Servers : 5
                     </h4>
@@ -83,14 +83,14 @@
                       >
                         <div class="p-2.5 xl:p-5">
                           <h5
-                            class="text-3xl font-medium uppercase xsm:text-base"
+                            class="text-sm font-medium uppercase xsm:text-base"
                           >
                             Server
                           </h5>
                         </div>
                         <div class="p-2.5 text-center xl:p-5">
                           <h5
-                            class="text-3xl font-medium uppercase xsm:text-base"
+                            class="text-sm font-medium uppercase xsm:text-base"
                           >
                             Status
                           </h5>
@@ -102,7 +102,7 @@
                       >
                         <div class="flex items-center gap-2 p-2.5 xl:p-5">
                           <p
-                            class="hidden text-xl font-medium text-black dark:text-cement sm:block"
+                            class="hidden font-medium text-black dark:text-cement sm:block"
                           >
                             Server-1
                           </p>
@@ -111,29 +111,25 @@
                         <div
                           class="flex items-center justify-center p-2.5 xl:p-5"
                         >
-                          <p
-                            class="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-xl font-medium text-success"
-                          >
-                            on
-                          </p>
+                          <p class="font-medium text-meta-3">ON</p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="m-5 justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                  class="m-5 flex flex-row justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
                 >
-                  <div class="m-5 mt-15">
+                  <div>
                     <h4
-                      class="text-center text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      class="mt-5 mb-6 text-xl font-bold text-black dark:text-cement"
                     >
                       Request Per Minute : 5
                     </h4>
                   </div>
-                  <div class="m-5">
+                  <div>
                     <h4
-                      class="text-center text-3xl font-bold text-lavendar3 dark:text-lavendar2"
+                      class="mt-5 mb-6 text-xl font-bold text-black dark:text-cement"
                     >
                       Total Number of Request : 5
                     </h4>
@@ -142,7 +138,7 @@
               </div>
               <div class="grid">
                 <div
-                  class="m-5 flex justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                  class="m-5 flex h-screen justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
                 >
                   <include src="./worldmap.html"></include>
                 </div>
@@ -321,15 +317,23 @@
                   >
                     Busy Servers
                   </h1>
+                  <div class="star-rating" data-rating="3.5">
+                    <div class="stars">
+                      <span class="star"></span>
+                      <span class="star"></span>
+                      <span class="star"></span>
+                      <span class="star"></span>
+                      <span class="star"></span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-              <div class="grid grid-cols-1">
-                <div
-                  class="m-5 justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
-                >
-                  <div>
-                    <div id="chartTwo"></div>.
+                <div class="grid grid-cols-1">
+                  <div
+                    class="m-5 w-full justify-evenly rounded-sm border border-stroke shadow-default dark:border-none dark:bg-boxdark"
+                  >
+                    <div>
+                      <div id="chartTwo"></div>
+                    </div>
                   </div>
                 </div>
               </div>
