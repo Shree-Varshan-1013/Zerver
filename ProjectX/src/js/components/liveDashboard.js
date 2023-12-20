@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
  // Function to update the chart with new data
 // Function to update the chart with new data
 function updateChart(data) {
+  console.log("Fkmb",data); 
   // Extract timestamp and logs_count from the data object
   cc = data.data[data.data.length-1]
   data.data = data.data.filter((e,ind,arr)=> ind % 90 === 0)

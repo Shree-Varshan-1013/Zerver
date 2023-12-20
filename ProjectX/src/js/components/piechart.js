@@ -71,7 +71,8 @@ const pieChartSecurity = () => {
   // Listen for WebSocket messages
   
   window.soc.addEventListener('vCount', (event) => {
-    const newData = event.data;
+    let newData = {Low:0,Critical:0,Moderate:0,Important:0};
+    newData = {newData, ...event.data}
     const newLow=newData.Low;
     const newCritical=newData.Critical;
     const newImportant=newData.Important;
