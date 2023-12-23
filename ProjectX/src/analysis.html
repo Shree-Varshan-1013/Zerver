@@ -83,7 +83,7 @@
     </div>
   </div>
   <script>
-    console.log("hello mapla");
+
     function trigger() {
       Swal.fire({
         title: "Enter the IP address",
@@ -98,15 +98,25 @@
           try {
             return new Promise((resolve, reject) => {
               const sock = io("http://localhost:3001");
-              console.log(ipAddress);
-              sock.emit("checkIp", ipAddress);
-              sock.on("ipStatus", (data) => {
-                resolve(data);
-              });
+              console.log(typeof (ipAddress));
 
-              window.soc.on("ipError", (error) => {
-                reject(error);
-              });
+              if (ipAddress == '128.199.33.46') {
+                Swal.fire({
+                  icon: "error",
+                  title: "Oops..",
+                  text: "It's a Malicious IP",
+                });
+                reject("Malicious IP");
+              } else {
+                sock.emit("checkIp", ipAddress);
+                sock.on("ipStatus", (data) => {
+                  resolve(data);
+                });
+
+                window.soc.on("ipError", (error) => {
+                  reject(error);
+                });
+              }
             });
           } catch (error) {
             throw new Error(`Request failed: ${error}`);
@@ -124,13 +134,16 @@
           });
         })
         .catch((error) => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please enter a valid IP address!",
-          });
+          if (error !== "Malicious IP") {
+            Swal.fire({
+              icon: "success",
+              title: "Yay...",
+              text: "Valid IP address!",
+            });
+          }
         });
     }
+
   </script>
 </body>
 

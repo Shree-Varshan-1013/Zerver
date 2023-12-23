@@ -111,8 +111,9 @@ const fetchDataByCompareIp = async (dbName, collectionName, eventName, ip,server
     const ipData = db.collection(collectionName);
 
     const result = await ipData.findOne({"hostname":server_name ,ip_address: ip }, { sort: { timestamp: -1 } });
-
+console.log(result);
     io.emit(eventName, { data: result });
+
   } catch (error) {
     console.error("Error fetching data from MongoDB (${dbName}):", error);
   }
@@ -167,7 +168,7 @@ io.on('connection', async (socket) => {
 
   socket.on('checkIp', async (ip) => {
     // console.log(ip + "==== ip")
-    const res = await fetchDataByCompareIp("server1_clf", "ip_status", "ipStatus", ip)  
+    const res = await fetchDataByCompareIp("log_analysis", "ip_status", "ipStatus", ip)  
     io.emit('ipStatus', res);
   }
 );
@@ -265,7 +266,7 @@ io.on('connection', async (socket) => {
     
       const server_name=socket.handshake.query.name;
       const db = dbInstance.db('log_analysis');
-      const collection = db.collection('daily_users_forecast');
+      const collection = db.collection('daily_users forecast');
       const collection2 = db.collection('logs_estimation_forecast');
       const startOf2023 = new Date('2023-12-09T00:00:00.000Z');
       const endOfFuture = new Date('2023-12-31T00:00:00.000Z');
@@ -284,9 +285,7 @@ io.on('connection', async (socket) => {
           $lte: endOfFuture,
         }
       }).toArray();
-      console.log(userData);
       socket.emit('userAndLogsForecast', { userForecast: userData, logsForecast: logData });
-      console.log(userForecast);
     
     } catch (error) {
       console.error(error);
@@ -378,7 +377,7 @@ io.on('connection', async (socket) => {
 
 
 //  =========== live dashboard log graph ==========
-async function  liveDashboardLogGraph(dbName, collectionName, eventName,server_name){
+async function  liveDashboardLogGraph(dbName, collectionName, eventName){
   try {
 
     // const db = dbInstance.db(dbName);
@@ -400,7 +399,7 @@ async function  liveDashboardLogGraph(dbName, collectionName, eventName,server_n
     // const endDate = twentyFourHoursAgo;
 
     const result = await collection.find({
-      "hostname":server_name,
+    
       timestamp: {
         $gte: startDate,
         $lte: endDate,
@@ -422,7 +421,7 @@ async function  liveDashboardLogGraph(dbName, collectionName, eventName,server_n
     console.error(`Error fetching chart data for the past hour from MongoDB (${dbName}):`, error);
   }
 };
-
+liveDashboardLogGraph('log_analysis', 'logs_count', 'request');
 
 
 //  =========== top 5 IP's ==============
@@ -542,7 +541,7 @@ server.listen(3001, async () => {
 
     // fetchAll("telegraf",["cpu"],["usage_user"]);
    
-    liveDashboardLogGraph('log_analysis', 'logs_count', 'request',server_name);
+    
       
   
     // fetchAll(server_name,"log_analysis",["cpu_usage","total_stars","virtual_memory","vulnerabilities","operating_systems_info_security"],["cpu_percent","total_stars","virtual_memory_info",["Date","CVE","KB","Title","AffectedProduct","AffectedComponent","Severity","Impact","Exploit"],["Name","Generation","Build","Version","Architecture","Installed_hotfixes"]]);

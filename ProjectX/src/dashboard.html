@@ -126,15 +126,15 @@
 
           <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-1  md:gap-6 xl:grid-cols-1 2xl:gap-5.5">
             <!-- Summary -->
-            <div
-              class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
-              <div class="flex items-start justify-start">
-                <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">
-                  Summary
-                </h1>
-              </div>
-              <p class="mt-3 text-[30px]" id="summary-text"></p>
-            </div>
+              <!-- <div
+                class="rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div class="flex items-start justify-start">
+                  <h1 class="text-3xl font-bold text-lavendar3 dark:text-lavendar2">
+                    Summary
+                  </h1>
+                </div>
+                <p class="mt-3 text-[30px]" id="summary-text"></p>
+              </div> -->
 
 
           </div>
@@ -154,30 +154,30 @@
         const logEntryElement = document.getElementById("summary-text");
 
        
-        console.log("Check",valuesArray);
+        // console.log("Check",valuesArray);
 
         // Update the content of the <p> tag with the summary property from the received data
-        if (valuesArray) {
-          const summaryText = valuesArray;
+        // if (valuesArray) {
+        //   const summaryText = valuesArray;
 
-          // Create a new typewriter instance
-          const typewriter = new Typewriter(logEntryElement, {
-            loop: false, // Set to true if you want the effect to loop
-            delay: 10, // Set the delay between characters
-          });
+        //   // Create a new typewriter instance
+        //   const typewriter = new Typewriter(logEntryElement, {
+        //     loop: false, // Set to true if you want the effect to loop
+        //     delay: 10, // Set the delay between characters
+        //   });
 
-          // Add the summary text to the typewriter instance
-          typewriter
-            .typeString(summaryText)
-            .pauseFor(2000)  // Pause for 2 seconds after typing the text
-            .deleteAll()     // Clear the text after pause
-            .callFunction(() => { // Use callFunction to create a pause
-              setTimeout(() => {
-                typewriter.start(); // Start typing again after the pause
-              }, 1000); // 1 second pause before retyping (adjust as needed)
-            })
-            .start();        // Start the typewriter effect
-        }
+        //   // Add the summary text to the typewriter instance
+        //   typewriter
+        //     .typeString(summaryText)
+        //     .pauseFor(2000)  // Pause for 2 seconds after typing the text
+        //     .deleteAll()     // Clear the text after pause
+        //     .callFunction(() => { // Use callFunction to create a pause
+        //       setTimeout(() => {
+        //         typewriter.start(); // Start typing again after the pause
+        //       }, 1000); // 1 second pause before retyping (adjust as needed)
+        //     })
+        //     .start();        // Start the typewriter effect
+        // }
       });
     });
   </script>
